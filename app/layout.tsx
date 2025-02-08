@@ -1,12 +1,7 @@
 import '~/styles/tailwind.css'
 import { Open_Sans } from 'next/font/google'
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from '~/providers/theme-provider'
 
 const OpenSansFont = Open_Sans({
   subsets: ['latin'],
@@ -20,15 +15,26 @@ export default function RootLayout({
   return (
     // * 注意包裹的是 html 喵~
     <ClerkProvider>
-      <html lang="en" className={OpenSansFont.className}>
-        <body className="h-full">
+      <html
+        lang="en"
+        className={OpenSansFont.className}
+        suppressHydrationWarning
+      >
+        <body className="dark:bg-slate-700 bg-slate-300">
           {/* <SignedOut>
             <SignInButton />
           </SignedOut> */}
           {/* <SignedIn>
             <UserButton />
           </SignedIn> */}
-          {children}v
+          <ThemeProvider
+            attribute={'class'}
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
