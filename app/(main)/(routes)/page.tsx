@@ -1,8 +1,11 @@
+import { UserButton } from '@clerk/nextjs'
+
 const Page = () => {
   return (
-    <>
-      <div>Page</div>
-    </>
+    <div>
+      登陆成功界面
+      <UserButton />
+    </div>
   )
 }
 
