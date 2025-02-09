@@ -1,7 +1,7 @@
 import '~/styles/tailwind.css'
 import { Open_Sans } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
-import { ThemeProvider } from '~/providers/theme-provider'
+import { ThemeProvider } from '~/components/providers/theme-provider'
 
 const OpenSansFont = Open_Sans({
   subsets: ['latin'],
