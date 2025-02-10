@@ -16,7 +16,6 @@ const NavigationItem = ({ name = 'null', id, imageUrl }: INavButtonProps) => {
   // * 获取之后点击跳转的链接地址~
   const params = useParams()
   const router = useRouter()
-  console.log(imageUrl, ' - url')
 
   return (
     <ActionTooltip side="right" align="center" label={name}>
@@ -24,7 +23,7 @@ const NavigationItem = ({ name = 'null', id, imageUrl }: INavButtonProps) => {
         onClick={() => {
           router.push(`/servers/${id}`)
         }}
-        className="group flex items-center size-12 cursor-pointer rounded-3xl hover:rounded-xl transition-all mx-auto"
+        className="group flex items-center size-12 cursor-pointer rounded-3xl hover:rounded-xl transition-all mx-auto mb-2"
       >
         {/* 选中以后的左侧小白条~ */}
         <div

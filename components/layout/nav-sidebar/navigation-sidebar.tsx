@@ -3,7 +3,6 @@ import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 import { ScrollArea } from '~/components/ui/scroll-area'
 import NavigationButton from './internal/navigation-button'
-import { Plus } from 'lucide-react'
 import { Separator } from '~/components/ui/separator'
 import NavigationItem from './internal/navigation-item'
 import { ModeToggle } from '~/components/ui/mode-toggle'
@@ -29,9 +28,9 @@ const NavigationSidebar = async () => {
 
   return (
     <aside className="bg-slate-800 w-16 space-y-4 flex flex-col items-center py-2 relative">
-      <NavigationButton Icon={Plus} />
+      <NavigationButton />
       <Separator className="h-[2px] bg-zinc-200 dark:bg-zinc-500 rounded-md w-10 mx-auto" />
-      <ScrollArea className="w-full flex">
+      <ScrollArea className="w-full">
         {servers.map(server => (
           <div key={server.id}>
             <NavigationItem

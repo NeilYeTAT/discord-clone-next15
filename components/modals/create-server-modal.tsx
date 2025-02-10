@@ -24,6 +24,7 @@ import {
 import { Input } from '~/components/ui/input'
 import FileUpload from '../file-upload'
 import { useRouter } from 'next/navigation'
+import { useModal } from '~/hooks/use-modal-store'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -34,8 +35,12 @@ const formSchema = z.object({
   }),
 })
 
-const InitialModal = () => {
+const CreateServerModal = () => {
   const router = useRouter()
+
+  const { isOpen, onClose, type } = useModal()
+  const isModalOpen = isOpen && type === 'createServer'
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,16 +54,20 @@ const InitialModal = () => {
       await axios.post('/api/servers', values)
       form.reset()
       router.refresh()
-      window.location.reload()
+      onClose()
     } catch (error) {
       console.warn(error, '创建服务器错误~')
     }
   }
 
+  const handleClose = () => {
+    form.reset()
+    onClose()
+  }
+
   return (
-    <div className="bg-black h-screen">
-      <Dialog open>
-        <DialogTrigger>Open in initial modal</DialogTrigger>
+    <div className="bg-pink-500">
+      <Dialog open={isModalOpen} onOpenChange={handleClose}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="m-auto text-2xl">
@@ -117,4 +126,4 @@ const InitialModal = () => {
   )
 }
 
-export default InitialModal
+export default CreateServerModal
