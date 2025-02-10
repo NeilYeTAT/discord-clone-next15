@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -22,6 +23,7 @@ import {
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
 import FileUpload from '../file-upload'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -33,6 +35,7 @@ const formSchema = z.object({
 })
 
 const InitialModal = () => {
+  const router = useRouter()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,8 +44,15 @@ const InitialModal = () => {
     },
   })
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data, '创建服务器~')
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await axios.post('/api/servers', values)
+      form.reset()
+      router.refresh()
+      window.location.reload()
+    } catch (error) {
+      console.warn(error, '创建服务器错误~')
+    }
   }
 
   return (
