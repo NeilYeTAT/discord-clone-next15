@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     // * 注意包裹的是 html 喵~
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={'/'}>
       <html
         lang="en"
         className={OpenSansFont.className}

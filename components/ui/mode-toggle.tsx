@@ -5,13 +5,14 @@ import { useTheme } from 'next-themes'
 
 import { Button } from '~/components/ui/button'
 
-export function ModeToggle() {
+export function ModeToggle({ className }: { className?: string }) {
   const { setTheme, theme } = useTheme()
 
   return (
     <Button
       variant="outline"
       size="icon"
+      className={className}
       onClick={() =>
         // * 默认 系统主题为黑色, 保护眼睛喵~ 🥺
         setTheme(theme === 'dark' || theme === 'system' ? 'light' : 'dark')
