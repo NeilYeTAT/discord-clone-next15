@@ -52,7 +52,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         )}
         {/* 群主可以设置服务器 */}
         {isAdmin && (
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onOpen('editServer', { server })}>
             服务器设置 <Settings className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
