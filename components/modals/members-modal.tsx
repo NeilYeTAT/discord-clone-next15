@@ -7,12 +7,37 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { useModal } from '~/hooks/use-modal-store'
-import { ServerWithMembersWithProfiles } from '~/types'
-import { ScrollArea } from '../ui/scroll-area'
 import UserAvatar from '../layout/user-avatar/user-avatar'
-import { ShieldAlert, ShieldCheck } from 'lucide-react'
+import { ScrollArea } from '~/components/ui/scroll-area'
+import {
+  Check,
+  Gavel,
+  Loader2,
+  MoreVertical,
+  Shield,
+  ShieldAlert,
+  ShieldCheck,
+  ShieldQuestion,
+} from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu'
+
+import { useModal } from '~/hooks/use-modal-store'
+import qs from 'query-string'
+import { ServerWithMembersWithProfiles } from '~/types'
 import { MemberRole } from '@prisma/client'
+import { useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {
   GUEST: null,
@@ -21,14 +46,36 @@ const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {
 }
 
 const MembersModal = () => {
+  const router = useRouter()
   const { isOpen, onClose, onOpen, type, data } = useModal()
+  const [loadingId, setLoadingId] = useState('')
 
   const { server } = data as { server: ServerWithMembersWithProfiles }
-
   const isModalOpen = isOpen && type === 'members'
 
   const handleClose = () => {
     onClose()
+  }
+
+  const handleRoleChange = async (memberId: string, role: MemberRole) => {
+    try {
+      setLoadingId(memberId)
+      const url = qs.stringifyUrl({
+        url: `/api/members/${memberId}`,
+        query: {
+          serverId: server?.id,
+        },
+      })
+      const response = await axios.patch(url, { role })
+
+      router.refresh()
+
+      onOpen('members', { server: response.data })
+    } catch (error) {
+      console.warn('handle role change error', error)
+    } finally {
+      setLoadingId('')
+    }
   }
 
   return (
@@ -57,6 +104,64 @@ const MembersModal = () => {
                     {member.profile.email}
                   </p>
                 </section>
+                {/* 对其他人的操作~ */}
+                {server.profileId !== member.profileId &&
+                  loadingId !== member.id && (
+                    <div className="ml-auto">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <MoreVertical className="size-4" />
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent side="left">
+                          <DropdownMenuSub>
+                            <DropdownMenuSubTrigger className="flex items-center">
+                              <ShieldQuestion className="size-4 mr-2" />
+                              <span>Role</span>
+                            </DropdownMenuSubTrigger>
+
+                            <DropdownMenuPortal>
+                              <DropdownMenuSubContent>
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleRoleChange(member.id, 'GUEST')
+                                  }
+                                >
+                                  <Shield className="size-4 ml-2" />
+                                  GUEST
+                                  {member.role === 'GUEST' && (
+                                    <Check className="size-4" />
+                                  )}
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleRoleChange(member.id, 'MODERATOR')
+                                  }
+                                >
+                                  <ShieldCheck className="size-4 ml-2" />
+                                  Moderator
+                                  {member.role === 'MODERATOR' && (
+                                    <Check className="size-4" />
+                                  )}
+                                </DropdownMenuItem>
+                              </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                          </DropdownMenuSub>
+                          {/* 分割 */}
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>
+                            <Gavel className="size-4 ml-2" />
+                            移出
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  )}
+                {/*  */}
+                {loadingId === member.id && (
+                  <Loader2 className="size-4 animate-spin ml-auto" />
+                )}
               </main>
             ))}
           </ScrollArea>
