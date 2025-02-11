@@ -58,7 +58,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         )}
         {/* 群主可以管理成员, 踢人~ */}
         {isAdmin && (
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onOpen('members', { server })}>
             管理成员 <Users className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
