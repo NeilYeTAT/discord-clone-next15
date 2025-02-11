@@ -8,6 +8,7 @@ export type ModalType =
   | 'members'
   | 'createChannel'
   | 'leaveServer'
+  | 'deleteServer'
 
 interface IModalData {
   server?: Server

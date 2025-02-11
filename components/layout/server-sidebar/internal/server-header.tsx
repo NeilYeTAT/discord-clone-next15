@@ -74,7 +74,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         {isAdmin && (
           <DropdownMenuItem
             className="text-rose-500"
-            onClick={() => onOpen('leaveServer', { server })}
+            onClick={() => onOpen('deleteServer', { server })}
           >
             删除频道 <Trash className="size-4 ml-auto" />
           </DropdownMenuItem>
