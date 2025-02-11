@@ -78,6 +78,23 @@ const MembersModal = () => {
     }
   }
 
+  const handleKick = async (memberId: string) => {
+    try {
+      setLoadingId(memberId)
+      const url = qs.stringifyUrl({
+        url: `/api/members/${memberId}`,
+        query: {
+          serverId: server?.id,
+        },
+      })
+
+      const response = await axios.delete(url)
+
+      router.refresh()
+      onOpen('members', { server: response.data })
+    } catch (error) {}
+  }
+
   return (
     <div className="bg-pink-500">
       <Dialog open={isModalOpen} onOpenChange={handleClose}>
@@ -150,7 +167,9 @@ const MembersModal = () => {
                           </DropdownMenuSub>
                           {/* 分割 */}
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleKick(member.id)}
+                          >
                             <Gavel className="size-4 ml-2" />
                             移出
                           </DropdownMenuItem>
