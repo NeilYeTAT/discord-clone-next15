@@ -64,7 +64,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         )}
         {/* 创建频道 */}
         {isModerator && (
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onOpen('createChannel')}>
             创建频道 <PlusCircle className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
