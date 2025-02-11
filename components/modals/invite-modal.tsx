@@ -49,10 +49,13 @@ const InviteModal = () => {
       setIsLoading(false)
     }
   }
+  const handleClose = () => {
+    onClose()
+  }
 
   return (
     <div className="bg-pink-500">
-      <Dialog open={isModalOpen}>
+      <Dialog open={isModalOpen} onOpenChange={handleClose}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="m-auto text-2xl">邀请朋友~</DialogTitle>
@@ -62,7 +65,7 @@ const InviteModal = () => {
             <Label className="text-xs font-bold text-zinc-300">邀请码</Label>
 
             <div className="flex items-center mt-2 gap-x-2">
-              <Input value={inviteUrl} />
+              <Input value={inviteUrl} readOnly />
               <Button size="icon" onClick={handleCopy} disabled={isLoading}>
                 {copied ? (
                   <Check className="size-4" />
