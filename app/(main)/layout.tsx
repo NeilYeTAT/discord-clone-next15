@@ -2,7 +2,7 @@ import NavigationSidebar from '~/components/layout/nav-sidebar/navigation-sideba
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="min-h-screen flex gap-4">
+    <div className="min-h-screen flex">
       <NavigationSidebar />
       <div>{children}</div>
     </div>

@@ -33,7 +33,7 @@ model Server {
   id         String @id @default(uuid())
   name       String
   imageUrl   String @db.Text
-  inviteCode String @db.Text
+  inviteCode String @unique
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -41,7 +41,7 @@ model Server {
   members Member[]
   channels Channel[]
 
-  cratedAt DateTime @default(now())
+  created DateTime @default(now())
   updateAt DateTime @updatedAt
 
   @@index([profileId])
@@ -63,7 +63,7 @@ model Member {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  cratedAt DateTime @default(now())
+  created DateTime @default(now())
   updateAt DateTime @updatedAt
 
   @@index([profileId])
@@ -87,7 +87,7 @@ model Channel {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  cratedAt DateTime @default(now())
+  created DateTime @default(now())
   updateAt DateTime @updatedAt
 
   @@index([profileId])
