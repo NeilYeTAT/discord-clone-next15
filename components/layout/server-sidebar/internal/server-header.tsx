@@ -72,13 +72,19 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         {isModerator && <DropdownMenuSeparator />}
 
         {isAdmin && (
-          <DropdownMenuItem className="text-rose-500">
+          <DropdownMenuItem
+            className="text-rose-500"
+            onClick={() => onOpen('leaveServer', { server })}
+          >
             删除频道 <Trash className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
 
         {!isAdmin && (
-          <DropdownMenuItem className="text-rose-500">
+          <DropdownMenuItem
+            className="text-rose-500"
+            onClick={() => onOpen('leaveServer', { server })}
+          >
             退出频道 <LogOut className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
