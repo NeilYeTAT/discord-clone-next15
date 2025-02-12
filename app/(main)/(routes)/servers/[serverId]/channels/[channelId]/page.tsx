@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import ChatHeader from '~/components/layout/chat/chat-header'
+import ChatInput from '~/components/layout/chat/chat-input'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 
@@ -34,12 +35,32 @@ const ChannelIdPage = async ({
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col justify-between">
       <ChatHeader
         name={channel.name}
         serverId={channel.serverId}
         type="channel"
       />
+      <div>Future Messages</div>
+      <ChatInput
+        name={channel.name}
+        type="channel"
+        apiUrl="/api/socket/messages"
+        query={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
+      />
+
+      {/* <ChatInput
+        name={channel.name}
+        type="channel"
+        apiUrl="/api/socket/messages"
+        query={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
+      /> */}
     </div>
   )
 }
