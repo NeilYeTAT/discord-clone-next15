@@ -4,7 +4,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen flex">
       <NavigationSidebar />
-      <div>{children}</div>
+      <div className="flex-grow">{children}</div>
     </div>
   )
 }

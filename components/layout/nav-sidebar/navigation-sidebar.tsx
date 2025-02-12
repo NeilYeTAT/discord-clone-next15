@@ -27,7 +27,7 @@ const NavigationSidebar = async () => {
   })
 
   return (
-    <aside className="bg-slate-800 w-16 space-y-4 flex flex-col items-center py-2 relative">
+    <aside className="bg-slate-800 w-16 space-y-4 flex flex-col items-center py-2 relative flex-shrink-0">
       <NavigationButton />
       <Separator className="h-[2px] bg-zinc-200 dark:bg-zinc-500 rounded-md w-10 mx-auto" />
       <ScrollArea className="w-full">
