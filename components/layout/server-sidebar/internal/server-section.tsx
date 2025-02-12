@@ -28,7 +28,7 @@ const ServerSection = ({
       {/* Text Channels */}
       {role !== MemberRole.GUEST && sectionType === 'channels' && (
         <ActionTooltip label="Create Channel" side="top">
-          <button onClick={() => onOpen('createChannel')}>
+          <button onClick={() => onOpen('createChannel', { channelType })}>
             <Plus className="size-4" />
           </button>
         </ActionTooltip>
