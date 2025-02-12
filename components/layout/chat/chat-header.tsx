@@ -1,5 +1,6 @@
 import { Hash } from 'lucide-react'
 import UserAvatar from '../user-avatar/user-avatar'
+import SocketIndicator from '~/components/socket-indicator'
 
 interface IChatHeaderProps {
   serverId: string
@@ -16,6 +17,9 @@ const ChatHeader = ({ name, serverId, type, imageUrl }: IChatHeaderProps) => {
         <UserAvatar src={imageUrl} className="size-8" />
       )}
       <p>{name}</p>
+      <div>
+        <SocketIndicator />
+      </div>
     </div>
   )
 }
