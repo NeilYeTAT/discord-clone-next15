@@ -22,8 +22,13 @@ const ServerMember = ({ member, server }: IServerMemberProps) => {
   const router = useRouter()
   const icon = ROLE_ICON_MAP[member.role]
 
+  const handleClick = () => {
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+  }
+
   return (
     <button
+      onClick={handleClick}
       className={cn(
         'group p-2 rounded-md flex items-center w-full',
         params?.memberId === member.id && 'bg-zinc-700/20',
@@ -34,7 +39,7 @@ const ServerMember = ({ member, server }: IServerMemberProps) => {
       <p
         className={cn(
           'font-mono text-sm',
-          params?.channelId === member.id && 'text-purple-300',
+          params?.memberId === member.id && 'text-purple-300',
         )}
       >
         {member.profile.name}

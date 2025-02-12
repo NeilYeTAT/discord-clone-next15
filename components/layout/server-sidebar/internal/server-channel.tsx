@@ -4,7 +4,7 @@ import { Channel, ChannelType, MemberRole, Server } from '@prisma/client'
 import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import ActionTooltip from '~/components/ui/action-tooltip'
-import { useModal } from '~/hooks/use-modal-store'
+import { ModalType, useModal } from '~/hooks/use-modal-store'
 import { cn } from '~/lib/utils'
 
 interface IServerChannelProps {
@@ -26,9 +26,18 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
 
   const Icon = CHANNEL_TYPE_ICON_MAP[channel.type]
 
+  const handleClick = () => {
+    router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
+  }
+
+  const onAction = (e: React.MouseEvent, action: ModalType) => {
+    e.stopPropagation()
+    onOpen(action, { channel, server })
+  }
+
   return (
     <button
-      onClick={() => {}}
+      onClick={handleClick}
       className={cn(
         'group p-2 rounded-md flex items-center w-full gap-2 bg-purple-700 z-10 cursor-pointer',
         params?.channelId === channel.id && 'bg-slate-300',
@@ -42,13 +51,13 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
           <ActionTooltip label="Edit">
             <Edit
               className="size-4"
-              onClick={() => onOpen('editChannel', { server, channel })}
+              onClick={e => onAction(e, 'editChannel')}
             />
           </ActionTooltip>
           <ActionTooltip label="Delete">
             <Trash
               className="size-4"
-              onClick={() => onOpen('deleteChannel', { server, channel })}
+              onClick={e => onAction(e, 'deleteChannel')}
             />
           </ActionTooltip>
         </div>
