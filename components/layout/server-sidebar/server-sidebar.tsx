@@ -14,6 +14,10 @@ import { currentProfile } from '~/lib/db/current-profile'
 import ServerHeader from './internal/server-header'
 import ServerSearch from './internal/server-search'
 import { ScrollArea } from '~/components/ui/scroll-area'
+import { Separator } from '~/components/ui/separator'
+import ServerSection from './internal/server-section'
+import ServerChannel from './internal/server-channel'
+import ServerMember from './internal/server-member'
 
 interface IServerSidebarProps {
   serverId: string
@@ -84,7 +88,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
   return (
     <div className="flex flex-col h-full">
       <ServerHeader server={server} role={myRoles} />
-      <ScrollArea className="flex-1 px-3">
+      <ScrollArea className="flex-1 px-2">
         <div>
           <ServerSearch
             data={[
@@ -130,6 +134,85 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
             ]}
           />
         </div>
+
+        <Separator className="w-full" />
+        {/* 频道列表渲染 */}
+        {/* 这里必须使用 !! 两次取反, 因为如果为 0 值的话, 页面会直接渲染成 0 的!!!!!!! */}
+        {!!textChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.TEXT}
+              role={myRoles}
+              label="Text Channels"
+            />
+
+            {textChannels.map(channel => (
+              <ServerChannel
+                key={channel.id}
+                channel={channel}
+                role={myRoles}
+                server={server}
+              />
+            ))}
+          </div>
+        )}
+
+        {!!audioChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.AUDIO}
+              role={myRoles}
+              label="Voice Channels"
+            />
+
+            {audioChannels.map(channel => (
+              <ServerChannel
+                key={channel.id}
+                channel={channel}
+                role={myRoles}
+                server={server}
+              />
+            ))}
+          </div>
+        )}
+
+        {!!videoChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.VIDEO}
+              role={myRoles}
+              label="Video Channels"
+            />
+
+            {videoChannels.map(channel => (
+              <ServerChannel
+                key={channel.id}
+                channel={channel}
+                role={myRoles}
+                server={server}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* 渲染成员 */}
+        {!!members?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="members"
+              role={myRoles}
+              label="Members"
+              server={server}
+            />
+
+            {members.map(member => (
+              <ServerMember />
+            ))}
+          </div>
+        )}
       </ScrollArea>
     </div>
   )

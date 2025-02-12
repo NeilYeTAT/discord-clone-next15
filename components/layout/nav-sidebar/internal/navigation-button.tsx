@@ -1,7 +1,7 @@
 'use client'
 
 import { useModal } from '~/hooks/use-modal-store'
-import ActionTooltip from './action-tooltip'
+import ActionTooltip from '../../../ui/action-tooltip'
 import { Plus } from 'lucide-react'
 
 interface IIconProps {
