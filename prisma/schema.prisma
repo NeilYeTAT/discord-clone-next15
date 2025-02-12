@@ -24,8 +24,8 @@ model Profile {
   member   Member[]
   channels Channel[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // * discord 的每个服务器其实就是一个 QQ 群~
@@ -38,10 +38,10 @@ model Server {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  members Member[]
+  members  Member[]
   channels Channel[]
 
-  created DateTime @default(now())
+  created  DateTime @default(now())
   updateAt DateTime @updatedAt
 
   @@index([profileId])
@@ -63,8 +63,15 @@ model Member {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  created DateTime @default(now())
-  updateAt DateTime @updatedAt
+  messages Message[]
+
+  conversationsInitialed Conversation[] @relation("MemberOne")
+  conversationsReceived  Conversation[] @relation("MemberTwo")
+
+  created       DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  Conversation  Conversation[]
+  DirectMessage DirectMessage[]
 
   @@index([profileId])
   @@index([serverId])
@@ -87,9 +94,73 @@ model Channel {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  created DateTime @default(now())
+  messages Message[]
+
+  created  DateTime @default(now())
   updateAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])
+}
+
+// * 聊天记录~
+
+model Message {
+  id      String @id @default(uuid())
+  content String @db.Text
+
+  fileUrl String? @db.Text
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  created  DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@index([memberId])
+}
+
+model Conversation {
+  id String @id @default(uuid())
+
+  memberOneId String
+  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+
+  memberTwoId String
+  memberTwo   Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
+
+  Member   Member? @relation(fields: [memberId], references: [id])
+  memberId String?
+
+  directMessages DirectMessage[]
+
+  @@unique([memberOneId, memberTwoId])
+  @@index([memberOneId])
+  @@index([memberTwoId])
+}
+
+model DirectMessage {
+  id      String  @id @default(uuid())
+  content String  @db.Text
+  fileUrl String? @db.Text
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  created  DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@index([memberId])
+  @@index([conversationId])
 }
