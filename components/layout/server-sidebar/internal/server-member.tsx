@@ -23,6 +23,7 @@ const ServerMember = ({ member, server }: IServerMemberProps) => {
   const icon = ROLE_ICON_MAP[member.role]
 
   const handleClick = () => {
+    console.log(params?.serverId, member.id)
     router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
   }
 
