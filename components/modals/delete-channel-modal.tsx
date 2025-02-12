@@ -13,25 +13,34 @@ import { Button } from '../ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import qs from 'query-string'
 
-const DeleteServerModal = () => {
+const DeleteChannelModal = () => {
   const router = useRouter()
+
   const { isOpen, onClose, onOpen, type, data } = useModal()
-  const { server } = data
-  const isModalOpen = isOpen && type === 'deleteServer'
+  const { server, channel } = data
+  const isModalOpen = isOpen && type === 'deleteChannel'
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleLeaveServer = async () => {
+  const handleDeleteChannel = async () => {
     try {
       setIsLoading(true)
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: {
+          serverId: server?.id,
+        },
+      })
 
-      await axios.delete(`/api/servers/${server?.id}`)
+      await axios.delete(url)
 
       onClose()
+      // * 妈的, 这里要先跳转再刷新
+      router.push(`/servers/${server?.id}`)
       router.refresh()
-      router.push('/')
     } catch (error) {
-      console.warn('leave server modal error', error)
+      console.warn('delete channel modal error', error)
     } finally {
       setIsLoading(false)
     }
@@ -42,13 +51,13 @@ const DeleteServerModal = () => {
       <Dialog open={isModalOpen} onOpenChange={onClose}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="m-auto text-2xl">删除服务器</DialogTitle>
+            <DialogTitle className="m-auto text-2xl">删除频道</DialogTitle>
             <DialogDescription>
               确定要删除{' '}
               <span className="font-semibold text-indigo-500">
-                {server?.name}
+                #{channel?.name}
               </span>{' '}
-              服务器喵🥹?
+              频道喵🥹?
             </DialogDescription>
           </DialogHeader>
 
@@ -56,7 +65,7 @@ const DeleteServerModal = () => {
             <Button
               disabled={isLoading}
               variant={'default'}
-              onClick={handleLeaveServer}
+              onClick={handleDeleteChannel}
             >
               确定
             </Button>
@@ -70,4 +79,4 @@ const DeleteServerModal = () => {
   )
 }
 
-export default DeleteServerModal
+export default DeleteChannelModal
