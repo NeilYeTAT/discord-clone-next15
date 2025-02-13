@@ -3,11 +3,13 @@
 import { Member, Message, Profile } from '@prisma/client'
 import ChatWelcome from './internal/chat-welcome'
 import { useChatQuery } from '~/hooks/use-chat-query'
-import { Loader2, ServerCrash } from 'lucide-react'
-import { Fragment } from 'react'
+import { Divide, Loader2, ServerCrash } from 'lucide-react'
+import { Fragment, useRef } from 'react'
 import { ChatItem } from './internal/chat-item'
 import { format } from 'date-fns'
 import { useChatSocket } from '~/hooks/use-chat-socket'
+import { Button } from '~/components/ui/button'
+import { useChatScroll } from '~/hooks/use-chat-scroll'
 
 interface IChatMessagesProps {
   name: string
@@ -44,6 +46,9 @@ const ChatMessages = ({
   const addKey = `chat:${chatId}:messages`
   const updateKey = `chat:${chatId}:messages:update`
 
+  const chatRef = useRef<HTMLDivElement>(null)
+  const bottomRef = useRef<HTMLDivElement>(null)
+
   const {
     data,
     fetchNextPage,
@@ -59,6 +64,13 @@ const ChatMessages = ({
     paramValue,
   })
   useChatSocket({ queryKey, addKey, updateKey })
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+    count: data?.pages?.[0].items?.length ?? 0,
+  })
 
   if (isLoading) {
     return (
@@ -81,9 +93,19 @@ const ChatMessages = ({
   }
 
   return (
-    <main className="flex-1 flex flex-col py-4 overflow-y-auto">
-      <div className="flex-1">ChatMessages</div>
-      <ChatWelcome type={type} name={name} />
+    <main ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
+      {!hasNextPage && <div className="flex-1" />}
+      {!hasNextPage && <ChatWelcome type={type} name={name} />}
+
+      {hasNextPage && (
+        <div className="flex justify-center">
+          {isFetchingNextPage ? (
+            <Loader2 className="size-6" />
+          ) : (
+            <Button onClick={() => fetchNextPage()}>加载更多...</Button>
+          )}
+        </div>
+      )}
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
@@ -106,6 +128,7 @@ const ChatMessages = ({
           </Fragment>
         ))}
       </div>
+      <div ref={bottomRef} />
     </main>
   )
 }
