@@ -10,6 +10,8 @@ import { Button } from '~/components/ui/button'
 import qs from 'query-string'
 import axios from 'axios'
 import { useModal } from '~/hooks/use-modal-store'
+import EmojiPicker from './internal/emoji-picker'
+import { useRouter } from 'next/navigation'
 
 interface IChatInputProps {
   apiUrl: string
@@ -23,6 +25,7 @@ const formSchema = z.object({
 })
 
 const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
+  const router = useRouter()
   const { onOpen } = useModal()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,6 +45,8 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
       })
 
       await axios.post(url, values)
+      form.reset()
+      router.refresh()
     } catch (error) {}
   }
 
@@ -56,6 +61,8 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
               <FormControl>
                 <div className="relative p-4">
                   <Button
+                    // * 必须使用 type
+                    type="button"
                     onClick={() => {
                       onOpen('messageFile', { apiUrl, query })
                     }}
@@ -71,12 +78,13 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
                       type === 'conversation' ? name : '# ' + name
                     }`}
                   />
-                  <Button
-                    onClick={() => {}}
-                    className="size-8 absolute top-8 right-8 bg-gray-400 rounded-full"
-                  >
-                    <Smile />
-                  </Button>
+                  <div className="size-8 absolute top-8 right-8 bg-gray-400 rounded-full">
+                    <EmojiPicker
+                      onChange={(emoji: any) =>
+                        field.onChange(`${field.value} ${emoji}`)
+                      }
+                    />
+                  </div>
                 </div>
               </FormControl>
             </FormItem>
