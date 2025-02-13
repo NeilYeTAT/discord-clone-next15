@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation'
 import ChatHeader from '~/components/layout/chat/chat-header'
+import ChatInput from '~/components/layout/chat/chat-input'
+import ChatMessages from '~/components/layout/chat/chat-messages'
 import { db } from '~/db'
 import { getOrCreateConversation } from '~/lib/conversation'
 import { currentProfile } from '~/lib/db/current-profile'
@@ -9,7 +11,6 @@ const MemberIdPage = async ({
 }: {
   params: Promise<{ memberId: string; serverId: string }>
 }) => {
-  console.log('yessssssssss')
   const profile = await currentProfile()
   const serverId = (await params).serverId
   const memberId = (await params).memberId
@@ -50,6 +51,27 @@ const MemberIdPage = async ({
         name={otherMember.profile.name}
         serverId={serverId}
         type="conversation"
+      />
+      <ChatMessages
+        member={currentMember}
+        name={otherMember.profile.name}
+        chatId={conversation.id}
+        type="conversation"
+        apiUrl="/api/direct-messages"
+        paramKey="conversationId"
+        paramValue={conversation.id}
+        socketUrl="/api/socket/direct-messages"
+        socketQuery={{
+          conversationId: conversation.id,
+        }}
+      />
+      <ChatInput
+        name={otherMember.profile.name}
+        type="conversation"
+        apiUrl="/api/socket/direct-messages"
+        query={{
+          conversationId: conversation.id,
+        }}
       />
     </div>
   )
