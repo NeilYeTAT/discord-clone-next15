@@ -24,8 +24,8 @@ model Profile {
   member   Member[]
   channels Channel[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAtAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // * discord 的每个服务器其实就是一个 QQ 群~
@@ -41,8 +41,8 @@ model Server {
   members  Member[]
   channels Channel[]
 
-  created  DateTime @default(now())
-  updateAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
   @@index([profileId])
 }
@@ -68,7 +68,7 @@ model Member {
   conversationsInitialed Conversation[] @relation("MemberOne")
   conversationsReceived  Conversation[] @relation("MemberTwo")
 
-  created       DateTime        @default(now())
+  createdAt     DateTime        @default(now())
   updateAt      DateTime        @updatedAt
   Conversation  Conversation[]
   DirectMessage DirectMessage[]
@@ -96,8 +96,8 @@ model Channel {
 
   messages Message[]
 
-  created  DateTime @default(now())
-  updateAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])
@@ -119,8 +119,8 @@ model Message {
 
   deleted Boolean @default(false)
 
-  created  DateTime @default(now())
-  updateAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
   @@index([channelId])
   @@index([memberId])
@@ -158,8 +158,8 @@ model DirectMessage {
 
   deleted Boolean @default(false)
 
-  created  DateTime @default(now())
-  updateAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 
   @@index([memberId])
   @@index([conversationId])

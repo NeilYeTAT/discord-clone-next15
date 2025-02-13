@@ -5,7 +5,7 @@ CREATE TABLE `Profile` (
     `name` VARCHAR(191) NOT NULL,
     `imageUrl` TEXT NOT NULL,
     `email` TEXT NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `createdAtAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Profile_userId_key`(`userId`),

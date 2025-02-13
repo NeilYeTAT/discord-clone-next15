@@ -32,7 +32,7 @@ const ServerIdPage = async ({
           name: 'general',
         },
         orderBy: {
-          created: 'asc',
+          createdAt: 'asc',
         },
       },
     },
