@@ -16,7 +16,7 @@ CREATE TABLE `Message` (
     `channelId` VARCHAR(191) NOT NULL,
     `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updateAt` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
 
     INDEX `Message_channelId_idx`(`channelId`),
     INDEX `Message_memberId_idx`(`memberId`),
@@ -45,7 +45,7 @@ CREATE TABLE `DirectMessage` (
     `conversationId` VARCHAR(191) NOT NULL,
     `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updateAt` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
 
     INDEX `DirectMessage_memberId_idx`(`memberId`),
     INDEX `DirectMessage_conversationId_idx`(`conversationId`),

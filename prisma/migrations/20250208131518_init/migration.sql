@@ -20,7 +20,7 @@ CREATE TABLE `Server` (
     `inviteCode` TEXT NOT NULL,
     `profileId` VARCHAR(191) NOT NULL,
     `cratedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updateAt` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
 
     INDEX `Server_profileId_idx`(`profileId`),
     PRIMARY KEY (`id`)
@@ -33,7 +33,7 @@ CREATE TABLE `Member` (
     `profileId` VARCHAR(191) NOT NULL,
     `serverId` VARCHAR(191) NOT NULL,
     `cratedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updateAt` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
 
     INDEX `Member_profileId_idx`(`profileId`),
     INDEX `Member_serverId_idx`(`serverId`),
@@ -48,7 +48,7 @@ CREATE TABLE `Channel` (
     `profileId` VARCHAR(191) NOT NULL,
     `serverId` VARCHAR(191) NOT NULL,
     `cratedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updateAt` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
 
     INDEX `Channel_profileId_idx`(`profileId`),
     INDEX `Channel_serverId_idx`(`serverId`),

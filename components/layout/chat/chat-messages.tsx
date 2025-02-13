@@ -5,6 +5,9 @@ import ChatWelcome from './internal/chat-welcome'
 import { useChatQuery } from '~/hooks/use-chat-query'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { Fragment } from 'react'
+import { ChatItem } from './internal/chat-item'
+import { format } from 'date-fns'
+import { useChatSocket } from '~/hooks/use-chat-socket'
 
 interface IChatMessagesProps {
   name: string
@@ -24,6 +27,8 @@ type IMessageWithMemberWithProfile = Message & {
   }
 }
 
+const DATE_FORMAT = 'd MMM yyyy, HH:mm'
+
 const ChatMessages = ({
   apiUrl,
   chatId,
@@ -36,6 +41,8 @@ const ChatMessages = ({
   type,
 }: IChatMessagesProps) => {
   const queryKey = `chat:${chatId}`
+  const addKey = `chat:${chatId}:messages`
+  const updateKey = `chat:${chatId}:messages:update`
 
   const {
     data,
@@ -51,6 +58,7 @@ const ChatMessages = ({
     paramKey,
     paramValue,
   })
+  useChatSocket({ queryKey, addKey, updateKey })
 
   if (isLoading) {
     return (
@@ -80,7 +88,20 @@ const ChatMessages = ({
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group?.items?.map((message: IMessageWithMemberWithProfile) => (
-              <p key={message.id}>{message.content}</p>
+              // <p key={message.id}>{message.content}</p>
+              <ChatItem
+                key={message.id}
+                id={message.id}
+                currentMember={member}
+                member={message.member}
+                content={message.content}
+                fileUrl={message.fileUrl}
+                deleted={message.deleted}
+                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                isUpdated={message.updatedAt !== message.createdAt}
+                socketUrl={socketUrl}
+                socketQuery={socketQuery}
+              />
             ))}
           </Fragment>
         ))}
