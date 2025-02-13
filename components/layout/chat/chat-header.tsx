@@ -1,6 +1,7 @@
 import { Hash } from 'lucide-react'
 import UserAvatar from '../user-avatar/user-avatar'
 import SocketIndicator from '~/components/socket-indicator'
+import { ChatVideoButton } from './internal/chat-video-button'
 
 interface IChatHeaderProps {
   serverId: string
@@ -18,6 +19,7 @@ const ChatHeader = ({ name, serverId, type, imageUrl }: IChatHeaderProps) => {
       )}
       <p>{name}</p>
       <div>
+        {type === 'conversation' && <ChatVideoButton />}
         <SocketIndicator />
       </div>
     </div>
