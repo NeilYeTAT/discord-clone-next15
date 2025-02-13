@@ -9,6 +9,7 @@ import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
 import qs from 'query-string'
 import axios from 'axios'
+import { useModal } from '~/hooks/use-modal-store'
 
 interface IChatInputProps {
   apiUrl: string
@@ -22,6 +23,8 @@ const formSchema = z.object({
 })
 
 const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
+  const { onOpen } = useModal()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,7 +56,9 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
               <FormControl>
                 <div className="relative p-4">
                   <Button
-                    onClick={() => {}}
+                    onClick={() => {
+                      onOpen('messageFile', { apiUrl, query })
+                    }}
                     className="size-8 absolute top-8 left-8 bg-gray-400 rounded-full"
                   >
                     <Plus />
