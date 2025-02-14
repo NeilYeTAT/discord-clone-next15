@@ -22,20 +22,20 @@ const ServerSection = ({
   server,
 }: IServerSectionProps) => {
   const { onOpen } = useModal()
+
   return (
-    <div className="flex items-center py-2 justify-between hover:bg-slate-400 duration-300">
-      <p>{label}</p>
-      {/* Text Channels */}
+    <div className="flex items-center justify-between p-2 duration-300 rounded-md my-1">
+      <h3 className="font-sans">{label}</h3>
       {role !== MemberRole.GUEST && sectionType === 'channels' && (
-        <ActionTooltip label="Create Channel" side="top">
+        <ActionTooltip label="创建频道" side="top">
           <button onClick={() => onOpen('createChannel', { channelType })}>
-            <Plus className="size-4" />
+            <Plus className="size-4 cursor-pointer" />
           </button>
         </ActionTooltip>
       )}
 
       {role === MemberRole.ADMIN && sectionType === 'members' && (
-        <ActionTooltip label="Manage members" side="top">
+        <ActionTooltip label="管理成员" side="top">
           {/* 别忘了传递 server 🤡🤡🤡 */}
           <button onClick={() => onOpen('members', { server })}>
             <Settings className="size-4" />

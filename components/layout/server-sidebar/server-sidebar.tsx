@@ -1,13 +1,5 @@
 import { ChannelType, MemberRole } from '@prisma/client'
-import {
-  AwardIcon,
-  Hash,
-  Mic,
-  RollerCoaster,
-  ShieldAlert,
-  ShieldCheck,
-  Video,
-} from 'lucide-react'
+import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
@@ -19,9 +11,17 @@ import ServerSection from './internal/server-section'
 import ServerChannel from './internal/server-channel'
 import ServerMember from './internal/server-member'
 
-interface IServerSidebarProps {
-  serverId: string
-}
+type ISearchData = {
+  label: string
+  type: 'channel' | 'member'
+  data:
+    | {
+        icon: React.ReactNode
+        name: string
+        id: string
+      }[]
+    | undefined
+}[]
 
 const CHANNEL_TYPE_ICON_MAP: Record<ChannelType, React.ReactNode> = {
   TEXT: <Hash className="mr-2 size-4" />,
@@ -34,7 +34,7 @@ const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {
   ADMIN: <ShieldAlert className="size-4 mr-2 text-rose-500" />,
 }
 
-const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
+const ServerSidebar = async ({ serverId }: { serverId: string }) => {
   const profile = await currentProfile()
 
   if (!profile) {
@@ -80,62 +80,60 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
     return redirect('/')
   }
 
-  // * 我在各个服务器(群组)里的权限
-  const myRoles = server.members.find(
+  // * 我在服务器(群组)里的权限
+  const myRole = server.members.find(
     member => member.profileId === profile.id,
   )?.role
 
+  const searchData: ISearchData = [
+    {
+      label: 'Text Channel',
+      type: 'channel',
+      data: textChannels?.map(channel => ({
+        id: channel.id,
+        name: channel.name,
+        icon: CHANNEL_TYPE_ICON_MAP[channel.type],
+      })),
+    },
+
+    {
+      label: 'Voice Channel',
+      type: 'channel',
+      data: audioChannels?.map(channel => ({
+        id: channel.id,
+        name: channel.name,
+        icon: CHANNEL_TYPE_ICON_MAP[channel.type],
+      })),
+    },
+
+    {
+      label: 'Video Channel',
+      type: 'channel',
+      data: videoChannels?.map(channel => ({
+        id: channel.id,
+        name: channel.name,
+        icon: CHANNEL_TYPE_ICON_MAP[channel.type],
+      })),
+    },
+
+    {
+      label: 'Member',
+      type: 'member',
+      data: members?.map(member => ({
+        id: member.id,
+        name: member.profile.name,
+        icon: ROLE_ICON_MAP[member.role],
+      })),
+    },
+  ]
+
   return (
-    <div className="flex flex-col h-full">
-      <ServerHeader server={server} role={myRoles} />
-      <ScrollArea className="flex-1 px-2">
-        <div>
-          <ServerSearch
-            data={[
-              {
-                label: 'Text Channel',
-                type: 'channel',
-                data: textChannels?.map(channel => ({
-                  id: channel.id,
-                  name: channel.name,
-                  icon: CHANNEL_TYPE_ICON_MAP[channel.type],
-                })),
-              },
-
-              {
-                label: 'Voice Channel',
-                type: 'channel',
-                data: audioChannels?.map(channel => ({
-                  id: channel.id,
-                  name: channel.name,
-                  icon: CHANNEL_TYPE_ICON_MAP[channel.type],
-                })),
-              },
-
-              {
-                label: 'Video Channel',
-                type: 'channel',
-                data: videoChannels?.map(channel => ({
-                  id: channel.id,
-                  name: channel.name,
-                  icon: CHANNEL_TYPE_ICON_MAP[channel.type],
-                })),
-              },
-
-              {
-                label: 'Member',
-                type: 'member',
-                data: members?.map(member => ({
-                  id: member.id,
-                  name: member.profile.name,
-                  icon: ROLE_ICON_MAP[member.role],
-                })),
-              },
-            ]}
-          />
-        </div>
-
-        <Separator className="w-full" />
+    <section className="flex flex-col w-60 bg-gray-950/80">
+      <ServerHeader server={server} role={myRole} />
+      <ScrollArea className="px-2">
+        {/* 搜索框展示的 modal 层 */}
+        <ServerSearch searchData={searchData} />
+        <Separator className="bg-slate-300" />
         {/* 频道列表渲染 */}
         {/* 这里必须使用 !! 两次取反, 因为如果为 0 值的话, 页面会直接渲染成 0 的!!!!!!! */}
         {!!textChannels?.length && (
@@ -143,7 +141,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
             <ServerSection
               sectionType="channels"
               channelType={ChannelType.TEXT}
-              role={myRoles}
+              role={myRole}
               label="Text Channels"
             />
 
@@ -151,7 +149,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
               <ServerChannel
                 key={channel.id}
                 channel={channel}
-                role={myRoles}
+                role={myRole}
                 server={server}
               />
             ))}
@@ -163,7 +161,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
             <ServerSection
               sectionType="channels"
               channelType={ChannelType.AUDIO}
-              role={myRoles}
+              role={myRole}
               label="Voice Channels"
             />
 
@@ -171,7 +169,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
               <ServerChannel
                 key={channel.id}
                 channel={channel}
-                role={myRoles}
+                role={myRole}
                 server={server}
               />
             ))}
@@ -183,7 +181,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
             <ServerSection
               sectionType="channels"
               channelType={ChannelType.VIDEO}
-              role={myRoles}
+              role={myRole}
               label="Video Channels"
             />
 
@@ -191,7 +189,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
               <ServerChannel
                 key={channel.id}
                 channel={channel}
-                role={myRoles}
+                role={myRole}
                 server={server}
               />
             ))}
@@ -203,7 +201,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
           <div className="mb-2">
             <ServerSection
               sectionType="members"
-              role={myRoles}
+              role={myRole}
               label="Members"
               server={server}
             />
@@ -214,7 +212,7 @@ const ServerSidebar = async ({ serverId }: IServerSidebarProps) => {
           </div>
         )}
       </ScrollArea>
-    </div>
+    </section>
   )
 }
 

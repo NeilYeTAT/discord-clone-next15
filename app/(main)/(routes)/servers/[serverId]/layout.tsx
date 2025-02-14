@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import NavigationSidebar from '~/components/layout/nav-sidebar/navigation-sidebar'
 import ServerSidebar from '~/components/layout/server-sidebar/server-sidebar'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
@@ -36,11 +37,13 @@ const ServerIdLayout = async ({
   }
 
   return (
-    <div>
-      <section className="w-60 fixed h-full z-20 bg-slate-600">
-        <ServerSidebar serverId={server.id} />
-      </section>
-      <main className="h-full pl-60 w-full flex-grow">{children}</main>
+    <div className="flex h-screen">
+      <NavigationSidebar />
+      <ServerSidebar serverId={server.id} />
+      {/* 聊天记录展示~ */}
+      <main className="bg-slate-800 flex-1 flex-grow overflow-auto">
+        {children}
+      </main>
     </div>
   )
 }

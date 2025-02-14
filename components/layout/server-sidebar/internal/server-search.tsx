@@ -14,7 +14,7 @@ import {
 import { DialogTitle } from '~/components/ui/dialog'
 
 interface IServerSearchProps {
-  data: {
+  searchData: {
     label: string
     type: 'channel' | 'member'
     data:
@@ -27,7 +27,7 @@ interface IServerSearchProps {
   }[]
 }
 
-const ServerSearch = ({ data }: IServerSearchProps) => {
+const ServerSearch = ({ searchData }: IServerSearchProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const params = useParams()
@@ -44,7 +44,7 @@ const ServerSearch = ({ data }: IServerSearchProps) => {
     return () => document.removeEventListener('keydown', down)
   }, [])
 
-  const handleClick = ({
+  const handleNavigation = ({
     id,
     type,
   }: {
@@ -69,24 +69,26 @@ const ServerSearch = ({ data }: IServerSearchProps) => {
         onClick={() => setOpen(true)}
       >
         <Search className="size-4" />
-        <p>Search</p>
+        <p className="text-sm">搜索</p>
         <kbd
-          className="pointer-events-none inline-flex h-5 select-none items-center 
+          className="pointer-events-none inline-flex h-6 select-none items-center px-2
                       gap-1 rounded border bg-muted font-mono text-[10px] 
-                      font-medium text-muted-foreground ml-auto px-[1.5]"
+                      font-medium text-muted-foreground ml-auto"
         >
-          <span>CMD</span>K
+          <span className="text-2xl">⌘</span> <span className="text-lg">K</span>
         </kbd>
       </button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <DialogTitle>{/* 控制台报错, 必须添加这个... */}</DialogTitle>
-        <CommandInput placeholder="搜索成员互频道" />
+        <DialogTitle>
+          {/* 控制台报错, 必须添加这个...说是为了提高无障碍可访问性... */}
+        </DialogTitle>
+        <CommandInput placeholder="搜索成员或频道喵~" />
 
         <CommandList>
-          <CommandEmpty>没有喵~</CommandEmpty>
+          <CommandEmpty>没有找到喵~🥺</CommandEmpty>
 
-          {data.map(({ label, type, data }) => {
+          {searchData.map(({ label, type, data }) => {
             if (!data?.length) return null
 
             return (
@@ -95,10 +97,10 @@ const ServerSearch = ({ data }: IServerSearchProps) => {
                   <CommandItem
                     key={id}
                     // * onClick 不生效哦~
-                    onSelect={() => handleClick({ id, type })}
+                    onSelect={() => handleNavigation({ id, type })}
                   >
                     {icon}
-                    <span>{name}</span>
+                    {name}
                   </CommandItem>
                 ))}
               </CommandGroup>

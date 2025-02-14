@@ -25,9 +25,7 @@ const ActionTooltip = ({
       <Tooltip delayDuration={50}>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent side={side} align={align}>
-          <p className="capitalize font-semibold text-sm">
-            {label.toUpperCase()}
-          </p>
+          <p className="font-semibold text-sm">{label.toUpperCase()}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

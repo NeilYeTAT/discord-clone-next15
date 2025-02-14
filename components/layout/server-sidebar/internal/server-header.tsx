@@ -33,17 +33,21 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="focus:outline-none" asChild>
-        <button
-          className="w-full px-3 flex items-center h-12 border-neutral-200 justify-between
-                    dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 
-                      transition"
-        >
-          {server.name}
-          <ChevronDown className="size-5" />
+      <DropdownMenuTrigger asChild>
+        <button className="flex justify-between h-12 p-1">
+          <div
+            className="flex justify-between items-center w-full rounded-md px-1
+                            duration-300 hover:bg-slate-800"
+          >
+            <span className="capitalize font-mono text-lg font-semibold">
+              {server.name}
+            </span>
+            <ChevronDown className="size-5" />
+          </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 text-xs font-medium space-y-[2px]">
+
+      <DropdownMenuContent className="w-56 font-medium space-y-[2px]">
         {/* 管理员可以拉人~ */}
         {isModerator && (
           <DropdownMenuItem onClick={() => onOpen('invite', { server })}>
@@ -76,7 +80,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
             className="text-rose-500"
             onClick={() => onOpen('deleteServer', { server })}
           >
-            删除频道 <Trash className="size-4 ml-auto" />
+            删除服务器 <Trash className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
 
@@ -85,7 +89,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
             className="text-rose-500"
             onClick={() => onOpen('leaveServer', { server })}
           >
-            退出频道 <LogOut className="size-4 ml-auto" />
+            退出服务器 <LogOut className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

@@ -19,17 +19,11 @@ export default function RootLayout({
     // * 注意包裹的是 html 喵~
     <ClerkProvider afterSignOutUrl={'/'}>
       <html
-        lang="en"
+        lang="zh-CN"
         className={OpenSansFont.className}
         suppressHydrationWarning
       >
         <body className="dark:bg-slate-700 bg-slate-300">
-          {/* <SignedOut>
-            <SignInButton />
-          </SignedOut> */}
-          {/* <SignedIn>
-            <UserButton />
-          </SignedIn> */}
           <ThemeProvider
             attribute={'class'}
             defaultTheme="dark"

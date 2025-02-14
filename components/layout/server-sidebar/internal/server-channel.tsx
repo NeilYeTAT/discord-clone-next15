@@ -14,9 +14,9 @@ interface IServerChannelProps {
 }
 
 const CHANNEL_TYPE_ICON_MAP: Record<ChannelType, React.ReactNode> = {
-  TEXT: <Hash className="mr-2 size-4" />,
-  AUDIO: <Mic className="mr-2 size-4" />,
-  VIDEO: <Video className="mr-2 size-4" />,
+  TEXT: <Hash className="size-4" />,
+  AUDIO: <Mic className="size-4" />,
+  VIDEO: <Video className="size-4" />,
 }
 
 const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
@@ -24,9 +24,7 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
   const router = useRouter()
   const { onOpen } = useModal()
 
-  const Icon = CHANNEL_TYPE_ICON_MAP[channel.type]
-
-  const handleClick = () => {
+  const handleNavigation = () => {
     router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
   }
 
@@ -37,24 +35,25 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
 
   return (
     <button
-      onClick={handleClick}
+      onClick={handleNavigation}
       className={cn(
-        'group p-2 rounded-md flex items-center w-full gap-2 bg-purple-700 z-10 cursor-pointer',
-        params?.channelId === channel.id && 'bg-slate-300',
+        'group p-2 rounded-md flex items-center w-full gap-1 cursor-pointer hover:bg-slate-800',
+        params?.channelId === channel.id && 'bg-slate-800',
       )}
     >
-      {Icon}
+      {CHANNEL_TYPE_ICON_MAP[channel.type]}
       <p>{channel.name}</p>
       {/* 管理员可以编辑频道 */}
       {channel.name !== 'general' && role !== MemberRole.GUEST && (
+        // !!! hover bug, 暂时先放着, 去修理别的地方先~
         <div className="ml-auto hidden group-hover:flex gap-2">
-          <ActionTooltip label="Edit">
+          <ActionTooltip label="编辑">
             <Edit
               className="size-4"
               onClick={e => onAction(e, 'editChannel')}
             />
           </ActionTooltip>
-          <ActionTooltip label="Delete">
+          <ActionTooltip label="删除">
             <Trash
               className="size-4"
               onClick={e => onAction(e, 'deleteChannel')}
