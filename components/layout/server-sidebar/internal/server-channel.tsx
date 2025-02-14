@@ -37,7 +37,7 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
     <button
       onClick={handleNavigation}
       className={cn(
-        'group p-2 rounded-md flex items-center w-full gap-1 cursor-pointer hover:bg-slate-800',
+        'group p-2 rounded-md flex items-center w-full gap-1 cursor-pointer hover:bg-slate-800 duration-300',
         params?.channelId === channel.id && 'bg-slate-800',
       )}
     >

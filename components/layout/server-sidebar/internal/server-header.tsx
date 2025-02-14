@@ -37,7 +37,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         <button className="flex justify-between h-12 p-1">
           <div
             className="flex justify-between items-center w-full rounded-md px-1
-                            duration-300 hover:bg-slate-800"
+                        duration-300 hover:bg-slate-800"
           >
             <span className="capitalize font-mono text-lg font-semibold">
               {server.name}

@@ -7,7 +7,7 @@ interface IUserAvatarProps {
 }
 const UserAvatar = ({ src, className }: IUserAvatarProps) => {
   return (
-    <Avatar className={cn('size-', className)}>
+    <Avatar className={cn('size-8', className)}>
       <AvatarImage src={src} />
     </Avatar>
   )

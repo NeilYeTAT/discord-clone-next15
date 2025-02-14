@@ -6,10 +6,10 @@ import { currentProfile } from '~/lib/db/current-profile'
 import ServerHeader from './internal/server-header'
 import ServerSearch from './internal/server-search'
 import { ScrollArea } from '~/components/ui/scroll-area'
-import { Separator } from '~/components/ui/separator'
 import ServerSection from './internal/server-section'
 import ServerChannel from './internal/server-channel'
 import ServerMember from './internal/server-member'
+import { Separator } from '~/components/ui/separator'
 
 type ISearchData = {
   label: string
@@ -207,7 +207,7 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
             />
 
             {members.map(member => (
-              <ServerMember key={member.id} member={member} server={server} />
+              <ServerMember key={member.id} member={member} />
             ))}
           </div>
         )}
