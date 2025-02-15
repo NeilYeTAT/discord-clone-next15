@@ -9,8 +9,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 import {
@@ -31,7 +30,7 @@ const formSchema = z.object({
     message: '服务器名不能为空~',
   }),
   imageUrl: z.string().min(1, {
-    message: '服务器图片不能为空~',
+    message: '服务器头像不能为空~',
   }),
 })
 
@@ -52,22 +51,21 @@ const CreateServerModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.post('/api/servers', values)
-      form.reset()
       router.refresh()
-      onClose()
+      handleModalClose()
     } catch (error) {
       console.warn(error, '创建服务器错误~')
     }
   }
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     form.reset()
     onClose()
   }
 
   return (
     <div className="bg-pink-500">
-      <Dialog open={isModalOpen} onOpenChange={handleClose}>
+      <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="m-auto text-2xl">

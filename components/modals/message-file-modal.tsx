@@ -10,7 +10,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 import {
@@ -31,6 +30,7 @@ const formSchema = z.object({
   }),
 })
 
+// todo 该组件后序应该考虑修改, 一个是预览时不应该使用圆角, 其次就是现在不支持上传 file 文件, 暂时只能上传图片...
 const MessageFileModal = () => {
   const router = useRouter()
 
@@ -57,22 +57,21 @@ const MessageFileModal = () => {
         ...values,
         content: values.fileUrl,
       })
-      form.reset()
       router.refresh()
-      handleClose()
+      handleModalClose()
     } catch (error) {
-      console.warn(error, '创建服务器错误~')
+      console.warn('文件消息出错, 爱来自 messages-file-modal 😘', error)
     }
   }
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     form.reset()
     onClose()
   }
 
   return (
     <div>
-      <Dialog open={isModalOpen} onOpenChange={handleClose}>
+      <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="m-auto text-2xl">添加附件</DialogTitle>
