@@ -5,19 +5,13 @@ import { Badge } from './ui/badge'
 
 const SocketIndicator = () => {
   const { isConnected } = useSocket()
-  console.log(isConnected, 'is connected???')
-
-  if (!isConnected) {
-    return (
-      <Badge variant={'outline'} className="bg-yellow-400">
-        Disconnected
-      </Badge>
-    )
-  }
 
   return (
-    <Badge variant={'outline'} className="bg-emerald-400">
-      Connected
+    <Badge
+      variant={'outline'}
+      className={isConnected ? 'bg-emerald-400' : 'bg-yellow-400'}
+    >
+      {isConnected ? <>connected</> : <>disconnected</>}
     </Badge>
   )
 }

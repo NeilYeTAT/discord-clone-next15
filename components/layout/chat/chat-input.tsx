@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
-import { Plus, Smile } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
 import qs from 'query-string'
@@ -73,18 +73,16 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
                   <Input
                     {...field}
                     disabled={isLoading}
-                    className="h-16 px-20"
-                    placeholder={`Message ${
-                      type === 'conversation' ? name : '# ' + name
-                    }`}
+                    className="h-16 px-14"
+                    placeholder={`给 ${
+                      type === 'conversation' ? name : '#' + name
+                    } 发消息~`}
                   />
-                  <div className="size-8 absolute top-8 right-8 bg-gray-400 rounded-full">
-                    <EmojiPicker
-                      onChange={(emoji: any) =>
-                        field.onChange(`${field.value} ${emoji}`)
-                      }
-                    />
-                  </div>
+                  <EmojiPicker
+                    onChange={(emoji: any) =>
+                      field.onChange(`${field.value} ${emoji}`)
+                    }
+                  />
                 </div>
               </FormControl>
             </FormItem>

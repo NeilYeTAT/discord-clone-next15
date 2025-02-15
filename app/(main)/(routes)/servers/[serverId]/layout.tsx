@@ -41,7 +41,7 @@ const ServerIdLayout = async ({
       <NavigationSidebar />
       <ServerSidebar serverId={server.id} />
       {/* 聊天记录展示~ */}
-      <main className="bg-slate-800 flex-1 flex-grow overflow-auto">
+      <main className="bg-slate-950/70 flex-1 flex-grow overflow-auto">
         {children}
       </main>
     </div>

@@ -48,11 +48,10 @@ const MemberIdPage = async ({
   const otherMember = memberOne.profileId === profile.id ? memberTwo : memberOne
 
   return (
-    <div className="">
+    <div className="min-h-screen flex flex-col justify-between">
       <ChatHeader
         imageUrl={otherMember.profile.imageUrl}
         name={otherMember.profile.name}
-        serverId={serverId}
         type="conversation"
       />
       {searchParams.video && (

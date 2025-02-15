@@ -3,14 +3,15 @@ import UserAvatar from '../user-avatar/user-avatar'
 import SocketIndicator from '~/components/socket-indicator'
 import { ChatVideoButton } from './internal/chat-video-button'
 
-interface IChatHeaderProps {
-  serverId: string
+const ChatHeader = ({
+  name,
+  type,
+  imageUrl,
+}: {
   name: string
   type: 'channel' | 'conversation'
   imageUrl?: string
-}
-
-const ChatHeader = ({ name, serverId, type, imageUrl }: IChatHeaderProps) => {
+}) => {
   return (
     <div className="px-3 flex items-center h-12 border-b-2 gap-2">
       {type === 'channel' && <Hash className="size-5" />}

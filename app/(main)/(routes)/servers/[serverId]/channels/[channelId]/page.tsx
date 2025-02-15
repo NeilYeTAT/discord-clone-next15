@@ -39,11 +39,7 @@ const ChannelIdPage = async ({
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
-      <ChatHeader
-        name={channel.name}
-        serverId={channel.serverId}
-        type="channel"
-      />
+      <ChatHeader name={channel.name} type="channel" />
       {channel.type === ChannelType.TEXT && (
         <>
           <ChatMessages
