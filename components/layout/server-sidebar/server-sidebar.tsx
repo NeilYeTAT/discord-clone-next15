@@ -6,7 +6,7 @@ import { currentProfile } from '~/lib/db/current-profile'
 import ServerHeader from './internal/server-header'
 import ServerSearch from './internal/server-search'
 import { ScrollArea } from '~/components/ui/scroll-area'
-import ServerSection from './internal/server-section'
+import ServerChannelHeader from './internal/server-channel-header'
 import ServerChannel from './internal/server-channel'
 import ServerMember from './internal/server-member'
 import { Separator } from '~/components/ui/separator'
@@ -138,11 +138,11 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
         {/* 这里必须使用 !! 两次取反, 因为如果为 0 值的话, 页面会直接渲染成 0 的!!!!!!! */}
         {!!textChannels?.length && (
           <div className="mb-2">
-            <ServerSection
+            <ServerChannelHeader
               sectionType="channels"
               channelType={ChannelType.TEXT}
               role={myRole}
-              label="Text Channels"
+              label="聊天频道"
             />
 
             {textChannels.map(channel => (
@@ -158,11 +158,11 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
 
         {!!audioChannels?.length && (
           <div className="mb-2">
-            <ServerSection
+            <ServerChannelHeader
               sectionType="channels"
               channelType={ChannelType.AUDIO}
               role={myRole}
-              label="Voice Channels"
+              label="语音房间"
             />
 
             {audioChannels.map(channel => (
@@ -178,11 +178,11 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
 
         {!!videoChannels?.length && (
           <div className="mb-2">
-            <ServerSection
+            <ServerChannelHeader
               sectionType="channels"
               channelType={ChannelType.VIDEO}
               role={myRole}
-              label="Video Channels"
+              label="视频房间"
             />
 
             {videoChannels.map(channel => (
@@ -199,10 +199,10 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
         {/* 渲染成员 */}
         {!!members?.length && (
           <div className="mb-2">
-            <ServerSection
+            <ServerChannelHeader
               sectionType="members"
               role={myRole}
-              label="Members"
+              label="成员"
               server={server}
             />
 

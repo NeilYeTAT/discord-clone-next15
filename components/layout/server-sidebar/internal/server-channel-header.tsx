@@ -6,7 +6,7 @@ import ActionTooltip from '~/components/ui/action-tooltip'
 import { Plus, Settings } from 'lucide-react'
 import { useModal } from '~/hooks/use-modal-store'
 
-const ServerSection = ({
+const ServerChannelHeader = ({
   label,
   sectionType,
   channelType,
@@ -23,7 +23,7 @@ const ServerSection = ({
 
   return (
     <div className="flex items-center justify-between p-2 duration-300 rounded-md my-1">
-      <h3 className="font-sans">{label}</h3>
+      <h3 className="font-sans font-semibold text-slate-400">{label}</h3>
       {role !== MemberRole.GUEST && sectionType === 'channels' && (
         <ActionTooltip label="创建频道" side="top">
           <button onClick={() => onOpen('createChannel', { channelType })}>
@@ -44,4 +44,4 @@ const ServerSection = ({
   )
 }
 
-export default ServerSection
+export default ServerChannelHeader
