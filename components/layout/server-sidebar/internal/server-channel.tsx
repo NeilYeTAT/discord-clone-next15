@@ -37,8 +37,8 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
     <button
       onClick={handleNavigation}
       className={cn(
-        'group px-2 py-[6px] rounded-md flex items-center w-full gap-1 cursor-pointer hover:bg-slate-800 duration-300 mb-1',
-        params?.channelId === channel.id && 'bg-slate-800',
+        'group px-2 py-[6px] rounded-md flex items-center w-full gap-1 cursor-pointer hover:bg-primary-foreground duration-300 mb-1',
+        params?.channelId === channel.id && 'bg-primary-foreground',
       )}
     >
       {CHANNEL_TYPE_ICON_MAP[channel.type]}

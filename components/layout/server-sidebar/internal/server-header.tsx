@@ -34,12 +34,12 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex justify-between h-12 p-1">
+        <button className="flex justify-between h-12 p-1 items-center border-b border-dashed">
           <div
-            className="flex justify-between items-center w-full rounded-md px-1
-                        duration-300 hover:bg-slate-800"
+            className="flex justify-between items-center w-full rounded-md px-2 h-full
+                        duration-300 hover:bg-primary-foreground"
           >
-            <span className="capitalize font-mono text-lg font-semibold">
+            <span className="font-mono text-xl font-semibold">
               {server.name}
             </span>
             <ChevronDown className="size-5" />

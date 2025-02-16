@@ -13,7 +13,7 @@ const ChatHeader = ({
   imageUrl?: string
 }) => {
   return (
-    <div className="px-3 flex items-center h-12 border-b-2 gap-2">
+    <div className="px-3 flex items-center h-12 gap-2 border-b border-dashed">
       {type === 'channel' && <Hash className="size-5" />}
       {type === 'conversation' && (
         <UserAvatar src={imageUrl} className="size-8" />

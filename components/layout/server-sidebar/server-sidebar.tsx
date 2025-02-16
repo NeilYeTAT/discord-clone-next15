@@ -128,12 +128,13 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
   ]
 
   return (
-    <section className="flex flex-col w-64 bg-gray-950/80">
+    <section className="flex flex-col w-64 bg-black border-x border-dashed">
       <ServerHeader server={server} role={myRole} />
       <ScrollArea className="px-2">
         {/* 搜索框展示的 modal 层 */}
         <ServerSearch searchData={searchData} />
         <Separator className="bg-slate-300" />
+        {/* <div className='border-b border-dashed' /> */}
         {/* 频道列表渲染 */}
         {/* 这里必须使用 !! 两次取反, 因为如果为 0 值的话, 页面会直接渲染成 0 的!!!!!!! */}
         {!!textChannels?.length && (

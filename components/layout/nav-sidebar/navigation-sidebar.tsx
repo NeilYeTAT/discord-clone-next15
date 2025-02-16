@@ -29,7 +29,7 @@ const NavigationSidebar = async () => {
   return (
     <aside className="h-screen flex flex-col items-center gap-4 py-2 flex-shrink-0 w-16 bg-black">
       <CreateServerButton />
-      <Separator className="h-[2px] bg-zinc-100 dark:bg-zinc-300 rounded-md w-10 mx-auto" />
+      <Separator className="bg-zinc-100 dark:bg-zinc-300 w-10 mx-auto" />
       <ScrollArea className="w-full">
         {servers.map(server => (
           <div key={server.id}>
