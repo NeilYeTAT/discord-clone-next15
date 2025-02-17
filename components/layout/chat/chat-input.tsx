@@ -47,7 +47,9 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
       await axios.post(url, values)
       form.reset()
       router.refresh()
-    } catch (error) {}
+    } catch (error) {
+      console.warn('chat input error', error)
+    }
   }
 
   return (

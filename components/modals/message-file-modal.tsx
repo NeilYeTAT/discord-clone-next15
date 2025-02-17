@@ -70,47 +70,45 @@ const MessageFileModal = () => {
   }
 
   return (
-    <div>
-      <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="m-auto text-2xl">添加附件</DialogTitle>
-            <DialogDescription className="m-auto">
-              发送文件到消息
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
+      <DialogContent className="max-w-fit">
+        <DialogHeader>
+          <DialogTitle className="m-auto text-2xl">添加附件</DialogTitle>
+          <DialogDescription className="m-auto">
+            发送文件到消息
+          </DialogDescription>
+        </DialogHeader>
 
-          {/* 表单配置 */}
-          <Form {...form}>
-            {/* 当点击底部按扭时, 触发这个提交事件~ */}
-            <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-              {/* 上传文件组件~ */}
-              <FormField
-                control={form.control}
-                name="fileUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-center flex-col">
-                    <FormControl>
-                      <FileUpload
-                        // * 支持图片, pdf, markdown
-                        endpoint="messageFile"
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        {/* 表单配置 */}
+        <Form {...form}>
+          {/* 当点击底部按扭时, 触发这个提交事件~ */}
+          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+            {/* 上传文件组件~ */}
+            <FormField
+              control={form.control}
+              name="fileUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <FileUpload
+                      // * 支持图片, pdf, markdown
+                      endpoint="messageFile"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <Button className="w-full" type="submit">
-                发送
-              </Button>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
-    </div>
+            <Button className="w-full" type="submit">
+              发送
+            </Button>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }
 
