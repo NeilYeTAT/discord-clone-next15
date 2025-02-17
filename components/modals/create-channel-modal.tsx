@@ -55,7 +55,7 @@ const CreateChannelModal = () => {
   const isModalOpen = isOpen && type === 'createChannel'
   const { channelType = ChannelType.TEXT } = data
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       channelName: '',

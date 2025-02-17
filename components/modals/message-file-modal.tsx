@@ -40,7 +40,7 @@ const MessageFileModal = () => {
   const isModalOpen = isOpen && type === 'messageFile'
   console.log(isModalOpen, 'modal')
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fileUrl: '',

@@ -42,7 +42,7 @@ const EditServerModal = () => {
   const isModalOpen = isOpen && type === 'editServer'
   const { server } = data
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       serverName: '',

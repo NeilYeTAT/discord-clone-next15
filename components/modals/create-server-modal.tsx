@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 import {
@@ -64,63 +64,61 @@ const CreateServerModal = () => {
   }
 
   return (
-    <div className="bg-pink-500">
-      <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="m-auto text-2xl">
-              请创建你的服务器
-            </DialogTitle>
-            <DialogDescription className="m-auto">
-              请给服务器创建名字和头像喵, 之后可以也可以再修改~
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="m-auto text-2xl">
+            请创建你的服务器
+          </DialogTitle>
+          <DialogDescription className="m-auto">
+            请给服务器创建名字和头像喵, 之后可以也可以再修改~
+          </DialogDescription>
+        </DialogHeader>
 
-          {/* 表单配置 */}
-          <Form {...form}>
-            {/* 当点击底部按扭时, 触发这个提交事件~ */}
-            <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-              {/* 上传文件组件~ */}
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-center flex-col">
-                    <FormControl>
-                      <FileUpload
-                        endpoint="serverImage"
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        {/* 表单配置 */}
+        <Form {...form}>
+          {/* 当点击底部按扭时, 触发这个提交事件~ */}
+          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+            {/* 上传文件组件~ */}
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem className="flex items-center justify-center flex-col">
+                  <FormControl>
+                    <FileUpload
+                      endpoint="serverImage"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* 输入框 */}
-              <FormField
-                control={form.control}
-                name="serverName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>服务器名</FormLabel>
-                    <FormControl>
-                      <Input placeholder="想好取什么名字了喵~" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            {/* 输入框 */}
+            <FormField
+              control={form.control}
+              name="serverName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>服务器名</FormLabel>
+                  <FormControl>
+                    <Input placeholder="想好取什么名字了喵~" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <Button className="w-full" type="submit">
-                创建
-              </Button>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
-    </div>
+            <Button className="w-full" type="submit">
+              创建
+            </Button>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }
 

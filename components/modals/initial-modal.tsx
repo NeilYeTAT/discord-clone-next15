@@ -36,7 +36,7 @@ const formSchema = z.object({
 
 const InitialModal = () => {
   const router = useRouter()
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       serverName: '',
