@@ -42,7 +42,7 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
       )}
     >
       {CHANNEL_TYPE_ICON_MAP[channel.type]}
-      <p>{channel.name}</p>
+      <p className="max-w-36 truncate text-left">{channel.name}</p>
       {/* 管理员可以编辑频道 */}
       {channel.name !== 'general' && role !== MemberRole.GUEST && (
         // !!! hover bug, 暂时先放着, 去修理别的地方先~
