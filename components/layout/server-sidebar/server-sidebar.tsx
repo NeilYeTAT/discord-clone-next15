@@ -130,7 +130,8 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
   return (
     <section className="flex flex-col w-64 bg-black border-x border-dashed">
       <ServerHeader server={server} role={myRole} />
-      <ScrollArea className="px-2">
+      {/* ScrollArea 源码中隐藏了滚动条的显示 */}
+      <ScrollArea className="pl-2">
         {/* 搜索框展示的 modal 层 */}
         <ServerSearch searchData={searchData} />
         <Separator className="bg-slate-300" />

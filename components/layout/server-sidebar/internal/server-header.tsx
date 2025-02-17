@@ -34,7 +34,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex justify-between h-12 p-1 items-center border-b border-dashed">
+        <button className="flex justify-between h-12 p-1 items-center border-b border-dashed flex-shrink-0">
           <div
             className="flex justify-between items-center w-full rounded-md px-2 h-full
                         duration-300 hover:bg-primary-foreground"
