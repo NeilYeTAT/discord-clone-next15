@@ -1,21 +1,24 @@
 'use client'
 
 import { useParams, useRouter } from 'next/navigation'
-import ActionTooltip from '../../../ui/action-tooltip'
+import ActionTooltip from '~/components/ui/action-tooltip'
 import { cn } from '~/lib/utils'
-import { group } from 'console'
 import Image from 'next/image'
+import { useState } from 'react'
 
-interface INavButtonProps {
+const NavigationItem = ({
+  name = 'null',
+  id,
+  imageUrl,
+}: {
   name?: string
   imageUrl: string
   id?: string
-}
-
-const NavigationItem = ({ name = 'null', id, imageUrl }: INavButtonProps) => {
+}) => {
   // * 获取之后点击跳转的链接地址~
   const params = useParams()
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
 
   return (
     <ActionTooltip side="right" align="center" label={name}>
@@ -36,16 +39,23 @@ const NavigationItem = ({ name = 'null', id, imageUrl }: INavButtonProps) => {
         {/* 左侧一个个群组的按扭 */}
         <div
           className={cn(
-            'relative group flex rounded-3xl group-hover:rounded-2xl transition-all overflow-hidden  bg-pink-400 size-full items-center justify-center',
+            'relative group flex rounded-3xl group-hover:rounded-2xl transition-all overflow-hidden size-full items-center justify-center',
             params?.serverId === id && 'bg-primary/10 text-primary rounded-2xl',
           )}
         >
+          {/* 骨架屏加载效果~ */}
+          {isLoading && (
+            <div className="absolute inset-0 bg-gray-300 animate-pulse size-full" />
+          )}
+
           {/* 如果图片不显示, 记得添加 unoptimized */}
           <Image
             src={imageUrl}
-            alt="如果图片不显示, 使用 unoptimized"
+            alt="server image"
             unoptimized
+            loading="lazy"
             fill
+            onLoad={() => setIsLoading(true)}
           />
         </div>
       </button>

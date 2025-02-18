@@ -6,7 +6,7 @@ import CreateServerButton from './internal/create-server-button'
 import { Separator } from '~/components/ui/separator'
 import NavigationItem from './internal/navigation-item'
 import { ModeToggle } from '~/components/ui/mode-toggle'
-import { UserButton } from '@clerk/nextjs'
+import UserButtonClient from './internal/user-button-client'
 
 const NavigationSidebar = async () => {
   const profile = await currentProfile()
@@ -45,11 +45,9 @@ const NavigationSidebar = async () => {
       {/* 底部用户信息按扭和明暗切换按扭 */}
       <div className="absolute bottom-0 pb-3 mt-auto flex flex-col items-center gap-y-4">
         <ModeToggle className="rounded-full size-12" />
-        {/* 去根布局的 layout.tsx 中配置, 视频中的写法已经不推荐~ */}
-        <UserButton
+        <UserButtonClient
           appearance={{
             elements: {
-              // * 不知道为啥 size-12 大小不一样, 懒得探究了, 这里直接写 11, 肉眼看差不多
               avatarBox: 'size-11',
             },
           }}
