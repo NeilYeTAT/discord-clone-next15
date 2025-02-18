@@ -1,5 +1,5 @@
-import { ChannelType, MemberRole } from '@prisma/client'
-import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react'
+import { ChannelType } from '@prisma/client'
+import { Hash, Mic, Video } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
@@ -10,6 +10,7 @@ import ServerChannelHeader from './internal/server-channel-header'
 import ServerChannel from './internal/server-channel'
 import ServerMember from './internal/server-member'
 import { Separator } from '~/components/ui/separator'
+import { CHANNEL_TYPE_ICON_MAP, ROLE_ICON_MAP } from '~/constants/icon-map'
 
 type ISearchData = {
   label: string
@@ -22,17 +23,6 @@ type ISearchData = {
       }[]
     | undefined
 }[]
-
-const CHANNEL_TYPE_ICON_MAP: Record<ChannelType, React.ReactNode> = {
-  TEXT: <Hash className="mr-2 size-4" />,
-  AUDIO: <Mic className="mr-2 size-4" />,
-  VIDEO: <Video className="mr-2 size-4" />,
-}
-const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {
-  GUEST: null,
-  MODERATOR: <ShieldCheck className="size-4 mr-2 text-indigo-500" />,
-  ADMIN: <ShieldAlert className="size-4 mr-2 text-rose-500" />,
-}
 
 const ServerSidebar = async ({ serverId }: { serverId: string }) => {
   const profile = await currentProfile()

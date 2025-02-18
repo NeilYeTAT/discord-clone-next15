@@ -15,7 +15,6 @@ import {
   Loader2,
   MoreVertical,
   Shield,
-  ShieldAlert,
   ShieldCheck,
   ShieldQuestion,
 } from 'lucide-react'
@@ -38,12 +37,7 @@ import { MemberRole } from '@prisma/client'
 import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-
-const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {
-  GUEST: null,
-  MODERATOR: <ShieldCheck className="size-4 text-indigo-500" />,
-  ADMIN: <ShieldAlert className="size-4 text-rose-500" />,
-}
+import { ROLE_ICON_MAP } from '~/constants/icon-map'
 
 const ManageMembersModal = () => {
   const router = useRouter()

@@ -1,12 +1,12 @@
 'use client'
 
-import * as z from 'zod'
+import { z } from 'zod'
 import axios from 'axios'
 import qs from 'query-string'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Member, MemberRole, Profile } from '@prisma/client'
-import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
+import { Edit, FileIcon, Trash } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
@@ -18,6 +18,7 @@ import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
 import UserAvatar from '../../user-avatar/user-avatar'
 import { useModal } from '~/hooks/use-modal-store'
+import { ROLE_ICON_MAP } from '~/constants/icon-map'
 
 interface IChatItemProps {
   id: string
@@ -32,12 +33,6 @@ interface IChatItemProps {
   isUpdated: boolean
   socketUrl: string
   socketQuery: Record<string, string>
-}
-
-const roleIconMap: Record<MemberRole, React.ReactNode> = {
-  GUEST: null,
-  MODERATOR: <ShieldCheck className="size-4 ml-2 text-indigo-500" />,
-  ADMIN: <ShieldAlert className="size-4 ml-2 text-rose-500" />,
 }
 
 const formSchema = z.object({
@@ -57,6 +52,7 @@ export const ChatItem = ({
   socketQuery,
 }: IChatItemProps) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const { onOpen } = useModal()
   const params = useParams()
   const router = useRouter()
@@ -87,8 +83,6 @@ export const ChatItem = ({
       content: content,
     },
   })
-
-  const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -142,30 +136,37 @@ export const ChatItem = ({
                 {member.profile.name}
               </p>
               <ActionTooltip label={member.role}>
-                {roleIconMap[member.role]}
+                {ROLE_ICON_MAP[member.role]}
               </ActionTooltip>
             </div>
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
               {timestamp}
             </span>
           </div>
-          {isImage && (
-            <a
-              href={fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
-            >
-              <Image
-                src={fileUrl}
-                alt={content}
-                fill
-                className="object-cover"
-                // * 老样子, 如果不显示图片, 添加👇🏻这个
-                unoptimized
-              />
-            </a>
-          )}
+          <div className="relative">
+            {isImage && (
+              <>
+                {isLoading && (
+                  <div className="absolute top-2 rounded-lg bg-gray-300 animate-pulse size-48 z-10" />
+                )}
+                <a
+                  href={fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
+                >
+                  <Image
+                    src={fileUrl}
+                    alt={content}
+                    fill
+                    className="object-cover"
+                    onLoad={() => setIsLoading(false)}
+                    unoptimized
+                  />
+                </a>
+              </>
+            )}
+          </div>
           {isPDF && (
             <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
               <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />

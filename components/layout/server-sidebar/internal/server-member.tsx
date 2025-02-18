@@ -1,16 +1,10 @@
 'use client'
 
-import { Member, MemberRole, Profile, Server } from '@prisma/client'
-import { ShieldAlert, ShieldCheck } from 'lucide-react'
+import { Member, Profile } from '@prisma/client'
 import { useParams, useRouter } from 'next/navigation'
 import { cn } from '~/lib/utils'
 import UserAvatar from '~/components/layout/user-avatar/user-avatar'
-
-const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {
-  GUEST: null,
-  MODERATOR: <ShieldCheck className="size-4 mr-2 text-indigo-500" />,
-  ADMIN: <ShieldAlert className="size-4 mr-2 text-rose-500" />,
-}
+import { ROLE_ICON_MAP } from '~/constants/icon-map'
 
 const ServerMember = ({
   member,

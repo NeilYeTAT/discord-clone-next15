@@ -4,6 +4,7 @@ import { Channel, ChannelType, MemberRole, Server } from '@prisma/client'
 import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import ActionTooltip from '~/components/ui/action-tooltip'
+import { CHANNEL_TYPE_ICON_MAP } from '~/constants/icon-map'
 import { ModalType, useModal } from '~/hooks/use-modal-store'
 import { cn } from '~/lib/utils'
 
@@ -11,12 +12,6 @@ interface IServerChannelProps {
   channel: Channel
   server: Server
   role?: MemberRole
-}
-
-const CHANNEL_TYPE_ICON_MAP: Record<ChannelType, React.ReactNode> = {
-  TEXT: <Hash className="size-4" />,
-  AUDIO: <Mic className="size-4" />,
-  VIDEO: <Video className="size-4" />,
 }
 
 const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
