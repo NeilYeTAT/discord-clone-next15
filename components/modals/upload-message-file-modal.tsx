@@ -37,7 +37,7 @@ const MessageFileModal = () => {
   const { isOpen, onClose, type, data } = useModal()
   const { apiUrl = '', query } = data
 
-  const isModalOpen = isOpen && type === 'messageFile'
+  const isModalOpen = isOpen && type === 'uploadMessageFile'
   console.log(isModalOpen, 'modal')
 
   const form = useForm<z.infer<typeof formSchema>>({

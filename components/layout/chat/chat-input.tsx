@@ -66,7 +66,7 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
                     // * 必须使用 type
                     type="button"
                     onClick={() => {
-                      onOpen('messageFile', { apiUrl, query })
+                      onOpen('uploadMessageFile', { apiUrl, query })
                     }}
                     className="size-8 absolute top-8 left-8 bg-gray-400 rounded-full"
                   >

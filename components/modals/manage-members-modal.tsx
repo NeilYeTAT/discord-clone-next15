@@ -45,7 +45,7 @@ const ManageMembersModal = () => {
   const [loadingId, setLoadingId] = useState('')
 
   const { server } = data as { server: ServerWithMembersWithProfiles }
-  const isModalOpen = isOpen && type === 'members'
+  const isModalOpen = isOpen && type === 'manageMembers'
 
   const handleRoleChange = async (memberId: string, role: MemberRole) => {
     try {
@@ -60,7 +60,7 @@ const ManageMembersModal = () => {
 
       router.refresh()
 
-      onOpen('members', { server: response.data })
+      onOpen('manageMembers', { server: response.data })
     } catch (error) {
       console.warn('管理成员出错, 爱来自 manage-members-modal 😘', error)
     } finally {
@@ -81,7 +81,7 @@ const ManageMembersModal = () => {
       const response = await axios.delete(url)
 
       router.refresh()
-      onOpen('members', { server: response.data })
+      onOpen('manageMembers', { server: response.data })
     } catch (error) {}
   }
 

@@ -3,15 +3,15 @@ import { create } from 'zustand'
 
 export type ModalType =
   | 'createServer'
-  | 'invite'
+  | 'inviteServer'
   | 'editServer'
-  | 'members'
+  | 'manageMembers'
   | 'createChannel'
   | 'leaveServer'
   | 'deleteServer'
   | 'deleteChannel'
   | 'editChannel'
-  | 'messageFile'
+  | 'uploadMessageFile'
   | 'deleteMessage'
 
 interface IModalData {

@@ -21,7 +21,7 @@ const InviteUsersModal = () => {
 
   const { server } = data
 
-  const isModalOpen = isOpen && type === 'invite'
+  const isModalOpen = isOpen && type === 'inviteServer'
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`
 
   const [copied, setCopied] = useState(false)
@@ -41,7 +41,7 @@ const InviteUsersModal = () => {
       const response = await axios.patch(
         `/api/servers/${server?.id}/inviteCode`,
       )
-      onOpen('invite', { server: response.data })
+      onOpen('inviteServer', { server: response.data })
     } catch (error) {
       console.warn('生成邀请链接出错, 爱来自 invite-users-modal 😘', error)
     } finally {
