@@ -50,7 +50,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
       <DropdownMenuContent className="w-56 font-medium space-y-[2px]">
         {/* 管理员可以拉人~ */}
         {isModerator && (
-          <DropdownMenuItem onClick={() => onOpen('invite', { server })}>
+          <DropdownMenuItem onClick={() => onOpen('inviteServer', { server })}>
             邀请他人 <UserPlus className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
@@ -62,7 +62,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         )}
         {/* 群主可以管理成员, 踢人~ */}
         {isAdmin && (
-          <DropdownMenuItem onClick={() => onOpen('members', { server })}>
+          <DropdownMenuItem onClick={() => onOpen('manageMembers', { server })}>
             管理成员 <Users className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}

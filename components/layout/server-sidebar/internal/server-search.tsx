@@ -65,7 +65,7 @@ const ServerSearch = ({ searchData }: IServerSearchProps) => {
   return (
     <>
       <button
-        className="p-2 rounded-md flex items-center gap-2 w-full"
+        className="p-2 rounded-md flex items-center gap-2 w-full border-b border-dashed"
         onClick={() => setOpen(true)}
       >
         <Search className="size-4" />
@@ -77,6 +77,7 @@ const ServerSearch = ({ searchData }: IServerSearchProps) => {
         >
           <span className="text-2xl">⌘</span> <span className="text-lg">K</span>
         </kbd>
+        <span />
       </button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>

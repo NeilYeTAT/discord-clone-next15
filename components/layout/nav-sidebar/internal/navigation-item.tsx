@@ -40,7 +40,8 @@ const NavigationItem = ({
         <div
           className={cn(
             'relative group flex rounded-3xl group-hover:rounded-2xl transition-all overflow-hidden size-full items-center justify-center',
-            params?.serverId === id && 'bg-primary/10 text-primary rounded-2xl',
+            params?.serverId === id &&
+              'bg-primary/10 text-primary rounded-2xl transition-all',
           )}
         >
           {/* 骨架屏加载效果~ */}

@@ -21,9 +21,7 @@ const ServerIdLayout = async ({
 
   const server = await db.server.findUnique({
     where: {
-      // * nextjs 15, promise 获取动态路由参数~
       id: (await params).serverId,
-      // * 确保本人在这个群组中~
       members: {
         some: {
           profileId: profile.id,
@@ -41,9 +39,7 @@ const ServerIdLayout = async ({
       <NavigationSidebar />
       <ServerSidebar serverId={server.id} />
       {/* 聊天记录展示~ */}
-      <main className="bg-black/95 flex-1 flex-grow overflow-auto">
-        {children}
-      </main>
+      <main className="flex-1 flex-grow overflow-auto">{children}</main>
     </div>
   )
 }

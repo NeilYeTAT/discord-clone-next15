@@ -27,10 +27,11 @@ const NavigationSidebar = async () => {
   })
 
   return (
-    <aside className="h-screen flex flex-col items-center gap-4 py-2 flex-shrink-0 w-16 bg-black">
+    <aside className="h-screen flex flex-col items-center gap-2 py-2 flex-shrink-0 w-16">
       <CreateServerButton />
       <Separator className="bg-zinc-100 dark:bg-zinc-300 w-10 mx-auto" />
-      <ScrollArea className="w-full">
+      {/* 这里滚动区域应该修改成跑马灯的哪个组件!!! */}
+      <ScrollArea className="w-full h-4/5">
         {servers.map(server => (
           <div key={server.id}>
             <NavigationItem
@@ -40,6 +41,98 @@ const NavigationSidebar = async () => {
             />
           </div>
         ))}
+
+        {/* {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))}
+        {servers.map(server => (
+          <div key={server.id}>
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}
+            />
+          </div>
+        ))} */}
       </ScrollArea>
 
       {/* 底部用户信息按扭和明暗切换按扭 */}

@@ -1,5 +1,4 @@
 import { ChannelType } from '@prisma/client'
-import { Hash, Mic, Video } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
@@ -9,7 +8,6 @@ import { ScrollArea } from '~/components/ui/scroll-area'
 import ServerChannelHeader from './internal/server-channel-header'
 import ServerChannel from './internal/server-channel'
 import ServerMember from './internal/server-member'
-import { Separator } from '~/components/ui/separator'
 import { CHANNEL_TYPE_ICON_MAP, ROLE_ICON_MAP } from '~/constants/icon-map'
 
 type ISearchData = {
@@ -121,10 +119,9 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
     <section className="flex flex-col w-64 bg-black border-x border-dashed">
       <ServerHeader server={server} role={myRole} />
       {/* ScrollArea 源码中隐藏了滚动条的显示 */}
-      <ScrollArea className="pl-2">
-        {/* 搜索框展示的 modal 层 */}
+      <ScrollArea className="px-2 py-1">
+        {/* 搜索框, 点击后展示 modal 层 */}
         <ServerSearch searchData={searchData} />
-        <Separator className="bg-slate-300" />
         {/* <div className='border-b border-dashed' /> */}
         {/* 频道列表渲染 */}
         {/* 这里必须使用 !! 两次取反, 因为如果为 0 值的话, 页面会直接渲染成 0 的!!!!!!! */}
