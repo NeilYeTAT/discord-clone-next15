@@ -39,41 +39,45 @@ const ChannelIdPage = async ({
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
-      <ChatHeader name={channel.name} type="channel" />
-      {channel.type === ChannelType.TEXT && (
-        <>
-          <ChatMessages
-            member={member}
-            name={channel.name}
-            chatId={channel.id}
-            type="channel"
-            apiUrl="/api/messages"
-            socketUrl="/api/socket/messages"
-            socketQuery={{
-              channelId: channel.id,
-              serverId: channel.serverId,
-            }}
-            paramKey="channelId"
-            paramValue={channel.id}
-          />
-          <ChatInput
-            name={channel.name}
-            type="channel"
-            apiUrl="/api/socket/messages"
-            query={{
-              channelId: channel.id,
-              serverId: channel.serverId,
-            }}
-          />
-        </>
-      )}
+      <section className="fixed w-full z-50">
+        <ChatHeader name={channel.name} type="channel" />
+      </section>
+      <main className="mt-10 flex flex-col flex-1">
+        {channel.type === ChannelType.TEXT && (
+          <>
+            <ChatMessages
+              member={member}
+              name={channel.name}
+              chatId={channel.id}
+              type="channel"
+              apiUrl="/api/messages"
+              socketUrl="/api/socket/messages"
+              socketQuery={{
+                channelId: channel.id,
+                serverId: channel.serverId,
+              }}
+              paramKey="channelId"
+              paramValue={channel.id}
+            />
+            <ChatInput
+              name={channel.name}
+              type="channel"
+              apiUrl="/api/socket/messages"
+              query={{
+                channelId: channel.id,
+                serverId: channel.serverId,
+              }}
+            />
+          </>
+        )}
 
-      {channel.type === ChannelType.AUDIO && (
-        <MediaRoom chatId={channel.id} video={false} audio={true} />
-      )}
-      {channel.type === ChannelType.VIDEO && (
-        <MediaRoom chatId={channel.id} video={true} audio={true} />
-      )}
+        {channel.type === ChannelType.AUDIO && (
+          <MediaRoom chatId={channel.id} video={false} audio={true} />
+        )}
+        {channel.type === ChannelType.VIDEO && (
+          <MediaRoom chatId={channel.id} video={true} audio={true} />
+        )}
+      </main>
     </div>
   )
 }
