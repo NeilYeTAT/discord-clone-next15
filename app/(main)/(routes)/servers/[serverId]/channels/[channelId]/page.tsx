@@ -42,7 +42,7 @@ const ChannelIdPage = async ({
       <section className="fixed w-full z-50">
         <ChatHeader name={channel.name} type="channel" />
       </section>
-      <main className="mt-10 flex flex-col flex-1">
+      <main className="mt-10 flex flex-col relative flex-1">
         {channel.type === ChannelType.TEXT && (
           <>
             <ChatMessages
