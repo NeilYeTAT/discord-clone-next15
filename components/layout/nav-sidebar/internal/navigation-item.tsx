@@ -1,6 +1,6 @@
 'use client'
 
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import ActionTooltip from '~/components/ui/action-tooltip'
 import { cn } from '~/lib/utils'
 import Image from 'next/image'
@@ -17,26 +17,11 @@ const NavigationItem = ({
 }) => {
   // * 获取之后点击跳转的链接地址~
   const params = useParams()
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
 
   return (
     <ActionTooltip side="right" align="center" label={name}>
-      <button
-        onClick={() => {
-          router.push(`/servers/${id}`)
-        }}
-        className="group flex items-center size-12 cursor-pointer rounded-3xl hover:rounded-xl transition-all mx-auto mb-2"
-      >
-        {/* 选中以后的左侧小白条~ */}
-        <div
-          className={cn(
-            'absolute left-0 bg-primary rounded-full transition-all w-1',
-            params?.serverId !== id && 'group-hover:h-5',
-            params?.serverId === id ? 'h-9' : 'h-2',
-          )}
-        />
-        {/* 左侧一个个群组的按扭 */}
+      <div className="group flex items-center size-12 cursor-pointer rounded-3xl hover:rounded-xl transition-all mx-auto mb-2">
         <div
           className={cn(
             'relative group flex rounded-3xl group-hover:rounded-2xl transition-all overflow-hidden size-full items-center justify-center',
@@ -59,7 +44,7 @@ const NavigationItem = ({
             onLoad={() => setIsLoading(true)}
           />
         </div>
-      </button>
+      </div>
     </ActionTooltip>
   )
 }

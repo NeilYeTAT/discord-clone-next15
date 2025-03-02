@@ -1,12 +1,11 @@
 import { redirect } from 'next/navigation'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
-import { ScrollArea } from '~/components/ui/scroll-area'
 import CreateServerButton from './internal/create-server-button'
 import { Separator } from '~/components/ui/separator'
-import NavigationItem from './internal/navigation-item'
 import { ModeToggle } from '~/components/ui/mode-toggle'
 import UserButtonClient from './internal/user-button-client'
+import NavigationScrollArea from './internal/navigation-scroll-area'
 
 const NavigationSidebar = async () => {
   const profile = await currentProfile()
@@ -31,110 +30,7 @@ const NavigationSidebar = async () => {
       <CreateServerButton />
       <Separator className="bg-zinc-100 dark:bg-zinc-300 w-10 mx-auto" />
       {/* 这里滚动区域应该修改成跑马灯的哪个组件!!! */}
-      <ScrollArea className="w-full h-4/5">
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-
-        {/* {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))}
-        {servers.map(server => (
-          <div key={server.id}>
-            <NavigationItem
-              id={server.id}
-              name={server.name}
-              imageUrl={server.imageUrl}
-            />
-          </div>
-        ))} */}
-      </ScrollArea>
-
+      <NavigationScrollArea servers={servers} />
       {/* 底部用户信息按扭和明暗切换按扭 */}
       <div className="absolute bottom-0 pb-3 mt-auto flex flex-col items-center gap-y-4">
         <ModeToggle className="rounded-full size-12" />

@@ -19,6 +19,7 @@ const SetupPage = async () => {
 
   // * 找到第一个服务器了, 重定向到那里去和小伙伴聊天吧~
   if (server) {
+    console.log('re server')
     return redirect(`/servers/${server.id}`)
   }
 
