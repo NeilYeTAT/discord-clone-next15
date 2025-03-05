@@ -68,7 +68,7 @@ const ServerSidebar = async ({ serverId }: { serverId: string }) => {
     return redirect('/')
   }
 
-  // * 我在服务器(群组)里的权限
+  // * 我在群组(群组)里的权限
   const myRole = server.members.find(
     member => member.profileId === profile.id,
   )?.role

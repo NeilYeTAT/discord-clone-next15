@@ -57,7 +57,7 @@ const DeleteChannelModal = () => {
             <span className="font-semibold text-indigo-500">
               #{channel?.name}
             </span>{' '}
-            频道喵🥹?
+            频道吗🥹?
           </DialogDescription>
         </DialogHeader>
 

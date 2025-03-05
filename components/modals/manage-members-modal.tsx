@@ -121,7 +121,7 @@ const ManageMembersModal = () => {
                         <DropdownMenuSub>
                           <DropdownMenuSubTrigger className="flex items-center">
                             <ShieldQuestion className="size-4 mr-2" />
-                            <span>Role</span>
+                            <span>权限</span>
                           </DropdownMenuSubTrigger>
 
                           <DropdownMenuPortal>
@@ -132,7 +132,7 @@ const ManageMembersModal = () => {
                                 }
                               >
                                 <Shield className="size-4 ml-2" />
-                                GUEST
+                                访客
                                 {member.role === 'GUEST' && (
                                   <Check className="size-4" />
                                 )}
@@ -144,7 +144,7 @@ const ManageMembersModal = () => {
                                 }
                               >
                                 <ShieldCheck className="size-4 ml-2" />
-                                Moderator
+                                管理员
                                 {member.role === 'MODERATOR' && (
                                   <Check className="size-4" />
                                 )}

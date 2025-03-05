@@ -84,10 +84,10 @@ const ServerSearch = ({ searchData }: IServerSearchProps) => {
         <DialogTitle>
           {/* 控制台报错, 必须添加这个...说是为了提高无障碍可访问性... */}
         </DialogTitle>
-        <CommandInput placeholder="搜索成员或频道喵~" />
+        <CommandInput placeholder="搜索成员或频道~" />
 
         <CommandList>
-          <CommandEmpty>没有找到喵~🥺</CommandEmpty>
+          <CommandEmpty>未找到🥺</CommandEmpty>
 
           {searchData.map(({ label, type, data }) => {
             if (!data?.length) return null

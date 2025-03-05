@@ -9,9 +9,9 @@ const SocketIndicator = () => {
   return (
     <Badge
       variant={'outline'}
-      className={isConnected ? 'bg-emerald-400' : 'bg-yellow-400'}
+      className={isConnected ? 'bg-emerald-500' : 'bg-yellow-500'}
     >
-      {isConnected ? <>connected</> : <>disconnected</>}
+      {isConnected ? <>已连接</> : <>断联中</>}
     </Badge>
   )
 }

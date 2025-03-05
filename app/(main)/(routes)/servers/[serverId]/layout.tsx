@@ -36,9 +36,9 @@ const ServerIdLayout = async ({
 
   return (
     <div className="flex h-screen">
-      {/* 展示加入的所有服务器~ */}
+      {/* 展示加入的所有群组~ */}
       <NavigationSidebar />
-      {/* 展示服务器内部频道~ */}
+      {/* 展示群组内部频道~ */}
       <ServerSidebar serverId={server.id} />
       {/* 展示聊天记录~ */}
       <main className="flex-1 flex-grow overflow-auto">{children}</main>

@@ -20,7 +20,7 @@ export async function PATCH(
       return new NextResponse('未授权', { status: 401 })
     }
     if (!serverId) {
-      return new NextResponse('未找到服务器id', { status: 400 })
+      return new NextResponse('未找到群组id', { status: 400 })
     }
 
     const server = await db.server.update({

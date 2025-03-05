@@ -28,10 +28,10 @@ import { useEffect } from 'react'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
-    message: '服务器名不能为空~',
+    message: '群组名不能为空~',
   }),
   imageUrl: z.string().min(1, {
-    message: '服务器图片不能为空~',
+    message: '群组图片不能为空~',
   }),
 })
 
@@ -64,7 +64,7 @@ const EditServerModal = () => {
       handleModalClose()
       router.refresh()
     } catch (error) {
-      console.warn('修改服务器出错, 爱来自 edit-server-modal 😘', error)
+      console.warn('修改群组出错, 爱来自 edit-server-modal 😘', error)
     }
   }
 
@@ -77,11 +77,9 @@ const EditServerModal = () => {
     <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="m-auto text-2xl">
-            请创建你的服务器
-          </DialogTitle>
+          <DialogTitle className="m-auto text-2xl">请创建你的群组</DialogTitle>
           <DialogDescription className="m-auto">
-            请给服务器创建名字和头像喵, 之后可以也可以再修改~
+            请给群组创建名字和头像, 之后可以也可以再修改~
           </DialogDescription>
         </DialogHeader>
 
@@ -113,9 +111,9 @@ const EditServerModal = () => {
               name="serverName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>服务器名</FormLabel>
+                  <FormLabel>群组名</FormLabel>
                   <FormControl>
-                    <Input placeholder="想好取什么名字了喵~" {...field} />
+                    <Input placeholder="想好取什么名字了吗~" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

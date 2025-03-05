@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 
-// * 点击左侧服务器图片时, 默认来选中第一个 general 频道~
+// * 点击左侧群组图片时, 默认来选中第一个 general 频道~
 const ServerIdPage = async ({
   params,
 }: {

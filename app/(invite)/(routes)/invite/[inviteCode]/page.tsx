@@ -11,7 +11,6 @@ const InviteCodePage = async ({
   const inviteCode = (await params).inviteCode
 
   if (!profile || !inviteCode) {
-    console.log('---------no profile or no invite code---------')
     return redirect('/')
   }
 
@@ -27,7 +26,6 @@ const InviteCodePage = async ({
   })
 
   if (existingServer) {
-    console.log('~~~~~~~~~~~~~~~existing server~~~~~~~~~~~~')
     return redirect(`/servers/${existingServer.id}`)
   }
 

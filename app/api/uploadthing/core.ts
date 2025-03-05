@@ -6,7 +6,7 @@ const f = createUploadthing()
 const handleAuth = async () => {
   const { userId } = await auth()
 
-  if (!userId) throw new Error('权限不够喵~')
+  if (!userId) throw new Error('权限不够')
 
   return { userId }
 }

@@ -24,7 +24,7 @@ export async function PATCH(
     }
 
     const server = await db.server.update({
-      // * 找到要更新的服务器~
+      // * 找到要更新的群组~
       where: {
         id: serverId,
         profileId: profile.id,

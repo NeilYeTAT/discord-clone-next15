@@ -43,7 +43,7 @@ const DeleteMessageModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="m-auto text-2xl">删除信息</DialogTitle>
-          <DialogDescription>确定要删除 这条信息喵🥹?</DialogDescription>
+          <DialogDescription>确定要删除 这条信息吗🥹?</DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="flex items-center">

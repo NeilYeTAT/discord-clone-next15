@@ -54,10 +54,10 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
             邀请他人 <UserPlus className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
-        {/* 群主可以设置服务器 */}
+        {/* 群主可以设置群组 */}
         {isAdmin && (
           <DropdownMenuItem onClick={() => onOpen('editServer', { server })}>
-            服务器设置 <Settings className="size-4 ml-auto" />
+            群组设置 <Settings className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
         {/* 群主可以管理成员, 踢人~ */}
@@ -80,7 +80,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
             className="text-rose-500"
             onClick={() => onOpen('deleteServer', { server })}
           >
-            删除服务器 <Trash className="size-4 ml-auto" />
+            删除群组 <Trash className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
 
@@ -89,7 +89,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
             className="text-rose-500"
             onClick={() => onOpen('leaveServer', { server })}
           >
-            退出服务器 <LogOut className="size-4 ml-auto" />
+            退出群组 <LogOut className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

@@ -53,7 +53,7 @@ const InviteUsersModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="m-auto text-2xl">邀请朋友~</DialogTitle>
+          <DialogTitle className="m-auto text-2xl">邀请朋友</DialogTitle>
         </DialogHeader>
 
         <div className="px-6 py-2">

@@ -14,7 +14,7 @@ export function ModeToggle({ className }: { className?: string }) {
       size="icon"
       className={className}
       onClick={() =>
-        // * 默认 系统主题为黑色, 保护眼睛喵~ 🥺
+        // * 默认 系统主题为黑色, 保护眼睛 🥺
         setTheme(theme === 'dark' || theme === 'system' ? 'light' : 'dark')
       }
     >

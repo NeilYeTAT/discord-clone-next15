@@ -113,7 +113,7 @@ const CreateChannelModal = () => {
                 <FormItem>
                   <FormLabel>频道名</FormLabel>
                   <FormControl>
-                    <Input placeholder="想好取什么名字了喵~" {...field} />
+                    <Input placeholder="想好取什么名字了吗~" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

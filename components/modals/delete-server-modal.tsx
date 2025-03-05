@@ -31,7 +31,7 @@ const DeleteServerModal = () => {
       router.refresh()
       router.push('/')
     } catch (error) {
-      console.warn('删除服务器出错, 爱来自 delete-server-modal 😘', error)
+      console.warn('删除群组出错, 爱来自 delete-server-modal 😘', error)
     } finally {
       setIsLoading(false)
     }
@@ -41,13 +41,13 @@ const DeleteServerModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="m-auto text-2xl">删除服务器</DialogTitle>
+          <DialogTitle className="m-auto text-2xl">删除群组</DialogTitle>
           <DialogDescription>
             确定要删除{' '}
             <span className="font-semibold text-indigo-500">
               {server?.name}
             </span>{' '}
-            服务器喵🥹?
+            群组吗🥹?
           </DialogDescription>
         </DialogHeader>
 

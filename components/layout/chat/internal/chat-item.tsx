@@ -19,6 +19,7 @@ import { Button } from '~/components/ui/button'
 import UserAvatar from '../../user-avatar/user-avatar'
 import { useModal } from '~/hooks/use-modal-store'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
+import { Span } from 'next/dist/trace'
 
 interface IChatItemProps {
   id: string
@@ -176,7 +177,7 @@ export const ChatItem = ({
                 rel="noopener noreferrer"
                 className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
               >
-                PDF File
+                PDF
               </a>
             </div>
           )}
@@ -185,13 +186,13 @@ export const ChatItem = ({
               className={cn(
                 'text-sm text-zinc-600 dark:text-zinc-300',
                 deleted &&
-                  'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1',
+                  'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1 line-through',
               )}
             >
               {content}
               {isUpdated && !deleted && (
                 <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
-                  (edited)
+                  (已编辑)
                 </span>
               )}
             </p>
@@ -223,7 +224,14 @@ export const ChatItem = ({
                 <Button size="sm">保存</Button>
               </form>
               <span className="text-[10px] mt-1 text-zinc-400">
-                Press escape to cancel, enter to save
+                <span className="text-primary font-mono font-semibold">
+                  ESC
+                </span>{' '}
+                退出 {''}
+                <span className="text-primary font-mono font-semibold">
+                  Enter
+                </span>{' '}
+                保存
               </span>
             </Form>
           )}

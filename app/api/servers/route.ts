@@ -12,9 +12,9 @@ interface ICreateServerRequest {
 
 export async function POST(req: NextRequest) {
   try {
-    // * 获取服务器名称和图片地址, 准备创建服务器(群组)
+    // * 获取群组名称和图片地址, 准备创建群组(群组)
     const { serverName, imageUrl }: ICreateServerRequest = await req.json()
-    // * 拿到准备创建服务器的用户信息
+    // * 拿到准备创建群组的用户信息
     const profile = await currentProfile()
 
     if (!profile) {
@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
         channels: {
           create: [
             {
-              // * 用过 discord 吧, qq 群中还可以创建不同的频道~ 比如 原神交流频道😋 二次元交流频道😋
               // * 这里默认创建一个 general 频道~
               name: 'general',
               profileId: profile.id,
