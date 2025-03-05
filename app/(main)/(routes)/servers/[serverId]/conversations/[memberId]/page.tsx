@@ -12,7 +12,7 @@ const MemberIdPage = async ({
   searchParams,
 }: {
   params: Promise<{ memberId: string; serverId: string }>
-  searchParams: { video: boolean }
+  searchParams: Promise<{ video: boolean }>
 }) => {
   const profile = await currentProfile()
   const serverId = (await params).serverId
@@ -54,10 +54,11 @@ const MemberIdPage = async ({
         name={otherMember.profile.name}
         type="conversation"
       />
-      {searchParams.video && (
+      {(await searchParams).video && (
         <MediaRoom chatId={conversation.id} video={true} audio={true} />
       )}
-      {!searchParams.video && (
+      {/* 只有点击顶部的 视频 logo 才会开启视频对话, 上面的组件才会显示, 默认显示聊天框~ */}
+      {!(await searchParams).video && (
         <>
           <ChatMessages
             member={currentMember}

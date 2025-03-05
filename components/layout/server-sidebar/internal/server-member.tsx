@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { cn } from '~/lib/utils'
 import UserAvatar from '~/components/layout/user-avatar/user-avatar'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
+import { AnimatePresence, motion } from 'motion/react'
 
 const ServerMember = ({
   member,
@@ -19,13 +20,14 @@ const ServerMember = ({
   }
 
   return (
-    <button
+    <motion.button
       onClick={handleNavigation}
       className={cn(
-        'group p-2 rounded-md flex items-center w-full gap-4 hover:bg-slate-800 duration-300',
-        params?.memberId === member.id && 'bg-slate-800',
-        // bg-zinc-700/20
+        'relative group p-2 rounded-md flex items-center w-full gap-4 hover:bg-primary-foreground duration-300',
+        params?.memberId === member.id && 'bg-primary-foreground',
       )}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: 'spring', stiffness: 300 }}
     >
       <UserAvatar src={member.profile.imageUrl} />
       <p
@@ -37,7 +39,15 @@ const ServerMember = ({
         {member.profile.name}
         {ROLE_ICON_MAP[member.role]}
       </p>
-    </button>
+      <AnimatePresence>
+        {params?.memberId === member.id && (
+          <motion.span
+            className="absolute top-0 left-0 size-full bg-white/10 rounded-md"
+            layoutId="server-sidebar-primary-selected"
+          />
+        )}
+      </AnimatePresence>
+    </motion.button>
   )
 }
 
