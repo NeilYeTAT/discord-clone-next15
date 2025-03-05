@@ -35,7 +35,7 @@ const ServerChannelHeader = ({
       {role === MemberRole.ADMIN && sectionType === 'members' && (
         <ActionTooltip label="管理成员" side="top">
           {/* 别忘了传递 server 🤡🤡🤡 */}
-          <button onClick={() => onOpen('members', { server })}>
+          <button onClick={() => onOpen('manageMembers', { server })}>
             <Settings className="size-4" />
           </button>
         </ActionTooltip>

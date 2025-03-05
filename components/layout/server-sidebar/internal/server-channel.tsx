@@ -1,20 +1,23 @@
 'use client'
 
-import { Channel, ChannelType, MemberRole, Server } from '@prisma/client'
-import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
+import { Channel, MemberRole, Server } from '@prisma/client'
+import { Edit, Lock, Trash } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useParams, useRouter } from 'next/navigation'
 import ActionTooltip from '~/components/ui/action-tooltip'
 import { CHANNEL_TYPE_ICON_MAP } from '~/constants/icon-map'
 import { ModalType, useModal } from '~/hooks/use-modal-store'
 import { cn } from '~/lib/utils'
 
-interface IServerChannelProps {
+const ServerChannel = ({
+  channel,
+  server,
+  role,
+}: {
   channel: Channel
   server: Server
   role?: MemberRole
-}
-
-const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
+}) => {
   const params = useParams()
   const router = useRouter()
   const { onOpen } = useModal()
@@ -29,19 +32,20 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
   }
 
   return (
-    <button
+    <motion.button
       onClick={handleNavigation}
       className={cn(
-        'group px-2 py-[6px] rounded-md flex items-center w-full gap-1 cursor-pointer hover:bg-primary-foreground duration-300 mb-1',
-        params?.channelId === channel.id && 'bg-primary-foreground',
+        'relative group px-1 py-[6px] rounded-md flex items-center w-full gap-1 cursor-pointer duration-300 mb-1 hover:bg-primary-foreground',
       )}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: 'spring', stiffness: 300 }}
     >
       {CHANNEL_TYPE_ICON_MAP[channel.type]}
       <p className="max-w-36 truncate text-left">{channel.name}</p>
       {/* 管理员可以编辑频道 */}
       {channel.name !== 'general' && role !== MemberRole.GUEST && (
         // !!! hover bug, 暂时先放着, 去修理别的地方先~
-        <div className="ml-auto hidden group-hover:flex gap-2">
+        <motion.div className="ml-auto group-hover:flex gap-2 hidden duration-300 z-50">
           <ActionTooltip label="编辑">
             <Edit
               className="size-4"
@@ -54,11 +58,19 @@ const ServerChannel = ({ channel, server, role }: IServerChannelProps) => {
               onClick={e => onAction(e, 'deleteChannel')}
             />
           </ActionTooltip>
-        </div>
+        </motion.div>
       )}
 
       {channel.name === 'general' && <Lock className="ml-auto size-4" />}
-    </button>
+      <AnimatePresence>
+        {params?.channelId === channel.id && (
+          <motion.span
+            className="absolute top-0 left-0 size-full bg-white/10 rounded-md"
+            layoutId="channel-hover-white-bg"
+          />
+        )}
+      </AnimatePresence>
+    </motion.button>
   )
 }
 

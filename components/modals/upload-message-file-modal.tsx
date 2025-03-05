@@ -38,7 +38,6 @@ const MessageFileModal = () => {
   const { apiUrl = '', query } = data
 
   const isModalOpen = isOpen && type === 'uploadMessageFile'
-  console.log(isModalOpen, 'modal')
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
