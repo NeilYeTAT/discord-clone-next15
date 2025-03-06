@@ -9,41 +9,46 @@ import {
 import { useModal } from '~/hooks/use-modal-store'
 import { Label } from '~/components/ui/label'
 import { Input } from '~/components/ui/input'
-import { Button } from '../ui/button'
+import { Button } from '~/components/ui/button'
 import { Check, Copy, RefreshCw } from 'lucide-react'
 import { useOrigin } from '~/hooks/use-origin'
 import { useState } from 'react'
-import axios from 'axios'
+import { getInviteCode } from '~/actions/invite-code'
+import { useCopyToClipboard, useThrottle } from '@uidotdev/usehooks'
 
 const InviteUsersModal = () => {
   const origin = useOrigin()
-  const { isOpen, onClose, onOpen, type, data } = useModal()
-
-  const { server } = data
-
+  const {
+    isOpen,
+    onClose,
+    onOpen,
+    type,
+    data: { server },
+  } = useModal()
   const isModalOpen = isOpen && type === 'inviteServer'
+  // * inviteCode 是数据库中给定的字段
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`
 
-  const [copied, setCopied] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [copiedText, copyToClipboard] = useCopyToClipboard()
+  const hasCopiedText = copiedText === inviteUrl
+  // * 节流, 等 3s 才可以重新生成
+  const throttledIsLoading = useThrottle(isLoading, 3000)
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(inviteUrl)
-    setCopied(true)
-
-    setTimeout(() => {
-      setCopied(false)
-    }, 1000)
-  }
   const generateNewLink = async () => {
     try {
       setIsLoading(true)
-      const response = await axios.patch(
-        `/api/servers/${server?.id}/inviteCode`,
-      )
-      onOpen('inviteServer', { server: response.data })
+
+      const response = await getInviteCode(server?.id)
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
+
+      onOpen('inviteServer', { server: response.data?.server })
     } catch (error) {
-      console.warn('生成邀请链接出错, 爱来自 invite-users-modal 😘', error)
+      console.error('获取邀请码失败：', error)
     } finally {
       setIsLoading(false)
     }
@@ -59,27 +64,31 @@ const InviteUsersModal = () => {
         <div className="px-6 py-2">
           <Label className="text-xs font-bold text-zinc-300">邀请码</Label>
 
-          <div className="flex items-center mt-2 gap-x-2">
+          <main className="flex items-center mt-2 gap-x-2">
             <Input value={inviteUrl} readOnly />
-            <Button size="icon" onClick={handleCopy} disabled={isLoading}>
-              {copied ? (
+            <Button
+              size="icon"
+              onClick={() => copyToClipboard(inviteUrl)}
+              disabled={isLoading}
+            >
+              {hasCopiedText ? (
                 <Check className="size-4" />
               ) : (
                 <Copy className="size-4" />
               )}
             </Button>
-          </div>
+          </main>
 
-          <Button
-            variant={'link'}
+          {/* 这里使用普通按扭是因为 shadcnUI 中 Button 无法控制鼠标禁用样式 */}
+          <button
             onClick={generateNewLink}
-            disabled={isLoading}
-            size={'sm'}
-            className="text-xs mt-2 text-zinc-500"
+            disabled={throttledIsLoading}
+            className="flex text-xs mt-2 text-zinc-500 cursor-pointer underline
+                        disabled:cursor-not-allowed disabled:text-zinc-600 transition-colors"
           >
             生成一个新的邀请链接~
             <RefreshCw className="size-4 ml-1" />
-          </Button>
+          </button>
         </div>
       </DialogContent>
     </Dialog>
