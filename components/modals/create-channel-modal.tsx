@@ -81,7 +81,7 @@ const CreateChannelModal = () => {
       handleModalClose()
       router.refresh()
     } catch (error) {
-      console.warn(error, '创建频道错误~')
+      console.error(error, '创建频道错误~')
     } finally {
       setIsLoading(false)
     }

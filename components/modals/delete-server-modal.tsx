@@ -31,7 +31,7 @@ const DeleteServerModal = () => {
       router.refresh()
       router.push('/')
     } catch (error) {
-      console.warn('删除群组出错, 爱来自 delete-server-modal 😘', error)
+      console.error('删除群组出错, 爱来自 delete-server-modal 😘', error)
     } finally {
       setIsLoading(false)
     }

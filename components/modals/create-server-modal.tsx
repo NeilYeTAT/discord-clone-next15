@@ -54,7 +54,7 @@ const CreateServerModal = () => {
       router.refresh()
       handleModalClose()
     } catch (error) {
-      console.warn(error, '创建群组错误~')
+      console.error(error, '创建群组错误~')
     }
   }
 

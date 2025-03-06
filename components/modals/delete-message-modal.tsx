@@ -32,7 +32,7 @@ const DeleteMessageModal = () => {
 
       onClose()
     } catch (error) {
-      console.warn('删除聊天信息出错, 爱来自 delete-message-modal 😘', error)
+      console.error('删除聊天信息出错, 爱来自 delete-message-modal 😘', error)
     } finally {
       setIsLoading(false)
     }

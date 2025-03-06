@@ -35,7 +35,7 @@ const LeaveServerModal = () => {
       router.refresh()
       router.push('/')
     } catch (error) {
-      console.warn('退出群组出错, 爱来自 leave-server-modal 😘', error)
+      console.error('退出群组出错, 爱来自 leave-server-modal 😘', error)
     } finally {
       setIsLoading(false)
     }

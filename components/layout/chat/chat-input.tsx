@@ -48,7 +48,7 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
       form.reset()
       router.refresh()
     } catch (error) {
-      console.warn('chat input error', error)
+      console.error('chat input error', error)
     }
   }
 

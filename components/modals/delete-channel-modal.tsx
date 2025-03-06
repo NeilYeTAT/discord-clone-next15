@@ -41,7 +41,7 @@ const DeleteChannelModal = () => {
       router.push(`/servers/${server?.id}`)
       router.refresh()
     } catch (error) {
-      console.warn('删除频道出错, 爱来自 delete-channel-modal 😘', error)
+      console.error('删除频道出错, 爱来自 delete-channel-modal 😘', error)
     } finally {
       setIsLoading(false)
     }

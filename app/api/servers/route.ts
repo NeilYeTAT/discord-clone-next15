@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(server)
   } catch (error) {
-    console.warn('servers/route.ts ', error)
+    console.error('servers/route.ts ', error)
 
     return new NextResponse('Internal Error', {
       status: 500,

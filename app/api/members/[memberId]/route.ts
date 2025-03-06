@@ -59,7 +59,7 @@ export async function PATCH(
 
     return NextResponse.json(server)
   } catch (error) {
-    console.warn('memberId route error patch', error)
+    console.error('memberId route error patch', error)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }
@@ -113,7 +113,7 @@ export async function DELETE(
 
     return NextResponse.json(server)
   } catch (error) {
-    console.warn('memberId route error delete', error)
+    console.error('memberId route error delete', error)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }

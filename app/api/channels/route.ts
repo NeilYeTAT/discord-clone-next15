@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(server)
   } catch (error) {
-    console.warn('Channels post', error)
+    console.error('Channels post', error)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }

@@ -84,7 +84,7 @@ const EditChannelModal = () => {
       router.refresh()
       onClose()
     } catch (error) {
-      console.warn('修改出错, 爱来自 edit-channel-modal 😘', error)
+      console.error('修改出错, 爱来自 edit-channel-modal 😘', error)
     } finally {
       setIsLoading(false)
     }

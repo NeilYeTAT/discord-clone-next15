@@ -64,7 +64,7 @@ const EditServerModal = () => {
       handleModalClose()
       router.refresh()
     } catch (error) {
-      console.warn('修改群组出错, 爱来自 edit-server-modal 😘', error)
+      console.error('修改群组出错, 爱来自 edit-server-modal 😘', error)
     }
   }
 

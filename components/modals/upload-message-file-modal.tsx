@@ -59,7 +59,7 @@ const MessageFileModal = () => {
       router.refresh()
       handleModalClose()
     } catch (error) {
-      console.warn('文件消息出错, 爱来自 messages-file-modal 😘', error)
+      console.error('文件消息出错, 爱来自 messages-file-modal 😘', error)
     }
   }
 

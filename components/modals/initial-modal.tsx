@@ -50,7 +50,7 @@ const InitialModal = () => {
       router.refresh()
       window.location.reload()
     } catch (error) {
-      console.warn('初始化创建群组出错, 爱来自 initial-modal 😘', error)
+      console.error('初始化创建群组出错, 爱来自 initial-modal 😘', error)
     }
   }
 

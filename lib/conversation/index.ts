@@ -34,7 +34,7 @@ export const findConversation = async (
       },
     })
   } catch (error) {
-    console.warn('FIND CONVERSATION ERROR', error)
+    console.error('FIND CONVERSATION ERROR', error)
     return null
   }
 }
@@ -63,7 +63,7 @@ export const createNewConversation = async (
       },
     })
   } catch (error) {
-    console.warn('CREATE A NEW CONVERSATION ERROR', error)
+    console.error('CREATE A NEW CONVERSATION ERROR', error)
     return null
   }
 }

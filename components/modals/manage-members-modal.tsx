@@ -62,7 +62,7 @@ const ManageMembersModal = () => {
 
       onOpen('manageMembers', { server: response.data })
     } catch (error) {
-      console.warn('管理成员出错, 爱来自 manage-members-modal 😘', error)
+      console.error('管理成员出错, 爱来自 manage-members-modal 😘', error)
     } finally {
       setLoadingId('')
     }

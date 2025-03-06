@@ -39,7 +39,7 @@ export async function PATCH(
 
     return NextResponse.json(server)
   } catch (error) {
-    console.warn('Server id patch error', error)
+    console.error('Server id patch error', error)
     return new NextResponse('Internal error', { status: 500 })
   }
 }
@@ -71,7 +71,7 @@ export async function DELETE(
 
     return NextResponse.json(server)
   } catch (error) {
-    console.warn('Server delete error', error)
+    console.error('Server delete error', error)
     return new NextResponse('Internal error', { status: 500 })
   }
 }

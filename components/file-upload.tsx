@@ -79,7 +79,7 @@ const FileUpload = ({
         onChange(url)
       }}
       onUploadError={error => {
-        console.warn('图片上传错误~', error)
+        console.error('图片上传错误~', error)
       }}
     />
   )
