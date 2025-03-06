@@ -1,7 +1,6 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -25,6 +24,7 @@ import FileUpload from '../file-upload'
 import { useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
 import { useEffect } from 'react'
+import { updateServer } from '~/actions/servers/update-server'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -60,7 +60,16 @@ const EditServerModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/servers/${server?.id}`, values)
+      const response = await updateServer({
+        serverId: server?.id ?? '',
+        ...values,
+      })
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
+
       handleModalClose()
       router.refresh()
     } catch (error) {

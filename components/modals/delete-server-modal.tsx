@@ -12,12 +12,16 @@ import { useModal } from '~/hooks/use-modal-store'
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
+import { deleteServer } from '~/actions/servers/delete-server'
 
 const DeleteServerModal = () => {
   const router = useRouter()
-  const { isOpen, onClose, type, data } = useModal()
-  const { server } = data
+  const {
+    isOpen,
+    onClose,
+    type,
+    data: { server },
+  } = useModal()
   const isModalOpen = isOpen && type === 'deleteServer'
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,7 +29,12 @@ const DeleteServerModal = () => {
     try {
       setIsLoading(true)
 
-      await axios.delete(`/api/servers/${server?.id}`)
+      const response = await deleteServer(server?.id ?? '')
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       onClose()
       router.refresh()

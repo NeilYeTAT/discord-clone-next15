@@ -29,7 +29,12 @@ const LeaveServerModal = () => {
     try {
       setIsLoading(true)
 
-      await leaveServer(server?.id ?? '')
+      const response = await leaveServer(server?.id ?? '')
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       onClose()
       router.refresh()
