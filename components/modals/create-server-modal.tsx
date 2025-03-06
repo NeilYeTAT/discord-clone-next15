@@ -1,7 +1,6 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -24,6 +23,7 @@ import { Input } from '~/components/ui/input'
 import FileUpload from '../file-upload'
 import { useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
+import { createServer } from '~/actions/servers/create-server'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -50,7 +50,11 @@ const CreateServerModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post('/api/servers', values)
+      const response = await createServer(values)
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
       router.refresh()
       handleModalClose()
     } catch (error) {

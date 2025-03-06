@@ -5,11 +5,13 @@ import { currentProfile } from '~/lib/db/current-profile'
 import { v4 } from 'uuid'
 import { IServer } from '~/types'
 
-export async function getInviteCode(serverId: string): Promise<{
-  success: boolean
-  error?: string
-  data?: { server: IServer }
-}> {
+type IGetInviteCodeResponse =
+  | { success: true; data: { server: IServer } }
+  | { success: false; error: string }
+
+export async function getInviteCode(
+  serverId: string,
+): Promise<IGetInviteCodeResponse> {
   const profile = await currentProfile()
 
   if (!profile) {

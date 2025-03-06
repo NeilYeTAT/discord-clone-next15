@@ -39,7 +39,7 @@ const InviteUsersModal = () => {
     try {
       setIsLoading(true)
 
-      const response = await getInviteCode(server?.id)
+      const response = await getInviteCode(server?.id ?? '')
 
       if (!response.success) {
         console.error('出错了', response.error)

@@ -4,11 +4,13 @@ import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 import { IServer } from '~/types'
 
-export async function leaveServer(serverId: string): Promise<{
-  success: boolean
-  error?: string
-  data?: { server: IServer }
-}> {
+type ILeaveServerResponse =
+  | { success: true; data: { server: IServer } }
+  | { success: false; error: string }
+
+export async function leaveServer(
+  serverId: string,
+): Promise<ILeaveServerResponse> {
   const profile = await currentProfile()
 
   if (!profile) {
