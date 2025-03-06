@@ -16,3 +16,13 @@ export type NextApiResponseServerIo = NextApiResponse & {
     }
   }
 }
+
+export type IServer = {
+  name: string
+  id: string
+  imageUrl: string
+  updatedAt: Date
+  inviteCode: string
+  profileId: string
+  createdAt: Date
+}

@@ -13,7 +13,7 @@ import { Button } from '~/components/ui/button'
 import { Check, Copy, RefreshCw } from 'lucide-react'
 import { useOrigin } from '~/hooks/use-origin'
 import { useState } from 'react'
-import { getInviteCode } from '~/actions/invite-code'
+import { getInviteCode } from '~/actions/servers/invite-code'
 import { useCopyToClipboard, useThrottle } from '@uidotdev/usehooks'
 
 const InviteUsersModal = () => {

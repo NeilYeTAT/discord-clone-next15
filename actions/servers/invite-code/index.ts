@@ -3,18 +3,9 @@
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 import { v4 } from 'uuid'
+import { IServer } from '~/types'
 
-type IServer = {
-  name: string
-  id: string
-  imageUrl: string
-  updatedAt: Date
-  inviteCode: string
-  profileId: string
-  createdAt: Date
-}
-
-export async function getInviteCode(serverId = ''): Promise<{
+export async function getInviteCode(serverId: string): Promise<{
   success: boolean
   error?: string
   data?: { server: IServer }

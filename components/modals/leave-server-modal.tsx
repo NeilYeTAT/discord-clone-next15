@@ -9,15 +9,19 @@ import {
   DialogTitle,
 } from '~/components/ui/dialog'
 import { useModal } from '~/hooks/use-modal-store'
-import { Button } from '../ui/button'
+import { Button } from '~/components/ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
+import { leaveServer } from '~/actions/servers/leave-server'
 
 const LeaveServerModal = () => {
   const router = useRouter()
-  const { isOpen, onClose, type, data } = useModal()
-  const { server } = data
+  const {
+    isOpen,
+    onClose,
+    type,
+    data: { server },
+  } = useModal()
   const isModalOpen = isOpen && type === 'leaveServer'
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,7 +29,7 @@ const LeaveServerModal = () => {
     try {
       setIsLoading(true)
 
-      await axios.patch(`/api/servers/${server?.id}/leave`)
+      await leaveServer(server?.id ?? '')
 
       onClose()
       router.refresh()
@@ -43,20 +47,16 @@ const LeaveServerModal = () => {
         <DialogHeader>
           <DialogTitle className="m-auto text-2xl">退出群组</DialogTitle>
           <DialogDescription>
-            确定要退出{' '}
+            确定要退出
             <span className="font-semibold text-indigo-500">
-              {server?.name}
-            </span>{' '}
+              {` ${server?.name} `}
+            </span>
             群组吗?
           </DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="flex items-center">
-          <Button
-            disabled={isLoading}
-            variant={'default'}
-            onClick={handleLeaveServer}
-          >
+          <Button disabled={isLoading} onClick={handleLeaveServer}>
             确定
           </Button>
           <Button disabled={isLoading} variant={'ghost'} onClick={onClose}>
