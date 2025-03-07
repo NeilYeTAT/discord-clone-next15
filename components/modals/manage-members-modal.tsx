@@ -31,14 +31,12 @@ import {
 } from '~/components/ui/dropdown-menu'
 
 import { useModal } from '~/hooks/use-modal-store'
-import qs from 'query-string'
 import { ServerWithMembersWithProfiles } from '~/types'
 import { MemberRole } from '@prisma/client'
 import { useState } from 'react'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
-import { updateMemberRole } from '~/actions/members'
+import { deleteMember, updateMemberRole } from '~/actions/members'
 
 const ManageMembersModal = () => {
   const router = useRouter()
@@ -73,20 +71,19 @@ const ManageMembersModal = () => {
     }
   }
 
-  const handleKick = async (memberId: string) => {
+  const handleDeleteMember = async (memberId: string) => {
     try {
       setLoadingId(memberId)
-      const url = qs.stringifyUrl({
-        url: `/api/members/${memberId}`,
-        query: {
-          serverId: server?.id,
-        },
-      })
 
-      const response = await axios.delete(url)
+      const response = await deleteMember({ memberId, serverId: server.id })
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       router.refresh()
-      onOpen('manageMembers', { server: response.data })
+      onOpen('manageMembers', { server: response.data?.server })
     } catch (error) {}
   }
 
@@ -159,7 +156,9 @@ const ManageMembersModal = () => {
                         </DropdownMenuSub>
                         {/* 分割 */}
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => handleKick(member.id)}>
+                        <DropdownMenuItem
+                          onClick={() => handleDeleteMember(member.id)}
+                        >
                           <Gavel className="size-4 ml-2" />
                           移出
                         </DropdownMenuItem>
