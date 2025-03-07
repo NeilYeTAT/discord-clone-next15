@@ -1,8 +1,6 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import qs from 'query-string'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -32,6 +30,7 @@ import {
   SelectValue,
 } from '../ui/select'
 import { useEffect, useState } from 'react'
+import { updateChannel } from '~/actions/channels'
 
 const formSchema = z.object({
   channelName: z
@@ -72,13 +71,17 @@ const UpdateChannelModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true)
-      const url = qs.stringifyUrl({
-        url: `/api/channels/${channel?.id}`,
-        query: {
-          serverId: server?.id,
-        },
+
+      const response = await updateChannel({
+        channelId: channel?.id ?? '',
+        serverId: server?.id ?? '',
+        ...values,
       })
-      await axios.patch(url, values)
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       form.reset()
       router.refresh()
