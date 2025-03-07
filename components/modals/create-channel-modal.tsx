@@ -1,8 +1,6 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import qs from 'query-string'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -32,6 +30,7 @@ import {
   SelectValue,
 } from '../ui/select'
 import { useEffect, useState } from 'react'
+import { createChannel } from '~/actions/channels'
 
 const formSchema = z.object({
   channelName: z
@@ -48,12 +47,15 @@ const formSchema = z.object({
 const CreateChannelModal = () => {
   const router = useRouter()
   const params = useParams()
-
-  const { isOpen, onClose, type, data } = useModal()
   const [isLoading, setIsLoading] = useState(false)
+  const {
+    isOpen,
+    onClose,
+    type,
+    data: { channelType = ChannelType.TEXT },
+  } = useModal()
 
   const isModalOpen = isOpen && type === 'createChannel'
-  const { channelType = ChannelType.TEXT } = data
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,13 +72,16 @@ const CreateChannelModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true)
-      const url = qs.stringifyUrl({
-        url: '/api/channels',
-        query: {
-          serverId: params?.serverId,
-        },
+
+      const response = await createChannel({
+        serverId: (params?.serverId as string) ?? '',
+        ...values,
       })
-      await axios.post(url, values)
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       handleModalClose()
       router.refresh()
