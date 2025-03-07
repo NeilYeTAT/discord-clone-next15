@@ -50,7 +50,7 @@ const ServerChannel = ({
           <ActionTooltip label="编辑">
             <Edit
               className="size-4"
-              onClick={e => onAction(e, 'editChannel')}
+              onClick={e => onAction(e, 'UpdateChannel')}
             />
           </ActionTooltip>
           <ActionTooltip label="删除">

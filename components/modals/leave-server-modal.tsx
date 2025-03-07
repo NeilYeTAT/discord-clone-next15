@@ -12,7 +12,7 @@ import { useModal } from '~/hooks/use-modal-store'
 import { Button } from '~/components/ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { leaveServer } from '~/actions/servers/leave-server'
+import { leaveServer } from '~/actions/servers'
 
 const LeaveServerModal = () => {
   const router = useRouter()

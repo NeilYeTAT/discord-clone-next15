@@ -56,7 +56,7 @@ const ServerHeader = ({ server, role }: IServerHeaderProps) => {
         )}
         {/* 群主可以设置群组 */}
         {isAdmin && (
-          <DropdownMenuItem onClick={() => onOpen('editServer', { server })}>
+          <DropdownMenuItem onClick={() => onOpen('updateServer', { server })}>
             群组设置 <Settings className="size-4 ml-auto" />
           </DropdownMenuItem>
         )}

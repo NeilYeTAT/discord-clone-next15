@@ -24,7 +24,7 @@ import FileUpload from '../file-upload'
 import { useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
 import { useEffect } from 'react'
-import { updateServer } from '~/actions/servers/update-server'
+import { updateServer } from '~/actions/servers'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -35,11 +35,11 @@ const formSchema = z.object({
   }),
 })
 
-const EditServerModal = () => {
+const UpdateServerModal = () => {
   const router = useRouter()
 
   const { isOpen, onClose, type, data } = useModal()
-  const isModalOpen = isOpen && type === 'editServer'
+  const isModalOpen = isOpen && type === 'updateServer'
   const { server } = data
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -139,4 +139,4 @@ const EditServerModal = () => {
   )
 }
 
-export default EditServerModal
+export default UpdateServerModal

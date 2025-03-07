@@ -45,13 +45,13 @@ const formSchema = z.object({
   type: z.nativeEnum(ChannelType),
 })
 
-const EditChannelModal = () => {
+const UpdateChannelModal = () => {
   const router = useRouter()
 
   const { isOpen, onClose, type, data } = useModal()
   const [isLoading, setIsLoading] = useState(false)
 
-  const isModalOpen = isOpen && type === 'editChannel'
+  const isModalOpen = isOpen && type === 'UpdateChannel'
   const { channel, server } = data
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -165,4 +165,4 @@ const EditChannelModal = () => {
   )
 }
 
-export default EditChannelModal
+export default UpdateChannelModal

@@ -12,7 +12,7 @@ import { useModal } from '~/hooks/use-modal-store'
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { deleteServer } from '~/actions/servers/delete-server'
+import { deleteServer } from '~/actions/servers'
 
 const DeleteServerModal = () => {
   const router = useRouter()
