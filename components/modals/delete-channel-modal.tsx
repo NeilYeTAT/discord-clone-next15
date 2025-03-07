@@ -12,29 +12,34 @@ import { useModal } from '~/hooks/use-modal-store'
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
-import qs from 'query-string'
+import { deleteChannel } from '~/actions/channels'
 
 const DeleteChannelModal = () => {
   const router = useRouter()
-
-  const { isOpen, onClose, type, data } = useModal()
-  const { server, channel } = data
-  const isModalOpen = isOpen && type === 'deleteChannel'
   const [isLoading, setIsLoading] = useState(false)
+
+  const {
+    isOpen,
+    onClose,
+    type,
+    data: { server, channel },
+  } = useModal()
+
+  const isModalOpen = isOpen && type === 'deleteChannel'
 
   const handleDeleteChannel = async () => {
     try {
       setIsLoading(true)
 
-      const url = qs.stringifyUrl({
-        url: `/api/channels/${channel?.id}`,
-        query: {
-          serverId: server?.id,
-        },
+      const response = await deleteChannel({
+        serverId: server?.id ?? '',
+        channelId: channel?.id ?? '',
       })
 
-      await axios.delete(url)
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       onClose()
       // * 妈的, 这里要先跳转再刷新

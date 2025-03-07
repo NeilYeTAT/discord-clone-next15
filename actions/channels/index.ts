@@ -57,3 +57,48 @@ export async function createChannel({
     },
   }
 }
+
+export async function deleteChannel({
+  serverId,
+  channelId,
+}: {
+  serverId: string
+  channelId: string
+}) {
+  const profile = await currentProfile()
+
+  if (!profile) {
+    return { success: false, error: '未授权' }
+  }
+
+  const server = await db.server.update({
+    where: {
+      id: serverId,
+      members: {
+        some: {
+          profileId: profile.id,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      channels: {
+        delete: {
+          id: channelId,
+          name: {
+            not: 'general',
+          },
+        },
+      },
+    },
+  })
+
+  return {
+    success: true,
+    data: {
+      server,
+    },
+  }
+}
