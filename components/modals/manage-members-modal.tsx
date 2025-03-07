@@ -38,6 +38,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
+import { updateMemberRole } from '~/actions/members'
 
 const ManageMembersModal = () => {
   const router = useRouter()
@@ -47,20 +48,24 @@ const ManageMembersModal = () => {
   const { server } = data as { server: ServerWithMembersWithProfiles }
   const isModalOpen = isOpen && type === 'manageMembers'
 
-  const handleRoleChange = async (memberId: string, role: MemberRole) => {
+  const handleMemberRoleChange = async (memberId: string, role: MemberRole) => {
     try {
       setLoadingId(memberId)
-      const url = qs.stringifyUrl({
-        url: `/api/members/${memberId}`,
-        query: {
-          serverId: server?.id,
-        },
+
+      const response = await updateMemberRole({
+        memberId,
+        role,
+        serverId: server?.id,
       })
-      const response = await axios.patch(url, { role })
+
+      if (!response.success) {
+        console.error('出错了', response.error)
+        return
+      }
 
       router.refresh()
 
-      onOpen('manageMembers', { server: response.data })
+      onOpen('manageMembers', { server: response.data?.server })
     } catch (error) {
       console.error('管理成员出错, 爱来自 manage-members-modal 😘', error)
     } finally {
@@ -128,7 +133,7 @@ const ManageMembersModal = () => {
                             <DropdownMenuSubContent>
                               <DropdownMenuItem
                                 onClick={() =>
-                                  handleRoleChange(member.id, 'GUEST')
+                                  handleMemberRoleChange(member.id, 'GUEST')
                                 }
                               >
                                 <Shield className="size-4 ml-2" />
@@ -140,7 +145,7 @@ const ManageMembersModal = () => {
 
                               <DropdownMenuItem
                                 onClick={() =>
-                                  handleRoleChange(member.id, 'MODERATOR')
+                                  handleMemberRoleChange(member.id, 'MODERATOR')
                                 }
                               >
                                 <ShieldCheck className="size-4 ml-2" />
