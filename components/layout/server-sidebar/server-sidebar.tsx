@@ -122,7 +122,6 @@ async function ServerSidebar({ serverId }: { serverId: string }) {
       <ScrollArea className="px-2 py-1">
         {/* 搜索框, 点击后展示 modal 层 */}
         <ServerSearch searchData={searchData} />
-        {/* <div className='border-b border-dashed' /> */}
         {/* 频道列表渲染 */}
         {/* 这里必须使用 !! 两次取反, 因为如果为 0 值的话, 页面会直接渲染成 0 的!!!!!!! */}
         {!!textChannels?.length && (

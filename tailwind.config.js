@@ -67,7 +67,7 @@ module.exports = {
 			},
 			animation: {
 				'ye-ping-1.1':
-					'ye-keyframes-ping-1.1 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+					'ye-keyframes-ping-1.1 1.1s cubic-bezier(0, 0, 0.5, 1) infinite',
 				'ye-spin-slow': 'spin 24s linear infinite',
 			},
   	}

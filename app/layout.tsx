@@ -29,7 +29,7 @@ export default function RootLayout({
         className={OpenSansFont.className}
         suppressHydrationWarning
       >
-        <body className="bg-black">
+        <body className="bg-[#09090b]">
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
