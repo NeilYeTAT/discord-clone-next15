@@ -10,6 +10,11 @@ type IBaseResponse =
   | { success: true; data: { server: IServer } }
   | { success: false; error: string }
 
+interface IValues {
+  serverName: string
+  imageUrl: string
+}
+
 export async function createServer(values: IValues): Promise<IBaseResponse> {
   const { imageUrl, serverName } = values
   const profile = await currentProfile()
@@ -167,9 +172,4 @@ export async function getInviteCode(serverId: string): Promise<IBaseResponse> {
     success: true,
     data: { server },
   }
-}
-
-interface IValues {
-  serverName: string
-  imageUrl: string
 }
