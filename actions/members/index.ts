@@ -1,6 +1,6 @@
 'use server'
 
-import { MemberRole } from '@prisma/client'
+import type { MemberRole } from '@prisma/client'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 

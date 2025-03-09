@@ -8,13 +8,13 @@ interface IChatScrollProps {
   count: number
 }
 
-export const useChatScroll = ({
+export function useChatScroll({
   chatRef,
   bottomRef,
   shouldLoadMore,
   loadMore,
   count,
-}: IChatScrollProps) => {
+}: IChatScrollProps) {
   const [hasInitialized, setHasInitialized] = useState(false)
 
   useEffect(() => {
@@ -48,8 +48,8 @@ export const useChatScroll = ({
         return false
       }
 
-      const distanceFromBottom =
-        topDiv.scrollHeight - topDiv.scrollTop - topDiv.clientHeight
+      const distanceFromBottom
+        = topDiv.scrollHeight - topDiv.scrollTop - topDiv.clientHeight
       return distanceFromBottom <= 100
     }
 

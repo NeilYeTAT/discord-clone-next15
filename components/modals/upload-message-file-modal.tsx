@@ -1,9 +1,12 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import qs from 'query-string'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -19,10 +21,8 @@ import {
   FormItem,
   FormMessage,
 } from '~/components/ui/form'
-import FileUpload from '../file-upload'
-import { useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
-import qs from 'query-string'
+import FileUpload from '../file-upload'
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
@@ -31,7 +31,7 @@ const formSchema = z.object({
 })
 
 // todo 该组件后序应该考虑修改, 一个是预览时不应该使用圆角, 其次就是现在不支持上传 file 文件, 暂时只能上传图片...
-const MessageFileModal = () => {
+function MessageFileModal() {
   const router = useRouter()
 
   const { isOpen, onClose, type, data } = useModal()
@@ -58,7 +58,8 @@ const MessageFileModal = () => {
       })
       router.refresh()
       handleModalClose()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('文件消息出错, 爱来自 messages-file-modal 😘', error)
     }
   }

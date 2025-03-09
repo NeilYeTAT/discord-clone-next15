@@ -1,4 +1,4 @@
-import { ChannelType, MemberRole } from '@prisma/client'
+import type { ChannelType, MemberRole } from '@prisma/client'
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react'
 
 export const ROLE_ICON_MAP: Record<MemberRole, React.ReactNode> = {

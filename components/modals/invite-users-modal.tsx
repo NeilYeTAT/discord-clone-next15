@@ -1,22 +1,22 @@
 'use client'
 
+import { useCopyToClipboard, useThrottle } from '@uidotdev/usehooks'
+import { Check, Copy, RefreshCw } from 'lucide-react'
+import { useState } from 'react'
+import { getInviteCode } from '~/actions/servers'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { useModal } from '~/hooks/use-modal-store'
-import { Label } from '~/components/ui/label'
 import { Input } from '~/components/ui/input'
-import { Button } from '~/components/ui/button'
-import { Check, Copy, RefreshCw } from 'lucide-react'
+import { Label } from '~/components/ui/label'
+import { useModal } from '~/hooks/use-modal-store'
 import { useOrigin } from '~/hooks/use-origin'
-import { useState } from 'react'
-import { getInviteCode } from '~/actions/servers'
-import { useCopyToClipboard, useThrottle } from '@uidotdev/usehooks'
 
-const InviteUsersModal = () => {
+function InviteUsersModal() {
   const origin = useOrigin()
   const {
     isOpen,
@@ -47,9 +47,11 @@ const InviteUsersModal = () => {
       }
 
       onOpen('inviteServer', { server: response.data?.server })
-    } catch (error) {
+    }
+    catch (error) {
       console.error('获取邀请码失败：', error)
-    } finally {
+    }
+    finally {
       setIsLoading(false)
     }
   }
@@ -71,11 +73,13 @@ const InviteUsersModal = () => {
               onClick={() => copyToClipboard(inviteUrl)}
               disabled={isLoading}
             >
-              {hasCopiedText ? (
-                <Check className="size-4" />
-              ) : (
-                <Copy className="size-4" />
-              )}
+              {hasCopiedText
+                ? (
+                    <Check className="size-4" />
+                  )
+                : (
+                    <Copy className="size-4" />
+                  )}
             </Button>
           </main>
 

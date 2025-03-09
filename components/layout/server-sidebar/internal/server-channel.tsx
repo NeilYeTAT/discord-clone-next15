@@ -1,15 +1,17 @@
 'use client'
 
-import { Channel, MemberRole, Server } from '@prisma/client'
+import type { Channel, Server } from '@prisma/client'
+import type { ModalType } from '~/hooks/use-modal-store'
+import { MemberRole } from '@prisma/client'
 import { Edit, Lock, Trash } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useParams, useRouter } from 'next/navigation'
 import ActionTooltip from '~/components/ui/action-tooltip'
 import { CHANNEL_TYPE_ICON_MAP } from '~/constants/icon-map'
-import { ModalType, useModal } from '~/hooks/use-modal-store'
+import { useModal } from '~/hooks/use-modal-store'
 import { cn } from '~/lib/utils'
 
-const ServerChannel = ({
+function ServerChannel({
   channel,
   server,
   role,
@@ -17,7 +19,7 @@ const ServerChannel = ({
   channel: Channel
   server: Server
   role?: MemberRole
-}) => {
+}) {
   const params = useParams()
   const router = useRouter()
   const { onOpen } = useModal()

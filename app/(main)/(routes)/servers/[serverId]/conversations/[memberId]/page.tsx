@@ -2,18 +2,18 @@ import { redirect } from 'next/navigation'
 import ChatHeader from '~/components/layout/chat/chat-header'
 import ChatInput from '~/components/layout/chat/chat-input'
 import ChatMessages from '~/components/layout/chat/chat-messages'
+import { MediaRoom } from '~/components/media-room'
 import { db } from '~/db'
 import { getOrCreateConversation } from '~/lib/conversation'
 import { currentProfile } from '~/lib/db/current-profile'
-import { MediaRoom } from '~/components/media-room'
 
-const MemberIdPage = async ({
+async function MemberIdPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ memberId: string; serverId: string }>
+  params: Promise<{ memberId: string, serverId: string }>
   searchParams: Promise<{ video: boolean }>
-}) => {
+}) {
   const profile = await currentProfile()
   const serverId = (await params).serverId
   const memberId = (await params).memberId
@@ -55,7 +55,7 @@ const MemberIdPage = async ({
         type="conversation"
       />
       {(await searchParams).video && (
-        <MediaRoom chatId={conversation.id} video={true} audio={true} />
+        <MediaRoom chatId={conversation.id} video audio />
       )}
       {/* 只有点击顶部的 视频 logo 才会开启视频对话, 上面的组件才会显示, 默认显示聊天框~ */}
       {!(await searchParams).video && (

@@ -33,9 +33,9 @@ Tips: 最新文档导入了这么一堆, 其中两个登陆登出按扭没必要
 ```tsx
 import {
   ClerkProvider,
-  SignInButton,
   SignedIn,
   SignedOut,
+  SignInButton,
   UserButton,
 } from '@clerk/nextjs'
 // -
@@ -51,7 +51,8 @@ return (
           </SignedIn> */}
         可以留一个这个, 登陆成功后首页会展示你的头像~
         <UserButton />
-        {children}v
+        {children}
+        v
       </body>
     </html>
   </ClerkProvider>

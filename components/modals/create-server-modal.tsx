@@ -1,8 +1,11 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { createServer } from '~/actions/servers'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -10,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,10 +22,8 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import FileUpload from '../file-upload'
-import { useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
-import { createServer } from '~/actions/servers'
+import FileUpload from '../file-upload'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -34,7 +34,7 @@ const formSchema = z.object({
   }),
 })
 
-const CreateServerModal = () => {
+function CreateServerModal() {
   const router = useRouter()
 
   const { isOpen, onClose, type } = useModal()
@@ -57,7 +57,8 @@ const CreateServerModal = () => {
       }
       router.refresh()
       handleModalClose()
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error, '创建群组错误~')
     }
   }

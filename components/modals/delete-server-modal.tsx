@@ -1,5 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { deleteServer } from '~/actions/servers'
 import {
   Dialog,
   DialogContent,
@@ -10,11 +13,8 @@ import {
 } from '~/components/ui/dialog'
 import { useModal } from '~/hooks/use-modal-store'
 import { Button } from '../ui/button'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { deleteServer } from '~/actions/servers'
 
-const DeleteServerModal = () => {
+function DeleteServerModal() {
   const router = useRouter()
   const {
     isOpen,
@@ -39,9 +39,11 @@ const DeleteServerModal = () => {
       onClose()
       router.refresh()
       router.push('/')
-    } catch (error) {
+    }
+    catch (error) {
       console.error('删除群组出错, 爱来自 delete-server-modal 😘', error)
-    } finally {
+    }
+    finally {
       setIsLoading(false)
     }
   }
@@ -52,10 +54,12 @@ const DeleteServerModal = () => {
         <DialogHeader>
           <DialogTitle className="m-auto text-2xl">删除群组</DialogTitle>
           <DialogDescription>
-            确定要删除{' '}
+            确定要删除
+            {' '}
             <span className="font-semibold text-indigo-500">
               {server?.name}
-            </span>{' '}
+            </span>
+            {' '}
             群组吗🥹?
           </DialogDescription>
         </DialogHeader>
@@ -64,7 +68,7 @@ const DeleteServerModal = () => {
           <Button disabled={isLoading} onClick={handleLeaveServer}>
             确定
           </Button>
-          <Button disabled={isLoading} variant={'ghost'} onClick={onClose}>
+          <Button disabled={isLoading} variant="ghost" onClick={onClose}>
             取消
           </Button>
         </DialogFooter>

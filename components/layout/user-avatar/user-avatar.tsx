@@ -5,7 +5,7 @@ interface IUserAvatarProps {
   src?: string
   className?: string
 }
-const UserAvatar = ({ src, className }: IUserAvatarProps) => {
+function UserAvatar({ src, className }: IUserAvatarProps) {
   return (
     <Avatar className={cn('size-8', className)}>
       <AvatarImage src={src} />

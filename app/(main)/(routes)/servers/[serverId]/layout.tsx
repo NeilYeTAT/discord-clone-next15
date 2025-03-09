@@ -4,7 +4,7 @@ import ServerSidebar from '~/components/layout/server-sidebar/server-sidebar'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 
-const ServerIdLayout = async ({
+async function ServerIdLayout({
   children,
   params,
 }: {
@@ -12,7 +12,7 @@ const ServerIdLayout = async ({
   params: Promise<{
     serverId: string
   }>
-}) => {
+}) {
   const profile = await currentProfile()
 
   if (!profile) {

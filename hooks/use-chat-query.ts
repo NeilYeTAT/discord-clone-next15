@@ -1,5 +1,5 @@
-import qs from 'query-string'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import qs from 'query-string'
 import { useSocket } from '~/components/providers/socket-provider'
 
 interface ChatQueryProps {
@@ -9,12 +9,12 @@ interface ChatQueryProps {
   paramValue: string
 }
 
-export const useChatQuery = ({
+export function useChatQuery({
   queryKey,
   apiUrl,
   paramKey,
   paramValue,
-}: ChatQueryProps) => {
+}: ChatQueryProps) {
   const { isConnected } = useSocket()
 
   const fetchMessages = async ({ pageParam = undefined }) => {
@@ -41,9 +41,9 @@ export const useChatQuery = ({
     isLoading,
     isSuccess,
     isError,
-  } =
+  }
     // * 我也不想 any 🥹🥹, 马上去学校了, 我想在家多看看风景, 之后回学校会统一修复的
-    useInfiniteQuery({
+    = useInfiniteQuery({
       queryKey: [queryKey],
       queryFn: fetchMessages,
       getNextPageParam: lastPage => lastPage?.nextCursor,

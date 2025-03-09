@@ -3,13 +3,13 @@ import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 
 // * 点击左侧群组图片时, 默认来选中第一个 general 频道~
-const ServerIdPage = async ({
+async function ServerIdPage({
   params,
 }: {
   params: Promise<{
     serverId: string
   }>
-}) => {
+}) {
   const profile = await currentProfile()
   const serverId = (await params).serverId
 

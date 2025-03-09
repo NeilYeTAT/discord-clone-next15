@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { io as ClientIO } from 'socket.io-client'
 
-type SocketContextType = {
+interface SocketContextType {
   socket: any | null
   isConnected: boolean
 }
@@ -13,11 +13,11 @@ const SocketContext = createContext<SocketContextType>({
   isConnected: false,
 })
 
-export const useSocket = () => {
+export function useSocket() {
   return useContext(SocketContext)
 }
 
-export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
+export function SocketProvider({ children }: { children: React.ReactNode }) {
   const [socket, setSocket] = useState(null)
   const [isConnected, setIsConnected] = useState(false)
 
@@ -49,8 +49,8 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <SocketContext.Provider value={{ socket, isConnected }}>
+    <SocketContext value={{ socket, isConnected }}>
       {children}
-    </SocketContext.Provider>
+    </SocketContext>
   )
 }

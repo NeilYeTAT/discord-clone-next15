@@ -1,9 +1,11 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -22,7 +23,6 @@ import {
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
 import FileUpload from '../file-upload'
-import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -33,7 +33,7 @@ const formSchema = z.object({
   }),
 })
 
-const InitialModal = () => {
+function InitialModal() {
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +49,8 @@ const InitialModal = () => {
       form.reset()
       router.refresh()
       window.location.reload()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('初始化创建群组出错, 爱来自 initial-modal 😘', error)
     }
   }

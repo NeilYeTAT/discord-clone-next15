@@ -1,15 +1,15 @@
 'use client'
 
-import { Member, Message, Profile } from '@prisma/client'
-import ChatWelcome from './internal/chat-welcome'
-import { useChatQuery } from '~/hooks/use-chat-query'
-import { Divide, Loader2, ServerCrash } from 'lucide-react'
-import { Fragment, useRef } from 'react'
-import { ChatItem } from './internal/chat-item'
+import type { Member, Message, Profile } from '@prisma/client'
 import { format } from 'date-fns'
-import { useChatSocket } from '~/hooks/use-chat-socket'
+import { Loader2, ServerCrash } from 'lucide-react'
+import { Fragment, useRef } from 'react'
 import { Button } from '~/components/ui/button'
+import { useChatQuery } from '~/hooks/use-chat-query'
 import { useChatScroll } from '~/hooks/use-chat-scroll'
+import { useChatSocket } from '~/hooks/use-chat-socket'
+import { ChatItem } from './internal/chat-item'
+import ChatWelcome from './internal/chat-welcome'
 
 interface IChatMessagesProps {
   name: string
@@ -31,7 +31,7 @@ type IMessageWithMemberWithProfile = Message & {
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm'
 
-const ChatMessages = ({
+function ChatMessages({
   apiUrl,
   chatId,
   member,
@@ -41,7 +41,7 @@ const ChatMessages = ({
   socketQuery,
   socketUrl,
   type,
-}: IChatMessagesProps) => {
+}: IChatMessagesProps) {
   const queryKey = `chat:${chatId}`
   const addKey = `chat:${chatId}:messages`
   const updateKey = `chat:${chatId}:messages:update`
@@ -99,11 +99,13 @@ const ChatMessages = ({
 
       {hasNextPage && (
         <div className="flex justify-center">
-          {isFetchingNextPage ? (
-            <Loader2 className="size-6" />
-          ) : (
-            <Button onClick={() => fetchNextPage()}>加载更多...</Button>
-          )}
+          {isFetchingNextPage
+            ? (
+                <Loader2 className="size-6" />
+              )
+            : (
+                <Button onClick={() => fetchNextPage()}>加载更多...</Button>
+              )}
         </div>
       )}
       <div className="flex flex-col-reverse mt-auto">

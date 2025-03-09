@@ -1,17 +1,17 @@
 'use client'
 
-import { Member, Profile } from '@prisma/client'
+import type { Member, Profile } from '@prisma/client'
+import { AnimatePresence, motion } from 'motion/react'
 import { useParams, useRouter } from 'next/navigation'
-import { cn } from '~/lib/utils'
 import UserAvatar from '~/components/layout/user-avatar/user-avatar'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
-import { AnimatePresence, motion } from 'motion/react'
+import { cn } from '~/lib/utils'
 
-const ServerMember = ({
+function ServerMember({
   member,
 }: {
   member: Member & { profile: Profile }
-}) => {
+}) {
   const params = useParams()
   const router = useRouter()
 

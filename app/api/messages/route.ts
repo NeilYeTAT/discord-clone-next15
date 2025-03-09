@@ -1,7 +1,7 @@
+import type { Message } from '@prisma/client'
 import { NextResponse } from 'next/server'
-import { Message } from '@prisma/client'
-import { currentProfile } from '~/lib/db/current-profile'
 import { db } from '~/db'
+import { currentProfile } from '~/lib/db/current-profile'
 
 // * 每次滚动加载 10 条消息
 const MESSAGES_BATCH = 10
@@ -45,7 +45,8 @@ export async function GET(req: Request) {
           createdAt: 'desc',
         },
       })
-    } else {
+    }
+    else {
       messages = await db.message.findMany({
         take: MESSAGES_BATCH,
         where: {
@@ -74,7 +75,8 @@ export async function GET(req: Request) {
       items: messages,
       nextCursor,
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.log('[MESSAGES_GET]', error)
     return new NextResponse('Internal Error', { status: 500 })
   }

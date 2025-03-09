@@ -1,9 +1,9 @@
 import { Hash } from 'lucide-react'
-import UserAvatar from '../user-avatar/user-avatar'
 import SocketIndicator from '~/components/socket-indicator'
+import UserAvatar from '../user-avatar/user-avatar'
 import { ChatVideoButton } from './internal/chat-video-button'
 
-const ChatHeader = ({
+function ChatHeader({
   name,
   type,
   imageUrl,
@@ -11,7 +11,7 @@ const ChatHeader = ({
   name: string
   type: 'channel' | 'conversation'
   imageUrl?: string
-}) => {
+}) {
   return (
     <div className="px-3 flex items-center h-12 gap-2 border-b border-dashed z-50 backdrop-blur-3xl">
       {type === 'channel' && <Hash className="size-5" />}

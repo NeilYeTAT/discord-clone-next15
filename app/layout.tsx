@@ -1,12 +1,12 @@
-import '~/styles/tailwind.css'
-import { Open_Sans } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { shadesOfPurple } from '@clerk/themes'
-import { ThemeProvider } from '~/components/providers/theme-provider'
-import { ModalProvider } from '~/components/providers/modal-provider'
-import { SocketProvider } from '~/components/providers/socket-provider'
-import { QueryProvider } from '~/components/providers/query-provider'
+import { Open_Sans } from 'next/font/google'
 import StarsBackground from '~/components/layout/stars-background.tsx'
+import { ModalProvider } from '~/components/providers/modal-provider'
+import { QueryProvider } from '~/components/providers/query-provider'
+import { SocketProvider } from '~/components/providers/socket-provider'
+import { ThemeProvider } from '~/components/providers/theme-provider'
+import '~/styles/tailwind.css'
 
 const OpenSansFont = Open_Sans({
   subsets: ['latin'],
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-      afterSignOutUrl={'/'}
+      afterSignOutUrl="/"
       appearance={{
         baseTheme: shadesOfPurple,
       }}
@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <body className="bg-black">
           <ThemeProvider
-            attribute={'class'}
+            attribute="class"
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange

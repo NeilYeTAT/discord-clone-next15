@@ -1,14 +1,14 @@
 'use server'
 
+import type { IServer } from '~/types'
+import { MemberRole } from '@prisma/client'
+import { v4 } from 'uuid'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
-import { IServer } from '~/types'
-import { v4 } from 'uuid'
-import { MemberRole } from '@prisma/client'
 
 type IBaseResponse =
-  | { success: true; data: { server: IServer } }
-  | { success: false; error: string }
+  | { success: true, data: { server: IServer } }
+  | { success: false, error: string }
 
 interface IValues {
   serverName: string
@@ -77,7 +77,7 @@ export async function updateServer({
     },
     data: {
       name: serverName,
-      imageUrl: imageUrl,
+      imageUrl,
     },
   })
 

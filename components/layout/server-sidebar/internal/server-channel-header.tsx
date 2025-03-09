@@ -1,12 +1,13 @@
 'use client'
 
-import { ChannelType, MemberRole } from '@prisma/client'
-import { ServerWithMembersWithProfiles } from '~/types'
-import ActionTooltip from '~/components/ui/action-tooltip'
+import type { ChannelType } from '@prisma/client'
+import type { ServerWithMembersWithProfiles } from '~/types'
+import { MemberRole } from '@prisma/client'
 import { Plus, Settings } from 'lucide-react'
+import ActionTooltip from '~/components/ui/action-tooltip'
 import { useModal } from '~/hooks/use-modal-store'
 
-const ServerChannelHeader = ({
+function ServerChannelHeader({
   label,
   sectionType,
   channelType,
@@ -18,7 +19,7 @@ const ServerChannelHeader = ({
   sectionType: 'channels' | 'members'
   channelType?: ChannelType
   server?: ServerWithMembersWithProfiles
-}) => {
+}) {
   const { onOpen } = useModal()
 
   return (

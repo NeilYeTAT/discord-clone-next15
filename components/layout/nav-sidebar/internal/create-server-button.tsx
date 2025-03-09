@@ -1,10 +1,10 @@
 'use client'
 
-import { useModal } from '~/hooks/use-modal-store'
-import ActionTooltip from '~/components/ui/action-tooltip'
 import { Plus } from 'lucide-react'
+import ActionTooltip from '~/components/ui/action-tooltip'
+import { useModal } from '~/hooks/use-modal-store'
 
-const CreateServerButton = () => {
+function CreateServerButton() {
   const { onOpen } = useModal()
 
   return (
@@ -12,7 +12,7 @@ const CreateServerButton = () => {
     <ActionTooltip side="right" align="center" label="创建群组">
       <button
         onClick={() => onOpen('createServer')}
-        className="flex items-center justify-center  
+        className="flex items-center justify-center
                   bg-slate-50 size-12 rounded-3xl cursor-pointer
                     group overflow-hidden duration-300
                   hover:bg-slate-800 hover:rounded-2xl"

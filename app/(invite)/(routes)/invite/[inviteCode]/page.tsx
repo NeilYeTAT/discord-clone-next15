@@ -2,11 +2,11 @@ import { redirect } from 'next/navigation'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 
-const InviteCodePage = async ({
+async function InviteCodePage({
   params,
 }: {
   params: Promise<{ inviteCode: string }>
-}) => {
+}) {
   const profile = await currentProfile()
   const inviteCode = (await params).inviteCode
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useOrigin = () => {
+export function useOrigin() {
   const [origin, setOrigin] = useState('')
 
   useEffect(() => {

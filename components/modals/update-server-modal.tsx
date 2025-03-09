@@ -1,8 +1,12 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { updateServer } from '~/actions/servers'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -10,7 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,11 +23,8 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import FileUpload from '../file-upload'
-import { useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
-import { useEffect } from 'react'
-import { updateServer } from '~/actions/servers'
+import FileUpload from '../file-upload'
 
 const formSchema = z.object({
   serverName: z.string().min(1, {
@@ -35,7 +35,7 @@ const formSchema = z.object({
   }),
 })
 
-const UpdateServerModal = () => {
+function UpdateServerModal() {
   const router = useRouter()
 
   const { isOpen, onClose, type, data } = useModal()
@@ -72,7 +72,8 @@ const UpdateServerModal = () => {
 
       handleModalClose()
       router.refresh()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('修改群组出错, 爱来自 edit-server-modal 😘', error)
     }
   }
