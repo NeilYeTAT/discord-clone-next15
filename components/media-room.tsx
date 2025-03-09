@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { LiveKitRoom, VideoConference } from '@livekit/components-react'
-import '@livekit/components-styles'
 import { useUser } from '@clerk/nextjs'
+import { LiveKitRoom, VideoConference } from '@livekit/components-react'
 import { Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import '@livekit/components-styles'
 
 interface MediaRoomProps {
   chatId: string
@@ -12,12 +12,13 @@ interface MediaRoomProps {
   audio: boolean
 }
 
-export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
+export function MediaRoom({ chatId, video, audio }: MediaRoomProps) {
   const { user } = useUser()
   const [token, setToken] = useState('')
 
   useEffect(() => {
-    if (!user?.firstName || !user?.lastName) return
+    if (!user?.firstName || !user?.lastName)
+      return
 
     const name = `${user.firstName} ${user.lastName}`
 
@@ -26,7 +27,8 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
         const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}`)
         const data = await resp.json()
         setToken(data.token)
-      } catch (e) {
+      }
+      catch (e) {
         console.log(e)
       }
     })()
@@ -46,7 +48,7 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
       data-lk-theme="default"
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       token={token}
-      connect={true}
+      connect
       video={video}
       audio={audio}
     >

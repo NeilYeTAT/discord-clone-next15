@@ -1,25 +1,25 @@
 'use client'
 
-import { z } from 'zod'
-import axios from 'axios'
-import qs from 'query-string'
-import { useForm } from 'react-hook-form'
+import type { Member, Profile } from '@prisma/client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Member, MemberRole, Profile } from '@prisma/client'
+import { MemberRole } from '@prisma/client'
+import axios from 'axios'
 import { Edit, FileIcon, Trash } from 'lucide-react'
 import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation'
+import qs from 'query-string'
 import { useEffect, useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useForm } from 'react-hook-form'
 
+import { z } from 'zod'
 import ActionTooltip from '~/components/ui/action-tooltip'
-import { cn } from '~/lib/utils'
+import { Button } from '~/components/ui/button'
 import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { Button } from '~/components/ui/button'
-import UserAvatar from '../../user-avatar/user-avatar'
-import { useModal } from '~/hooks/use-modal-store'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
-import { Span } from 'next/dist/trace'
+import { useModal } from '~/hooks/use-modal-store'
+import { cn } from '~/lib/utils'
+import UserAvatar from '../../user-avatar/user-avatar'
 
 interface IChatItemProps {
   id: string
@@ -40,7 +40,7 @@ const formSchema = z.object({
   content: z.string().min(1),
 })
 
-export const ChatItem = ({
+export function ChatItem({
   id,
   content,
   member,
@@ -51,7 +51,7 @@ export const ChatItem = ({
   isUpdated,
   socketUrl,
   socketQuery,
-}: IChatItemProps) => {
+}: IChatItemProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const { onOpen } = useModal()
@@ -81,7 +81,7 @@ export const ChatItem = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: content,
+      content,
     },
   })
 
@@ -96,14 +96,15 @@ export const ChatItem = ({
 
       form.reset()
       setIsEditing(false)
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error)
     }
   }
 
   useEffect(() => {
     form.reset({
-      content: content,
+      content,
     })
   }, [content])
 
@@ -185,8 +186,8 @@ export const ChatItem = ({
             <p
               className={cn(
                 'text-sm text-zinc-600 dark:text-zinc-300',
-                deleted &&
-                  'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1 line-through',
+                deleted
+                && 'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1 line-through',
               )}
             >
               {content}
@@ -226,11 +227,15 @@ export const ChatItem = ({
               <span className="text-[10px] mt-1 text-zinc-400">
                 <span className="text-primary font-mono font-semibold">
                   ESC
-                </span>{' '}
-                退出 {''}
+                </span>
+                {' '}
+                退出
+                {' '}
+
                 <span className="text-primary font-mono font-semibold">
                   Enter
-                </span>{' '}
+                </span>
+                {' '}
                 保存
               </span>
             </Form>
@@ -253,8 +258,7 @@ export const ChatItem = ({
                 onOpen('deleteMessage', {
                   apiUrl: `${socketUrl}/${id}`,
                   query: socketQuery,
-                })
-              }
+                })}
               className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
             />
           </ActionTooltip>

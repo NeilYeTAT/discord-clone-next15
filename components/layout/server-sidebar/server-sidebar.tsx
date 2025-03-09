@@ -1,28 +1,28 @@
 import { ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
+import { ScrollArea } from '~/components/ui/scroll-area'
+import { CHANNEL_TYPE_ICON_MAP, ROLE_ICON_MAP } from '~/constants/icon-map'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
-import ServerHeader from './internal/server-header'
-import ServerSearch from './internal/server-search'
-import { ScrollArea } from '~/components/ui/scroll-area'
-import ServerChannelHeader from './internal/server-channel-header'
 import ServerChannel from './internal/server-channel'
+import ServerChannelHeader from './internal/server-channel-header'
+import ServerHeader from './internal/server-header'
 import ServerMember from './internal/server-member'
-import { CHANNEL_TYPE_ICON_MAP, ROLE_ICON_MAP } from '~/constants/icon-map'
+import ServerSearch from './internal/server-search'
 
 type ISearchData = {
   label: string
   type: 'channel' | 'member'
   data:
     | {
-        icon: React.ReactNode
-        name: string
-        id: string
-      }[]
+      icon: React.ReactNode
+      name: string
+      id: string
+    }[]
     | undefined
 }[]
 
-const ServerSidebar = async ({ serverId }: { serverId: string }) => {
+async function ServerSidebar({ serverId }: { serverId: string }) {
   const profile = await currentProfile()
 
   if (!profile) {

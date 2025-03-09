@@ -1,8 +1,8 @@
-import { redirect } from 'next/navigation'
 import { currentUser } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
 import { db } from '~/db'
 
-export const initialProfile = async () => {
+export async function initialProfile() {
   const user = await currentUser()
 
   // * 重定向去登陆

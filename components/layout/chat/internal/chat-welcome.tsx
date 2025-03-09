@@ -1,12 +1,12 @@
 import { Hash } from 'lucide-react'
 
-const ChatWelcome = ({
+function ChatWelcome({
   name,
   type,
 }: {
   name: string
   type: 'channel' | 'conversation'
-}) => {
+}) {
   return (
     <section className="space-y-2 px-4 mb-4">
       {type === 'channel' && (

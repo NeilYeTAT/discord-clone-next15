@@ -1,14 +1,7 @@
 'use client'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '~/components/ui/dialog'
-import UserAvatar from '../layout/user-avatar/user-avatar'
-import { ScrollArea } from '~/components/ui/scroll-area'
+import type { MemberRole } from '@prisma/client'
+import type { ServerWithMembersWithProfiles } from '~/types'
 import {
   Check,
   Gavel,
@@ -18,6 +11,17 @@ import {
   ShieldCheck,
   ShieldQuestion,
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+
+import { deleteMember, updateMemberRole } from '~/actions/members'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,16 +33,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
-
-import { useModal } from '~/hooks/use-modal-store'
-import { ServerWithMembersWithProfiles } from '~/types'
-import { MemberRole } from '@prisma/client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { ScrollArea } from '~/components/ui/scroll-area'
 import { ROLE_ICON_MAP } from '~/constants/icon-map'
-import { deleteMember, updateMemberRole } from '~/actions/members'
+import { useModal } from '~/hooks/use-modal-store'
+import UserAvatar from '../layout/user-avatar/user-avatar'
 
-const ManageMembersModal = () => {
+function ManageMembersModal() {
   const router = useRouter()
   const { isOpen, onClose, onOpen, type, data } = useModal()
   const [loadingId, setLoadingId] = useState('')
@@ -64,9 +64,11 @@ const ManageMembersModal = () => {
       router.refresh()
 
       onOpen('manageMembers', { server: response.data?.server })
-    } catch (error) {
+    }
+    catch (error) {
       console.error('管理成员出错, 爱来自 manage-members-modal 😘', error)
-    } finally {
+    }
+    finally {
       setLoadingId('')
     }
   }
@@ -84,7 +86,8 @@ const ManageMembersModal = () => {
 
       router.refresh()
       onOpen('manageMembers', { server: response.data?.server })
-    } catch (error) {}
+    }
+    catch (error) {}
   }
 
   return (
@@ -94,7 +97,9 @@ const ManageMembersModal = () => {
           <DialogTitle className="m-auto text-2xl">管理成员</DialogTitle>
 
           <DialogDescription className="text-center">
-            {server?.members?.length} 位成员
+            {server?.members?.length}
+            {' '}
+            位成员
           </DialogDescription>
         </DialogHeader>
 
@@ -111,61 +116,59 @@ const ManageMembersModal = () => {
                 <p className="text-sm text-gray-400">{member.profile.email}</p>
               </section>
               {/* 对其他人的操作~ */}
-              {server.profileId !== member.profileId &&
-                loadingId !== member.id && (
-                  <div className="ml-auto">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <MoreVertical className="size-4" />
-                      </DropdownMenuTrigger>
+              {server.profileId !== member.profileId
+                && loadingId !== member.id && (
+                <div className="ml-auto">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <MoreVertical className="size-4" />
+                    </DropdownMenuTrigger>
 
-                      <DropdownMenuContent side="left">
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger className="flex items-center">
-                            <ShieldQuestion className="size-4 mr-2" />
-                            <span>权限</span>
-                          </DropdownMenuSubTrigger>
+                    <DropdownMenuContent side="left">
+                      <DropdownMenuSub>
+                        <DropdownMenuSubTrigger className="flex items-center">
+                          <ShieldQuestion className="size-4 mr-2" />
+                          <span>权限</span>
+                        </DropdownMenuSubTrigger>
 
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  handleMemberRoleChange(member.id, 'GUEST')
-                                }
-                              >
-                                <Shield className="size-4 ml-2" />
-                                访客
-                                {member.role === 'GUEST' && (
-                                  <Check className="size-4" />
-                                )}
-                              </DropdownMenuItem>
+                        <DropdownMenuPortal>
+                          <DropdownMenuSubContent>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleMemberRoleChange(member.id, 'GUEST')}
+                            >
+                              <Shield className="size-4 ml-2" />
+                              访客
+                              {member.role === 'GUEST' && (
+                                <Check className="size-4" />
+                              )}
+                            </DropdownMenuItem>
 
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  handleMemberRoleChange(member.id, 'MODERATOR')
-                                }
-                              >
-                                <ShieldCheck className="size-4 ml-2" />
-                                管理员
-                                {member.role === 'MODERATOR' && (
-                                  <Check className="size-4" />
-                                )}
-                              </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
-                        {/* 分割 */}
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={() => handleDeleteMember(member.id)}
-                        >
-                          <Gavel className="size-4 ml-2" />
-                          移出
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                )}
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleMemberRoleChange(member.id, 'MODERATOR')}
+                            >
+                              <ShieldCheck className="size-4 ml-2" />
+                              管理员
+                              {member.role === 'MODERATOR' && (
+                                <Check className="size-4" />
+                              )}
+                            </DropdownMenuItem>
+                          </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                      </DropdownMenuSub>
+                      {/* 分割 */}
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => handleDeleteMember(member.id)}
+                      >
+                        <Gavel className="size-4 ml-2" />
+                        移出
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              )}
               {/*  */}
               {loadingId === member.id && (
                 <Loader2 className="size-4 animate-spin ml-auto" />

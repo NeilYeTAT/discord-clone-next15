@@ -1,8 +1,7 @@
-import { NextApiRequest } from 'next'
-import { StringifiableRecord } from 'query-string'
+import type { NextApiRequest } from 'next'
+import type { NextApiResponseServerIo } from '~/types'
 import { db } from '~/db'
 import { currentProfilePages } from '~/lib/db/current-profile-pages'
-import { NextApiResponseServerIo } from '~/types'
 
 export default async function handler(
   req: NextApiRequest,
@@ -87,7 +86,8 @@ export default async function handler(
     res.socket.server.io.emit(channelKey, message)
 
     return res.status(200).json(message)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('api socket messages error', error)
     return res.status(500).json({ message: 'Internal Error' })
   }

@@ -1,22 +1,22 @@
 'use client'
 
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 import { Smile } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '~/components/ui/popover'
-import Picker from '@emoji-mart/react'
-import data from '@emoji-mart/data'
-import { useTheme } from 'next-themes'
 
-const EmojiPicker = ({ onChange }: { onChange: (value: string) => void }) => {
+function EmojiPicker({ onChange }: { onChange: (value: string) => void }) {
   const { resolvedTheme } = useTheme()
 
   return (
     <div
       className="absolute top-8 right-8
-                  flex justify-center items-center size-8  
+                  flex justify-center items-center size-8
                 bg-gray-400 rounded-full"
     >
       <Popover>

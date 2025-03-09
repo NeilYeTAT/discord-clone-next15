@@ -1,17 +1,17 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { Plus } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import qs from 'query-string'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
-import { Plus } from 'lucide-react'
-import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
-import qs from 'query-string'
-import axios from 'axios'
+import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
 import { useModal } from '~/hooks/use-modal-store'
 import EmojiPicker from './internal/emoji-picker'
-import { useRouter } from 'next/navigation'
 
 interface IChatInputProps {
   apiUrl: string
@@ -24,7 +24,7 @@ const formSchema = z.object({
   content: z.string().min(1),
 })
 
-const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
+function ChatInput({ apiUrl, name, query, type }: IChatInputProps) {
   const router = useRouter()
   const { onOpen } = useModal()
 
@@ -47,7 +47,8 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
       await axios.post(url, values)
       form.reset()
       router.refresh()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('chat input error', error)
     }
   }
@@ -77,13 +78,12 @@ const ChatInput = ({ apiUrl, name, query, type }: IChatInputProps) => {
                     disabled={isLoading}
                     className="h-16 px-14"
                     placeholder={`给 ${
-                      type === 'conversation' ? name : '#' + name
+                      type === 'conversation' ? name : `#${name}`
                     } 发消息~`}
                   />
                   <EmojiPicker
                     onChange={(emoji: any) =>
-                      field.onChange(`${field.value} ${emoji}`)
-                    }
+                      field.onChange(`${field.value} ${emoji}`)}
                   />
                 </div>
               </FormControl>

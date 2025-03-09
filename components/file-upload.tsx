@@ -2,16 +2,16 @@
 
 import { FileIcon, X } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRef } from 'react'
 import { UploadDropzone } from '~/lib/uploadthing'
 import '@uploadthing/react/styles.css'
-import { useRef } from 'react'
-import Link from 'next/link'
 
-const getFileType = (filename: string) => {
+function getFileType(filename: string) {
   return filename.split('.').pop() || ''
 }
 
-const FileUpload = ({
+function FileUpload({
   endpoint,
   value,
   onChange,
@@ -19,7 +19,7 @@ const FileUpload = ({
   value: string
   endpoint: 'messageFile' | 'serverImage'
   onChange: (url?: string) => void
-}) => {
+}) {
   const fileTypeRef = useRef('')
   const fileType = fileTypeRef.current
 
@@ -78,7 +78,7 @@ const FileUpload = ({
         fileTypeRef.current = getFileType(name)
         onChange(url)
       }}
-      onUploadError={error => {
+      onUploadError={(error) => {
         console.error('图片上传错误~', error)
       }}
     />

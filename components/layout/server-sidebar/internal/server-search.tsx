@@ -19,15 +19,15 @@ interface IServerSearchProps {
     type: 'channel' | 'member'
     data:
       | {
-          icon: React.ReactNode
-          name: string
-          id: string
-        }[]
+        icon: React.ReactNode
+        name: string
+        id: string
+      }[]
       | undefined
   }[]
 }
 
-const ServerSearch = ({ searchData }: IServerSearchProps) => {
+function ServerSearch({ searchData }: IServerSearchProps) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const params = useParams()
@@ -72,10 +72,12 @@ const ServerSearch = ({ searchData }: IServerSearchProps) => {
         <p className="text-sm">搜索</p>
         <kbd
           className="pointer-events-none inline-flex h-6 select-none items-center px-2
-                      gap-1 rounded border bg-muted font-mono text-[10px] 
+                      gap-1 rounded border bg-muted font-mono text-[10px]
                       font-medium text-muted-foreground ml-auto"
         >
-          <span className="text-2xl">⌘</span> <span className="text-lg">K</span>
+          <span className="text-2xl">⌘</span>
+          {' '}
+          <span className="text-lg">K</span>
         </kbd>
         <span />
       </button>
@@ -90,7 +92,8 @@ const ServerSearch = ({ searchData }: IServerSearchProps) => {
           <CommandEmpty>未找到🥺</CommandEmpty>
 
           {searchData.map(({ label, type, data }) => {
-            if (!data?.length) return null
+            if (!data?.length)
+              return null
 
             return (
               <CommandGroup key={label} heading={label}>

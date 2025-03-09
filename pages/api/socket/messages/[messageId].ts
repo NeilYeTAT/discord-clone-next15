@@ -1,9 +1,9 @@
-import { NextApiRequest } from 'next'
-import { MemberRole } from '@prisma/client'
+import type { NextApiRequest } from 'next'
+import type { NextApiResponseServerIo } from '~/types'
 
-import { NextApiResponseServerIo } from '~/types'
-import { currentProfilePages } from '~/lib/db/current-profile-pages'
+import { MemberRole } from '@prisma/client'
 import { db } from '~/db'
+import { currentProfilePages } from '~/lib/db/current-profile-pages'
 
 export default async function handler(
   req: NextApiRequest,
@@ -141,7 +141,8 @@ export default async function handler(
     res?.socket?.server?.io?.emit(updateKey, message)
 
     return res.status(200).json(message)
-  } catch (error) {
+  }
+  catch (error) {
     console.log('[MESSAGE_ID]', error)
     return res.status(500).json({ error: 'Internal Error' })
   }

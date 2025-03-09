@@ -1,12 +1,14 @@
-import { createUploadthing, type FileRouter } from 'uploadthing/next'
+import type { FileRouter } from 'uploadthing/next'
 import { auth } from '@clerk/nextjs/server'
+import { createUploadthing } from 'uploadthing/next'
 
 const f = createUploadthing()
 
-const handleAuth = async () => {
+async function handleAuth() {
   const { userId } = await auth()
 
-  if (!userId) throw new Error('权限不够')
+  if (!userId)
+    throw new Error('权限不够')
 
   return { userId }
 }

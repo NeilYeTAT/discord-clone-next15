@@ -1,8 +1,8 @@
+import type { DirectMessage } from '@prisma/client'
 import { NextResponse } from 'next/server'
-import { DirectMessage } from '@prisma/client'
 
-import { currentProfile } from '~/lib/db/current-profile'
 import { db } from '~/db'
+import { currentProfile } from '~/lib/db/current-profile'
 
 const MESSAGES_BATCH = 10
 
@@ -45,7 +45,8 @@ export async function GET(req: Request) {
           createdAt: 'desc',
         },
       })
-    } else {
+    }
+    else {
       messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         where: {
@@ -74,7 +75,8 @@ export async function GET(req: Request) {
       items: messages,
       nextCursor,
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.log('[DIRECT_MESSAGES_GET]', error)
     return new NextResponse('Internal Error', { status: 500 })
   }

@@ -3,7 +3,7 @@ import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 import NavigationItem from './navigation-item'
 
-const NavigationScrollArea = async () => {
+async function NavigationScrollArea() {
   const profile = await currentProfile()
 
   if (!profile) {

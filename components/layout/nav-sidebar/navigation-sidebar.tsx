@@ -1,13 +1,10 @@
-import { redirect } from 'next/navigation'
-import { db } from '~/db'
-import { currentProfile } from '~/lib/db/current-profile'
-import CreateServerButton from './internal/create-server-button'
-import { Separator } from '~/components/ui/separator'
 import { ModeToggle } from '~/components/ui/mode-toggle'
-import UserButtonClient from './internal/user-button-client'
+import { Separator } from '~/components/ui/separator'
+import CreateServerButton from './internal/create-server-button'
 import NavigationScrollArea from './internal/navigation-scroll-area'
+import UserButtonClient from './internal/user-button-client'
 
-const NavigationSidebar = async () => {
+async function NavigationSidebar() {
   return (
     <aside className="h-screen flex flex-col items-center gap-2 py-2 flex-shrink-0 w-16">
       <CreateServerButton />

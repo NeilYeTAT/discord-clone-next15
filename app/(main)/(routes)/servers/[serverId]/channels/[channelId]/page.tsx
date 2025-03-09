@@ -7,11 +7,11 @@ import { MediaRoom } from '~/components/media-room'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
 
-const ChannelIdPage = async ({
+async function ChannelIdPage({
   params,
 }: {
-  params: Promise<{ serverId: string; channelId: string }>
-}) => {
+  params: Promise<{ serverId: string, channelId: string }>
+}) {
   const profile = await currentProfile()
   const serverId = (await params).serverId
   const channelId = (await params).channelId
@@ -73,12 +73,12 @@ const ChannelIdPage = async ({
 
         {channel.type === ChannelType.AUDIO && (
           <div className="absolute bottom-0 w-full">
-            <MediaRoom chatId={channel.id} video={false} audio={true} />
+            <MediaRoom chatId={channel.id} video={false} audio />
           </div>
         )}
         {channel.type === ChannelType.VIDEO && (
           <div className="absolute bottom-0 w-full">
-            <MediaRoom chatId={channel.id} video={true} audio={true} />
+            <MediaRoom chatId={channel.id} video audio />
           </div>
         )}
       </main>

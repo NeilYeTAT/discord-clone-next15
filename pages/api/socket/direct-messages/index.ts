@@ -1,8 +1,8 @@
-import { NextApiRequest } from 'next'
+import type { NextApiRequest } from 'next'
 
-import { NextApiResponseServerIo } from '~/types'
-import { currentProfilePages } from '~/lib/db/current-profile-pages'
+import type { NextApiResponseServerIo } from '~/types'
 import { db } from '~/db'
+import { currentProfilePages } from '~/lib/db/current-profile-pages'
 
 export default async function handler(
   req: NextApiRequest,
@@ -63,8 +63,8 @@ export default async function handler(
       return res.status(404).json({ message: 'Conversation not found' })
     }
 
-    const member =
-      conversation.memberOne.profileId === profile.id
+    const member
+      = conversation.memberOne.profileId === profile.id
         ? conversation.memberOne
         : conversation.memberTwo
 
@@ -93,7 +93,8 @@ export default async function handler(
     res?.socket?.server?.io?.emit(channelKey, message)
 
     return res.status(200).json(message)
-  } catch (error) {
+  }
+  catch (error) {
     console.log('[DIRECT_MESSAGES_POST]', error)
     return res.status(500).json({ message: 'Internal Error' })
   }

@@ -1,5 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { deleteChannel } from '~/actions/channels'
 import {
   Dialog,
   DialogContent,
@@ -10,11 +13,8 @@ import {
 } from '~/components/ui/dialog'
 import { useModal } from '~/hooks/use-modal-store'
 import { Button } from '../ui/button'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { deleteChannel } from '~/actions/channels'
 
-const DeleteChannelModal = () => {
+function DeleteChannelModal() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -45,9 +45,11 @@ const DeleteChannelModal = () => {
       // * 妈的, 这里要先跳转再刷新
       router.push(`/servers/${server?.id}`)
       router.refresh()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('删除频道出错, 爱来自 delete-channel-modal 😘', error)
-    } finally {
+    }
+    finally {
       setIsLoading(false)
     }
   }
@@ -58,10 +60,13 @@ const DeleteChannelModal = () => {
         <DialogHeader>
           <DialogTitle className="m-auto text-2xl">删除频道</DialogTitle>
           <DialogDescription>
-            确定要删除{' '}
+            确定要删除
+            {' '}
             <span className="font-semibold text-indigo-500">
-              #{channel?.name}
-            </span>{' '}
+              #
+              {channel?.name}
+            </span>
+            {' '}
             频道吗🥹?
           </DialogDescription>
         </DialogHeader>
@@ -70,7 +75,7 @@ const DeleteChannelModal = () => {
           <Button disabled={isLoading} onClick={handleDeleteChannel}>
             确定
           </Button>
-          <Button disabled={isLoading} variant={'ghost'} onClick={onClose}>
+          <Button disabled={isLoading} variant="ghost" onClick={onClose}>
             取消
           </Button>
         </DialogFooter>

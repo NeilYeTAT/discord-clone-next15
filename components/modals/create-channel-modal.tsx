@@ -1,15 +1,19 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ChannelType } from '@prisma/client'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { createChannel } from '~/actions/channels'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
 import {
   Form,
   FormControl,
@@ -19,9 +23,7 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { useParams, useRouter } from 'next/navigation'
 import { useModal } from '~/hooks/use-modal-store'
-import { ChannelType } from '@prisma/client'
 import {
   Select,
   SelectContent,
@@ -29,8 +31,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
-import { useEffect, useState } from 'react'
-import { createChannel } from '~/actions/channels'
 
 const formSchema = z.object({
   channelName: z
@@ -39,12 +39,12 @@ const formSchema = z.object({
       message: '频道名不能为空~',
     })
     .refine(name => name !== 'general', {
-      message: "不能使用 'general' 作为频道名!",
+      message: '不能使用 \'general\' 作为频道名!',
     }),
   type: z.nativeEnum(ChannelType),
 })
 
-const CreateChannelModal = () => {
+function CreateChannelModal() {
   const router = useRouter()
   const params = useParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -85,9 +85,11 @@ const CreateChannelModal = () => {
 
       handleModalClose()
       router.refresh()
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error, '创建频道错误~')
-    } finally {
+    }
+    finally {
       setIsLoading(false)
     }
   }
