@@ -55,8 +55,21 @@ module.exports = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
-  		}
+  			},
+  		},
+			keyframes: {
+				'ye-keyframes-ping-1.1': {
+					'75%, 100%': {
+						transform: 'scale(1.1)',
+						opacity: '0',
+					},
+				},
+			},
+			animation: {
+				'ye-ping-1.1':
+					'ye-keyframes-ping-1.1 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+				'ye-spin-slow': 'spin 24s linear infinite',
+			},
   	}
   },
   plugins: [require("tailwindcss-animate")],

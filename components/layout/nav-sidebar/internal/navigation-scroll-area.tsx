@@ -7,7 +7,6 @@ async function NavigationScrollArea() {
   const profile = await currentProfile()
 
   if (!profile) {
-    console.log('no profile')
     return
   }
 
@@ -22,7 +21,7 @@ async function NavigationScrollArea() {
   })
 
   return (
-    <ScrollArea className="w-full h-4/5">
+    <ScrollArea className="w-full h-5/6 py-2">
       {servers?.map(server => (
         <NavigationItem
           key={server.id}
