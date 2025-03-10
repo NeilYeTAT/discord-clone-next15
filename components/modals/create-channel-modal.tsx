@@ -69,6 +69,12 @@ function CreateChannelModal() {
     form.setValue('type', channelType)
   }, [channelType, form])
 
+  // ! 这里会导致报错..., 后序在处理这个报错问题...
+  const handleModalClose = () => {
+    form.reset()
+    onClose()
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true)
@@ -92,12 +98,6 @@ function CreateChannelModal() {
     finally {
       setIsLoading(false)
     }
-  }
-
-  // ! 这里会导致报错..., 后序在处理这个报错问题...
-  const handleModalClose = () => {
-    form.reset()
-    onClose()
   }
 
   return (

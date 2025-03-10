@@ -10,18 +10,18 @@ export const config = {
   },
 }
 
-export function ioHandler(request: NextApiRequest, response: NextApiResponseServerIo) {
-  if (!response.socket.server.io) {
-    const path = `/api/socket/io`
-    const httpServer: NetServer = response.socket.server as any
+function ioHandler(req: NextApiRequest, res: NextApiResponseServerIo) {
+  if (!res.socket.server.io) {
+    const path = '/api/socket/io'
+    const httpServer: NetServer = res.socket.server as any
     const io = new ServerIO(httpServer, {
       path,
       addTrailingSlash: false,
     })
-    response.socket.server.io = io
+    res.socket.server.io = io
   }
 
-  response.end()
+  res.end()
 }
 
 export default ioHandler

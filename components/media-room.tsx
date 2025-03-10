@@ -29,7 +29,7 @@ export function MediaRoom({ chatId, video, audio }: MediaRoomProps) {
         setToken(data.token)
       }
       catch (e) {
-        console.log(e)
+        console.error(e)
       }
     })()
   }, [user?.firstName, user?.lastName, chatId])

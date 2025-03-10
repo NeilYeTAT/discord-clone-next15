@@ -98,7 +98,7 @@ export function ChatItem({
       setIsEditing(false)
     }
     catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

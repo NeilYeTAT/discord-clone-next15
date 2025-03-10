@@ -23,27 +23,25 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const socketInstance = new (ClientIO as any)(
-      process.env.NEXT_PUBLIC_SITE_URL!,
+      'http://localhost:3000',
       {
         path: '/api/socket/io',
-        addTrailingSlash: false,
+        transports: ['websocket'],
       },
     )
 
     socketInstance.on('connect', () => {
-      console.log('✅ 已连接到 WebSocket 服务器')
       setIsConnected(true)
     })
 
     socketInstance.on('disconnect', () => {
-      console.log('❌ 断开连接')
       setIsConnected(false)
     })
 
     setSocket(socketInstance)
 
     return () => {
-      console.log('useEffect 清理~ 即将断开连接~')
+      console.warn('断开连接')
       socketInstance.disconnect()
     }
   }, [])
