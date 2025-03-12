@@ -46,6 +46,11 @@ function MessageFileModal() {
     },
   })
 
+  const handleModalClose = () => {
+    form.reset()
+    onClose()
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
@@ -62,11 +67,6 @@ function MessageFileModal() {
     catch (error) {
       console.error('文件消息出错, 爱来自 messages-file-modal 😘', error)
     }
-  }
-
-  const handleModalClose = () => {
-    form.reset()
-    onClose()
   }
 
   return (

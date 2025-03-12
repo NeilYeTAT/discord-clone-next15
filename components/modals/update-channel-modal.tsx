@@ -68,6 +68,12 @@ function UpdateChannelModal() {
     }
   }, [form, channel])
 
+  // ! 同样的问题, 在 创建频道的时候也会出现, 暂时先放着...
+  const handleModalClose = () => {
+    form.reset()
+    onClose()
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true)
@@ -93,12 +99,6 @@ function UpdateChannelModal() {
     finally {
       setIsLoading(false)
     }
-  }
-
-  // ! 同样的问题, 在 创建频道的时候也会出现, 暂时先放着...
-  const handleModalClose = () => {
-    form.reset()
-    onClose()
   }
 
   return (

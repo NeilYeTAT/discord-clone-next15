@@ -87,7 +87,9 @@ function ManageMembersModal() {
       router.refresh()
       onOpen('manageMembers', { server: response.data?.server })
     }
-    catch (error) {}
+    catch (error) {
+      console.error('管理成员出错', error)
+    }
   }
 
   return (

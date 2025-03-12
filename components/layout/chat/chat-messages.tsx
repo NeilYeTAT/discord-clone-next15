@@ -56,7 +56,6 @@ function ChatMessages({
     isFetchingNextPage,
     isLoading,
     isError,
-    isSuccess,
   } = useChatQuery({
     queryKey,
     apiUrl,
@@ -112,7 +111,6 @@ function ChatMessages({
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group?.items?.map((message: IMessageWithMemberWithProfile) => (
-              // <p key={message.id}>{message.content}</p>
               <ChatItem
                 key={message.id}
                 id={message.id}

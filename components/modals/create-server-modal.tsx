@@ -48,6 +48,11 @@ function CreateServerModal() {
     },
   })
 
+  const handleModalClose = () => {
+    form.reset()
+    onClose()
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await createServer(values)
@@ -61,11 +66,6 @@ function CreateServerModal() {
     catch (error) {
       console.error(error, '创建群组错误~')
     }
-  }
-
-  const handleModalClose = () => {
-    form.reset()
-    onClose()
   }
 
   return (

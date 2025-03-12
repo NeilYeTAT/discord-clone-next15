@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:test":"next build --no-lint ",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix"

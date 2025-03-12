@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react'
 
-interface IChatScrollProps {
-  chatRef: React.RefObject<HTMLDivElement>
-  bottomRef: React.RefObject<HTMLDivElement>
-  shouldLoadMore: boolean
-  loadMore: () => void
-  count: number
-}
-
 export function useChatScroll({
   chatRef,
   bottomRef,
   shouldLoadMore,
   loadMore,
   count,
-}: IChatScrollProps) {
+}: {
+  chatRef: React.RefObject<HTMLDivElement>
+  bottomRef: React.RefObject<HTMLDivElement>
+  shouldLoadMore: boolean
+  loadMore: () => void
+  count: number
+}) {
   const [hasInitialized, setHasInitialized] = useState(false)
 
   useEffect(() => {
@@ -53,12 +51,18 @@ export function useChatScroll({
       return distanceFromBottom <= 100
     }
 
+    let timer: NodeJS.Timeout
+
     if (shouldAutoScroll()) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         bottomRef.current?.scrollIntoView({
           behavior: 'smooth',
         })
       }, 100)
+    }
+
+    return () => {
+      clearTimeout(timer)
     }
   }, [bottomRef, chatRef, count, hasInitialized])
 }

@@ -75,7 +75,7 @@ export function ChatItem({
 
     window.addEventListener('keydown', handleKeyDown)
 
-    return () => window.removeEventListener('keyDown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const form = useForm<z.infer<typeof formSchema>>({

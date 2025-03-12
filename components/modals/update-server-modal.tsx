@@ -58,6 +58,11 @@ function UpdateServerModal() {
     }
   }, [form, server])
 
+  const handleModalClose = () => {
+    form.reset()
+    onClose()
+  }
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await updateServer({
@@ -76,11 +81,6 @@ function UpdateServerModal() {
     catch (error) {
       console.error('修改群组出错, 爱来自 edit-server-modal 😘', error)
     }
-  }
-
-  const handleModalClose = () => {
-    form.reset()
-    onClose()
   }
 
   return (

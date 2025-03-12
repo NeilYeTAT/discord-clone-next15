@@ -85,6 +85,7 @@ function InviteUsersModal() {
 
           {/* 这里使用普通按扭是因为 shadcnUI 中 Button 无法控制鼠标禁用样式 */}
           <button
+            type="button"
             onClick={generateNewLink}
             disabled={throttledIsLoading}
             className="flex text-xs mt-2 text-zinc-500 cursor-pointer underline

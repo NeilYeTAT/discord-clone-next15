@@ -65,6 +65,7 @@ function ServerSearch({ searchData }: IServerSearchProps) {
   return (
     <>
       <button
+        type="button"
         className="p-2 rounded-md flex items-center gap-2 w-full border-b border-dashed"
         onClick={() => setOpen(true)}
       >

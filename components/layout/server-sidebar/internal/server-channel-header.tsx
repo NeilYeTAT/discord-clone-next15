@@ -27,7 +27,7 @@ function ServerChannelHeader({
       <h3 className="font-sans font-semibold text-slate-400">{label}</h3>
       {role !== MemberRole.GUEST && sectionType === 'channels' && (
         <ActionTooltip label="创建频道" side="top">
-          <button onClick={() => onOpen('createChannel', { channelType })}>
+          <button type="button" onClick={() => onOpen('createChannel', { channelType })}>
             <Plus className="size-4 cursor-pointer" />
           </button>
         </ActionTooltip>
@@ -36,7 +36,7 @@ function ServerChannelHeader({
       {role === MemberRole.ADMIN && sectionType === 'members' && (
         <ActionTooltip label="管理成员" side="top">
           {/* 别忘了传递 server 🤡🤡🤡 */}
-          <button onClick={() => onOpen('manageMembers', { server })}>
+          <button type="button" onClick={() => onOpen('manageMembers', { server })}>
             <Settings className="size-4" />
           </button>
         </ActionTooltip>
