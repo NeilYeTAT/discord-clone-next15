@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { db } from '~/db'
 import { currentProfile } from '~/lib/db/current-profile'
@@ -7,7 +8,7 @@ async function NavigationScrollArea() {
   const profile = await currentProfile()
 
   if (!profile) {
-    return
+    return redirect('/')
   }
 
   const servers = await db.server.findMany({
@@ -21,7 +22,7 @@ async function NavigationScrollArea() {
   })
 
   return (
-    <ScrollArea className="w-full h-5/6 py-2">
+    <ScrollArea className="w-full h-5/6">
       {servers?.map(server => (
         <NavigationItem
           key={server.id}

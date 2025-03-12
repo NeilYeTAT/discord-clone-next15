@@ -5,7 +5,7 @@ import UserButtonClient from './internal/user-button-client'
 
 async function NavigationSidebar() {
   return (
-    <aside className="h-screen flex flex-col items-center gap-2 py-2 flex-shrink-0 w-16">
+    <aside className="h-screen flex flex-col items-center py-2 flex-shrink-0 w-16">
       <CreateServerButton />
       <NavigationScrollArea />
       {/* 底部用户信息按扭和明暗切换按扭 */}

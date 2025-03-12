@@ -3,7 +3,7 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ActionTooltip from '~/components/ui/action-tooltip'
 
 function NavigationItem({
@@ -13,12 +13,25 @@ function NavigationItem({
 }: {
   name: string
   imageUrl: string
-  id?: string
+  id: string
 }) {
   // * 获取之后点击跳转的链接地址~
   const params = useParams()
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
+  const isActive = params?.serverId === id
+  const itemRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    if (isActive && itemRef.current) {
+      itemRef.current.scrollIntoView({
+        // * 别使用 smooth, 感觉不如 instant 丝滑
+        behavior: 'instant',
+        block: 'nearest',
+        inline: 'nearest',
+      })
+    }
+  }, [isActive])
 
   return (
     <ActionTooltip
@@ -26,9 +39,11 @@ function NavigationItem({
       align="center"
       label={name}
     >
-      <button
+      <motion.button
         type="button"
-        className="group flex items-center size-12 cursor-pointer rounded-3xl hover:rounded-xl transition-all mx-auto mb-2"
+        className="relative group flex items-center size-12 cursor-pointer rounded-3xl hover:rounded-xl transition-all mx-auto my-3"
+        ref={isActive ? itemRef : null}
+        layoutId={`server-${id}`}
         onClick={() => {
           router.push(`/servers/${id}`)
         }}
@@ -54,21 +69,20 @@ function NavigationItem({
             }}
           />
         </div>
-        {params?.serverId === id
+        {isActive
           && (
-            <motion.span
-              className="bg-slate-50 h-10 w-[3px] absolute rounded-full left-0"
-              layoutId="white-line"
-            />
+            <>
+              <motion.span
+                className="bg-slate-50 h-10 w-[3px] absolute rounded-full -left-2"
+                layoutId="white-line"
+              />
+              <motion.span
+                className="absolute rounded-full size-12 ring-4 ring-purple-800 ring-offset-1 animate-ye-ping-1.1 z-50"
+                layoutId="highlight-bg"
+              />
+            </>
           )}
-        {params?.serverId === id
-          && (
-            <motion.span
-              className="absolute left-2 rounded-full size-12 ring-4 ring-purple-800 ring-offset-1 animate-ye-ping-1.1 z-50"
-              layoutId="highlight-bg"
-            />
-          )}
-      </button>
+      </motion.button>
     </ActionTooltip>
   )
 }

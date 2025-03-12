@@ -23,7 +23,7 @@ function CreateServerButton() {
           <Plus className="text-black group-hover:text-white duration-300" />
         </button>
       </ActionTooltip>
-      <Separator className="bg-zinc-100 dark:bg-zinc-300 w-10 mx-auto" />
+      <Separator className="bg-zinc-100 dark:bg-zinc-300 w-10 mx-auto mt-3" />
     </>
   )
 }
