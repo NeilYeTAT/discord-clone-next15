@@ -1,7 +1,6 @@
 'use client'
 
 import { useSocket } from '~/lib/socket-context'
-// import { useSocket } from './providers/socket-provider'
 import { Badge } from './ui/badge'
 
 function SocketIndicator() {
@@ -12,7 +11,9 @@ function SocketIndicator() {
       variant="outline"
       className={isConnected ? 'bg-emerald-500' : 'bg-yellow-500'}
     >
-      {isConnected ? <>已连接</> : <>断联中</>}
+      <span className="text-white">
+        {isConnected ? <>已连接</> : <>断联中</>}
+      </span>
     </Badge>
   )
 }

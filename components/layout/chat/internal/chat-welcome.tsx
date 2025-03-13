@@ -10,8 +10,8 @@ function ChatWelcome({
   return (
     <section className="space-y-2 px-4 mb-4">
       {type === 'channel' && (
-        <div className="size-20 rounded-full bg-primary-foreground flex items-center justify-center">
-          <Hash className="size-12 text-white" />
+        <div className="size-20 rounded-full dark:bg-primary-foreground bg-slate-200 flex items-center justify-center">
+          <Hash className="size-12 dark:text-white text-slate-950" />
         </div>
       )}
       <p className="text-xl md:text-3xl font-bold font-mono">
