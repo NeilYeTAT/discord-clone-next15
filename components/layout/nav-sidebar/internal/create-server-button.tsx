@@ -16,7 +16,7 @@ function CreateServerButton() {
           type="button"
           onClick={() => onOpen('createServer')}
           className="flex items-center justify-center
-                  dark:bg-slate-50 bg-slate-900 size-12 rounded-3xl cursor-pointer
+                  dark:bg-slate-50 bg-slate-700 size-12 rounded-3xl cursor-pointer
                     group overflow-hidden duration-300
                   hover:bg-slate-800 hover:rounded-2xl"
         >

@@ -66,11 +66,11 @@ function ServerSearch({ searchData }: IServerSearchProps) {
     <>
       <button
         type="button"
-        className="p-2 rounded-md flex items-center gap-2 w-full border-b border-dashed"
+        className="p-2 flex items-center gap-2 w-full border-b border-dashed border-pink-500 dark:border-b-slate-500"
         onClick={() => setOpen(true)}
       >
         <Search className="size-4" />
-        <p className="text-sm">搜索</p>
+        <h3 className="text-sm">搜索</h3>
         <kbd
           className="pointer-events-none inline-flex h-6 select-none items-center px-2
                       gap-1 rounded border bg-muted font-mono text-[10px]

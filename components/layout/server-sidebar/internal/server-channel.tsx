@@ -37,13 +37,14 @@ function ServerChannel({
     <motion.button
       onClick={handleNavigation}
       className={cn(
-        'relative group px-1 py-[6px] rounded-md flex items-center w-full gap-1 cursor-pointer duration-300 mb-1 hover:bg-primary-foreground',
+        'relative group pr-2 py-[6px] rounded-md flex items-center w-full gap-1 cursor-pointer duration-300 mb-1 hover:bg-primary-foreground',
         params?.channelId === channel.id && 'bg-primary-foreground',
       )}
       whileHover={{ scale: 1.05 }}
-      transition={{ type: 'spring', stiffness: 300 }}
     >
-      {CHANNEL_TYPE_ICON_MAP[channel.type]}
+      <span className="ml-2">
+        {CHANNEL_TYPE_ICON_MAP[channel.type]}
+      </span>
       <p className="max-w-36 truncate text-left">{channel.name}</p>
       {/* 管理员可以编辑频道 */}
       {channel.name !== 'general' && role !== MemberRole.GUEST && (

@@ -116,7 +116,7 @@ async function ServerSidebar({ serverId }: { serverId: string }) {
   ]
 
   return (
-    <section className="flex flex-col w-64 bg-black border-x border-dashed">
+    <section className="flex flex-col w-64 dark:border-x border-dashed border-x border-x-pink-500 dark:border-x-slate-500">
       <ServerHeader server={server} role={myRole} />
       {/* ScrollArea 源码中隐藏了滚动条的显示 */}
       <ScrollArea className="px-2 py-1">
