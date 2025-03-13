@@ -16,14 +16,14 @@ function CreateServerButton() {
           type="button"
           onClick={() => onOpen('createServer')}
           className="flex items-center justify-center
-                  bg-slate-50 size-12 rounded-3xl cursor-pointer
+                  dark:bg-slate-50 bg-slate-900 size-12 rounded-3xl cursor-pointer
                     group overflow-hidden duration-300
                   hover:bg-slate-800 hover:rounded-2xl"
         >
-          <Plus className="text-black group-hover:text-white duration-300" />
+          <Plus className="dark:text-slate-900 text-white group-hover:text-white dark:group-hover:text-black duration-300" />
         </button>
       </ActionTooltip>
-      <Separator className="bg-zinc-100 dark:bg-zinc-300 w-10 mx-auto mt-3" />
+      <Separator className="dark:bg-zinc-100 bg-black w-10 mx-auto mt-3" />
     </>
   )
 }

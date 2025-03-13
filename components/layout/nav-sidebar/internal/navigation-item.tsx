@@ -73,7 +73,7 @@ function NavigationItem({
           && (
             <>
               <motion.span
-                className="bg-slate-50 h-10 w-[3px] absolute rounded-full -left-2"
+                className="dark:bg-slate-50 bg-purple-500 h-10 w-[3px] absolute rounded-full -left-2"
                 layoutId="white-line"
               />
               <motion.span
