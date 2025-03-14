@@ -39,7 +39,7 @@ const formSchema = z.object({
       message: '频道名不能为空~',
     })
     .refine(name => name !== 'general', {
-      message: '不能使用 \'general\' 作为频道名!',
+      message: `不能使用 'general' 作为频道名!`,
     }),
   type: z.nativeEnum(ChannelType),
 })
@@ -47,11 +47,13 @@ const formSchema = z.object({
 function UpdateChannelModal() {
   const router = useRouter()
 
-  const { isOpen, onClose, type, data } = useModal()
+  const { isOpen, onClose, type, data: {
+    channel,
+    server,
+  } } = useModal()
   const [isLoading, setIsLoading] = useState(false)
 
   const isModalOpen = isOpen && type === 'UpdateChannel'
-  const { channel, server } = data
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

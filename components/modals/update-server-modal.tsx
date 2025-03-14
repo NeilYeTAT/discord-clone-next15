@@ -38,9 +38,8 @@ const formSchema = z.object({
 function UpdateServerModal() {
   const router = useRouter()
 
-  const { isOpen, onClose, type, data } = useModal()
+  const { isOpen, onClose, type, data: { server } } = useModal()
   const isModalOpen = isOpen && type === 'updateServer'
-  const { server } = data
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -107,7 +106,12 @@ function UpdateServerModal() {
                     <FileUpload
                       endpoint="serverImage"
                       value={field.value}
-                      onChange={field.onChange}
+                      onChange={(url) => {
+                        field.onChange(url)
+                        if (!url) {
+                          form.resetField('imageUrl')
+                        }
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
