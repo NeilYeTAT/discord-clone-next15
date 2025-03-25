@@ -82,7 +82,7 @@ function MessageFileModal() {
         {/* 表单配置 */}
         <Form {...form}>
           {/* 当点击底部按扭时, 触发这个提交事件~ */}
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="space-y-8 w-96" onSubmit={form.handleSubmit(onSubmit)}>
             {/* 上传文件组件~ */}
             <FormField
               control={form.control}
@@ -95,6 +95,7 @@ function MessageFileModal() {
                       endpoint="messageFile"
                       value={field.value}
                       onChange={field.onChange}
+                      shouldStoreFileType
                     />
                   </FormControl>
                   <FormMessage />

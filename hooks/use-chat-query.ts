@@ -52,6 +52,7 @@ export function useChatQuery({
       // * 上面这种需要手动刷新再显示, 不确定是不是bug, 使用下面这种可以即时展示
       refetchInterval: 1000,
     } as any)
+  console.log(data, 'ddddddddddd')
 
   return {
     data,

@@ -10,8 +10,8 @@ import { useParams, useRouter } from 'next/navigation'
 import qs from 'query-string'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-
 import { z } from 'zod'
+import { getChatHistoryFileType } from '~/actions/filetype'
 import ActionTooltip from '~/components/ui/action-tooltip'
 import { Button } from '~/components/ui/button'
 import { Form, FormControl, FormField, FormItem } from '~/components/ui/form'
@@ -28,7 +28,7 @@ interface IChatItemProps {
     profile: Profile
   }
   timestamp: string
-  fileUrl: string | null
+  fileUrl: string
   deleted: boolean
   currentMember: Member
   isUpdated: boolean
@@ -54,6 +54,9 @@ export function ChatItem({
 }: IChatItemProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isPDF, setIsPDF] = useState(false)
+  const [isImage, setIsImage] = useState(false)
+
   const { onOpen } = useModal()
   const params = useParams()
   const router = useRouter()
@@ -96,8 +99,7 @@ export function ChatItem({
 
       form.reset()
       setIsEditing(false)
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -108,10 +110,23 @@ export function ChatItem({
     })
   }, [content])
 
-  // ! 获取不了类型, url 中不存在后缀
-  const fileType = fileUrl?.split('.').pop()
-  const isPDF = fileType === 'pdf' && fileUrl
-  const isImage = !isPDF && fileUrl
+  useEffect(() => {
+    const fetchFileType = async () => {
+      const resp = await getChatHistoryFileType(fileUrl || '')
+      if (!resp.success) {
+        return ''
+      }
+      const fileType = resp.data?.fileType
+      if (!fileType) {
+        return ''
+      }
+      console.warn(fileType.toUpperCase(), 'fileType')
+      setIsPDF(fileType.toUpperCase() === 'PDF')
+      setIsImage(!isPDF)
+    }
+
+    fetchFileType()
+  }, [isPDF, isImage])
 
   const isAdmin = currentMember.role === MemberRole.ADMIN
   const isModerator = currentMember.role === MemberRole.MODERATOR
@@ -120,8 +135,8 @@ export function ChatItem({
   const canEditMessage = !deleted && isOwner && !fileUrl
 
   return (
-    <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
-      <div className="group flex gap-x-2 items-start w-full">
+    <main className="relative group flex items-center hover:bg-white/5 p-4 transition w-full">
+      <section className="group flex gap-2 items-start w-full">
         <div
           onClick={onMemberClick}
           className="cursor-pointer hover:drop-shadow-md transition"
@@ -129,14 +144,15 @@ export function ChatItem({
           <UserAvatar src={member.profile.imageUrl} />
         </div>
         <div className="flex flex-col w-full">
-          <div className="flex items-center gap-x-2">
+          {/* 名字 和 logo */}
+          <header className="flex items-center">
             <div className="flex items-center">
-              <p
+              <span
                 onClick={onMemberClick}
                 className="font-semibold text-sm hover:underline cursor-pointer"
               >
                 {member.profile.name}
-              </p>
+              </span>
               <ActionTooltip label={member.role}>
                 {ROLE_ICON_MAP[member.role]}
               </ActionTooltip>
@@ -144,7 +160,8 @@ export function ChatItem({
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
               {timestamp}
             </span>
-          </div>
+          </header>
+          {/* 具体的聊天记录区域 */}
           <div className="relative">
             {isImage && (
               <>
@@ -186,8 +203,8 @@ export function ChatItem({
             <p
               className={cn(
                 'text-sm text-zinc-600 dark:text-zinc-300',
-                deleted
-                && 'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1 line-through',
+                deleted &&
+                  'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1 line-through',
               )}
             >
               {content}
@@ -227,21 +244,17 @@ export function ChatItem({
               <span className="text-[10px] mt-1 text-zinc-400">
                 <span className="text-primary font-mono font-semibold">
                   ESC
-                </span>
-                {' '}
-                退出
-                {' '}
-
+                </span>{' '}
+                退出{' '}
                 <span className="text-primary font-mono font-semibold">
                   Enter
-                </span>
-                {' '}
+                </span>{' '}
                 保存
               </span>
             </Form>
           )}
         </div>
-      </div>
+      </section>
       {canDeleteMessage && (
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
           {canEditMessage && (
@@ -258,12 +271,13 @@ export function ChatItem({
                 onOpen('deleteMessage', {
                   apiUrl: `${socketUrl}/${id}`,
                   query: socketQuery,
-                })}
+                })
+              }
               className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
             />
           </ActionTooltip>
         </div>
       )}
-    </div>
+    </main>
   )
 }

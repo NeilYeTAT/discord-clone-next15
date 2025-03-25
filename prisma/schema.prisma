@@ -13,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// * 个人信息
 model Profile {
   id       String @id @default(uuid())
   userId   String @unique
@@ -24,11 +25,11 @@ model Profile {
   member   Member[]
   channels Channel[]
 
-  createdAtAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-// * discord 的每个服务器其实就是一个 QQ 群~
+// * 群组
 model Server {
   id         String @id @default(uuid())
   name       String
@@ -53,6 +54,7 @@ enum MemberRole {
   GUEST
 }
 
+// * 群员
 model Member {
   id   String     @id @default(uuid())
   role MemberRole @default(GUEST)
@@ -83,6 +85,7 @@ enum ChannelType {
   VIDEO
 }
 
+// * 一个群组有多个频道, 一个频道只存在一个群组中~
 model Channel {
   id   String      @id @default(uuid())
   name String
@@ -103,29 +106,7 @@ model Channel {
   @@index([serverId])
 }
 
-// * 聊天记录~
-
-model Message {
-  id      String @id @default(uuid())
-  content String @db.Text
-
-  fileUrl String? @db.Text
-
-  memberId String
-  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
-
-  channelId String
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-
-  deleted Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([channelId])
-  @@index([memberId])
-}
-
+// * 好友关系
 model Conversation {
   id String @id @default(uuid())
 
@@ -145,10 +126,43 @@ model Conversation {
   @@index([memberTwoId])
 }
 
+// * 聊天记录~
+
+model Message {
+  id      String @id @default(uuid())
+  content String @db.Text
+
+  fileUrl String? @db.Text
+
+  // fileType String? @db.VarChar(10) 
+  fileTypeId String?
+  fileType FileType? @relation(fields: [fileTypeId], references: [id], onDelete: Cascade)
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@index([memberId])
+}
+
+
+// * 单独私聊的聊天记录
+// ! 由于无法通过 uploadthing 的 url 获取文件类型, 因此额外创建一张表来映射..., 毕竟 url 是唯一的~
 model DirectMessage {
   id      String  @id @default(uuid())
   content String  @db.Text
   fileUrl String? @db.Text
+
+  fileTypeId String?
+  fileType FileType? @relation(fields: [fileTypeId], references: [id], onDelete: Cascade)
 
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
@@ -163,4 +177,13 @@ model DirectMessage {
 
   @@index([memberId])
   @@index([conversationId])
+}
+
+model FileType {
+  id  String @id @default(uuid())
+  fileUrl String @unique
+  fileType String? @db.VarChar(10) 
+
+  messages Message[]
+  directMessages DirectMessage[]
 }
