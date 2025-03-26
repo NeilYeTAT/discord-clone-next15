@@ -7,8 +7,8 @@ export function useChatScroll({
   loadMore,
   count,
 }: {
-  chatRef: React.RefObject<HTMLDivElement>
-  bottomRef: React.RefObject<HTMLDivElement>
+  chatRef: React.RefObject<HTMLDivElement | null>
+  bottomRef: React.RefObject<HTMLDivElement | null>
   shouldLoadMore: boolean
   loadMore: () => void
   count: number
@@ -35,7 +35,7 @@ export function useChatScroll({
 
   useEffect(() => {
     const bottomDiv = bottomRef?.current
-    const topDiv = chatRef.current
+    const topDiv = chatRef?.current
     const shouldAutoScroll = () => {
       if (!hasInitialized && bottomDiv) {
         setHasInitialized(true)
@@ -46,8 +46,8 @@ export function useChatScroll({
         return false
       }
 
-      const distanceFromBottom
-        = topDiv.scrollHeight - topDiv.scrollTop - topDiv.clientHeight
+      const distanceFromBottom =
+        topDiv.scrollHeight - topDiv.scrollTop - topDiv.clientHeight
       return distanceFromBottom <= 100
     }
 
@@ -55,7 +55,7 @@ export function useChatScroll({
 
     if (shouldAutoScroll()) {
       timer = setTimeout(() => {
-        bottomRef.current?.scrollIntoView({
+        bottomRef?.current?.scrollIntoView({
           behavior: 'smooth',
         })
       }, 100)

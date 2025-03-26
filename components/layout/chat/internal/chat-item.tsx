@@ -112,7 +112,7 @@ export function ChatItem({
 
   useEffect(() => {
     const fetchFileType = async () => {
-      const resp = await getChatHistoryFileType(fileUrl || '')
+      const resp = await getChatHistoryFileType(fileUrl)
       if (!resp.success) {
         return ''
       }

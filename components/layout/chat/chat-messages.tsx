@@ -98,13 +98,11 @@ function ChatMessages({
 
       {hasNextPage && (
         <div className="flex justify-center">
-          {isFetchingNextPage
-            ? (
-                <Loader2 className="size-6" />
-              )
-            : (
-                <Button onClick={() => fetchNextPage()}>加载更多...</Button>
-              )}
+          {isFetchingNextPage ? (
+            <Loader2 className="size-6" />
+          ) : (
+            <Button onClick={() => fetchNextPage()}>加载更多...</Button>
+          )}
         </div>
       )}
       <div className="flex flex-col-reverse mt-auto">
@@ -117,7 +115,7 @@ function ChatMessages({
                 currentMember={member}
                 member={message.member}
                 content={message.content}
-                fileUrl={message.fileUrl}
+                fileUrl={message.fileUrl || ''}
                 deleted={message.deleted}
                 timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                 isUpdated={message.updatedAt !== message.createdAt}
