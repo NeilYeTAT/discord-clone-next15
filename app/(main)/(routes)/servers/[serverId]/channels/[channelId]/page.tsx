@@ -10,7 +10,7 @@ import { currentProfile } from '~/lib/db/current-profile'
 async function ChannelIdPage({
   params,
 }: {
-  params: Promise<{ serverId: string, channelId: string }>
+  params: Promise<{ serverId: string; channelId: string }>
 }) {
   const profile = await currentProfile()
   const serverId = (await params).serverId
@@ -39,36 +39,23 @@ async function ChannelIdPage({
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
-      <section className="fixed w-full z-50">
-        <ChatHeader name={channel.name} type="channel" />
-      </section>
+      <ChatHeader name={channel.name} type="channel" />
       <main className="mt-10 flex flex-col relative flex-1">
         {channel.type === ChannelType.TEXT && (
-          <>
-            <ChatMessages
-              member={member}
-              name={channel.name}
-              chatId={channel.id}
-              type="channel"
-              apiUrl="/api/messages"
-              socketUrl="/api/socket/messages"
-              socketQuery={{
-                channelId: channel.id,
-                serverId: channel.serverId,
-              }}
-              paramKey="channelId"
-              paramValue={channel.id}
-            />
-            <ChatInput
-              name={channel.name}
-              type="channel"
-              apiUrl="/api/socket/messages"
-              query={{
-                channelId: channel.id,
-                serverId: channel.serverId,
-              }}
-            />
-          </>
+          <ChatMessages
+            member={member}
+            name={channel.name}
+            chatId={channel.id}
+            type="channel"
+            apiUrl="/api/messages"
+            socketUrl="/api/socket/messages"
+            socketQuery={{
+              channelId: channel.id,
+              serverId: channel.serverId,
+            }}
+            paramKey="channelId"
+            paramValue={channel.id}
+          />
         )}
 
         {channel.type === ChannelType.AUDIO && (
@@ -82,6 +69,18 @@ async function ChannelIdPage({
           </div>
         )}
       </main>
+      {/* 固定底部输入框, 后序考虑固定定位 */}
+      {channel.type === ChannelType.TEXT && (
+        <ChatInput
+          name={channel.name}
+          type="channel"
+          apiUrl="/api/socket/messages"
+          query={{
+            channelId: channel.id,
+            serverId: channel.serverId,
+          }}
+        />
+      )}
     </div>
   )
 }

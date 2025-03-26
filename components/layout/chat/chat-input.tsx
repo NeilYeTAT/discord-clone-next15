@@ -47,15 +47,17 @@ function ChatInput({ apiUrl, name, query, type }: IChatInputProps) {
       await axios.post(url, values)
       form.reset()
       router.refresh()
-    }
-    catch (error) {
+    } catch (error) {
       console.error('chat input error', error)
     }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="z-50 bottom-0 w-full"
+      >
         <FormField
           control={form.control}
           name="content"
@@ -83,7 +85,8 @@ function ChatInput({ apiUrl, name, query, type }: IChatInputProps) {
                   />
                   <EmojiPicker
                     onChange={(emoji: any) =>
-                      field.onChange(`${field.value} ${emoji}`)}
+                      field.onChange(`${field.value} ${emoji}`)
+                    }
                   />
                 </div>
               </FormControl>

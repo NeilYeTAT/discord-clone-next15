@@ -13,17 +13,17 @@ function ChatHeader({
   imageUrl?: string
 }) {
   return (
-    <div className="px-3 flex items-center h-12 gap-2 border-b border-pink-500 dark:border-slate-500 border-dashed z-50 backdrop-blur-3xl">
+    <header className="fixed w-full z-50 px-3 flex items-center h-12 gap-2 border-b border-pink-500 dark:border-slate-500 border-dashed backdrop-blur-3xl">
       {type === 'channel' && <Hash className="size-5" />}
       {type === 'conversation' && (
         <UserAvatar src={imageUrl} className="size-8 relative" />
       )}
-      <p className="font-mono font-semibold">{name}</p>
+      <span className="font-mono font-semibold">{name}</span>
       <div className="flex items-center">
         {type === 'conversation' && <ChatVideoButton />}
         <SocketIndicator />
       </div>
-    </div>
+    </header>
   )
 }
 
